@@ -7,6 +7,20 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+/**
+ * Вебинар.20191028_GB-Разработка_игры_на_LibGDX.Преподаватель: Алексей Кутепов
+ * Урок 1. Установка и настройка инструментов разработки
+ * Установка и настройка инструментов разработки. Создание шаблонного
+ * проекта и его запуск. Структура проекта. Обзор модулей LibGDX.
+ * @author Yuriy Litvinenko
+ * Домашнее задание:
+ * Установить все необходимые инструменты для разработки (перечислены на вебинаре и в методичке)
+ * и собрать проект.
+ * Разместить проект на GitHub
+ * Подобрать картинку для фона, сделать её размеры кратными степени 2 (например 2048x1024 или 2048x2048)
+ * и добавить фон в игру
+ *
+ */
 public class StarGame extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private Texture img;
