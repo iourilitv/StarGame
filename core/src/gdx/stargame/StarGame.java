@@ -15,11 +15,11 @@ public class StarGame extends ApplicationAdapter {
 
 	//TODO temporarily.Added
 	//ширина и высота текстуры(картинки)
-	private final int TEXTURE_WIDTH = 2048;//512;
+	private final int TEXTURE_WIDTH = 1792;//1920;//2048;//512;
 	private final int TEXTURE_HEIGHT = 1024;
 	//ширина и высота куска
-	private final int REGION_WIDTH = 64;
-	private final int REGION_HEIGHT = 64;
+	private final int REGION_WIDTH = 128;
+	private final int REGION_HEIGHT = 128;
 	//переменная сдвига картинки по горизонтали и по вертикали
 	private float deltaX;
 	private float deltaY;
@@ -84,7 +84,7 @@ public class StarGame extends ApplicationAdapter {
 	//TODO temporarily.Added
 	//метод привязывает переменную сдвига картинки по горизонтали ко времени обновления экрана
 	private float calculateDeltaX(float x){
-		x += Gdx.graphics.getDeltaTime() * 100;
+		x += Gdx.graphics.getDeltaTime() * 300;
 		//если картинка ушла за экран по горизонтали, переходим в начало
 		return x < TEXTURE_WIDTH - REGION_WIDTH ? x : 0;
 	}
