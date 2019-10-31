@@ -14,7 +14,7 @@ public class DesktopLauncher {
 		config.height = 512;
 		//запрещаем изменение размеров окна приложения
 		config.resizable = false;
-//		new LwjglApplication(new StarGame(), config);
-		new LwjglApplication(new Puzzle(), config);
+		new LwjglApplication(new StarGame(), config);
+//		new LwjglApplication(new Puzzle(), config);
 	}
 }
