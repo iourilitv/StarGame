@@ -3,9 +3,12 @@ package gdx.stargame.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-import gdx.stargame.puzzle.Puzzle1;
-import gdx.stargame.puzzle.Puzzle2;
-import gdx.stargame.stargame.StarGame;
+//import gdx.stargame.puzzle.Puzzle1;
+//import gdx.stargame.puzzle.Puzzle2;
+//import gdx.stargame.stargame.StarGame;
+//import gdx.stargame.lessons.lesson1.StarGame;
+//import gdx.stargame.lessons.lesson2.StarGame;
+import gdx.stargame.lessons.lesson2.StarGame1;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
@@ -18,8 +21,10 @@ public class DesktopLauncher {
 
 		//config.fullscreen = true;
 
+		new LwjglApplication(new StarGame1(), config);
+
 		//слишком большой размер картинки - не вмещается в экран
-		new LwjglApplication(new StarGame(), config);
+//		new LwjglApplication(new StarGame(), config);
 
 //		new LwjglApplication(new Puzzle1(), config);
 //		new LwjglApplication(new Puzzle2(), config);
