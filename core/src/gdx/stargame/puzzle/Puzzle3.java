@@ -1,4 +1,4 @@
-package gdx.stargame;
+package gdx.stargame.puzzle;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -7,13 +7,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class Puzzle extends ApplicationAdapter {
+/** NOT RELEASED!
+ * Puzzle3.
+ * Screen filling with pieces of the picture in random order.
+ */
+public class Puzzle3 extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private Texture imgBG;
 	private TextureRegion region;
-	//private TextureRegion regionLineFull;
 
-	//TODO temporarily.Added
 	//ширина и высота куска
 	private final int REGION_WIDTH = 128;
 	private final int REGION_HEIGHT = 128;
@@ -27,7 +29,9 @@ public class Puzzle extends ApplicationAdapter {
 	//задаем переменную скорости от частоты очищения экрана
 	private float f;
 	//массив кусков картинки
-	//private TextureRegion[][] regions;
+	private TextureRegion[][] regions;
+	//массив отметок об использовании куска картинки
+	//private boolean[][] used;
 
 	//рассчитываем размер текстуры в кусках
 	private int regWidth = TEXTURE_WIDTH / REGION_WIDTH;
@@ -39,30 +43,15 @@ public class Puzzle extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		//инициируем объекты текстур на основе картинок в папке android/assets/
 		imgBG = new Texture("background-h-2048-1024.png");
-		//инициируем кусок полной линии текстуры
-		region = new TextureRegion(imgBG, REGION_WIDTH * 7, REGION_HEIGHT * 4, REGION_WIDTH, REGION_HEIGHT);
-
-
-
-		//инициируем кусок полной линии текстуры
-//		regionLineFull = new TextureRegion(imgBG, 0, 0, TEXTURE_WIDTH, REGION_HEIGHT);
-//
-//		//рассчитываем размер текстуры в кусках
-//		int regWidth = TEXTURE_WIDTH / REGION_WIDTH;
-//		int regHeight = TEXTURE_HEIGHT / REGION_HEIGHT;
-//		//инициируем массив кусков картинки
-//		regions = new TextureRegion[regHeight][regWidth];
-//		//инициируем переменнтые сдвига выреза по вертикали и горизонтали
-//		int nV = REGION_HEIGHT;
-//		int nH = REGION_WIDTH;
-//		//наполняем массив кусков картинки
-//		for (int i = 0; i < regHeight; i++) {
-//			for (int j = 0; j < regWidth; j++) {
-//				regions[i][j] = new TextureRegion(imgBG, i * REGION_HEIGHT, j * REGION_WIDTH,
-//						REGION_WIDTH, REGION_HEIGHT);
-//			}
-//		}
-
+		//инициируем массив кусков картинки
+		regions = new TextureRegion[regHeight][regWidth];
+		//наполняем массив кусков картинки
+		for (int y = 0; y < regHeight; y++) {
+			for (int x = 0; x < regWidth; x++) {
+				regions[y][x] = new TextureRegion(imgBG, x * REGION_HEIGHT, y * REGION_WIDTH,
+						REGION_WIDTH, REGION_HEIGHT);
+			}
+		}
 	}
 
 	@Override
@@ -78,34 +67,23 @@ public class Puzzle extends ApplicationAdapter {
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);//команда на обновление экрана
 		}
 
-		//TODO temporarily.Added
 		//***подготовка кусков картинки***
-
 		//привязываем переменную сдвига картинки по горизонтали ко времени обновления экрана
-		//deltaX = calculateDeltaX(deltaX, f);
 		deltaX = calculateDeltaX(f);
-
 		//привязываем переменную сдвига картинки по вертикали к уходу картинки за экран по горизонтали
-		//deltaY = calculateDeltaY(deltaX, deltaY);
 		deltaY = calculateDeltaY(f);
-
 		//задаем переменную скорости от частоты очищения экрана
 		f += Gdx.graphics.getDeltaTime();
 
-		//выводим на экран картинку по кускам
-
 		//TODO temporarily
-		System.out.println("f: " + f + ". deltaX: " + deltaX + ". deltaY: " + deltaY);
+		//System.out.println("f: " + f + ". deltaX: " + deltaX + ". deltaY: " + deltaY);
 
 		//в блоке begin...end располагаются все прорисовки
 		batch.begin();
-
-		//добавляем движение картинки по горизонтали и вертикали
+		//присваиваем текущей переменной кусок картинки из массива
+		region = regions[regHeight - 1 - (int)deltaY / REGION_HEIGHT][(int)deltaX / REGION_WIDTH];
+		//выводим на экран кусок картинки
 		batch.draw(region, deltaX, deltaY);
-//		batch.draw(region, 0, 0);
-//		batch.draw(region, TEXTURE_WIDTH - REGION_WIDTH, 0);
-//		batch.draw(region, 0, TEXTURE_HEIGHT - REGION_HEIGHT);
-//		batch.draw(region, TEXTURE_WIDTH - REGION_WIDTH, TEXTURE_HEIGHT - REGION_HEIGHT);
 
 		batch.end();
 
@@ -119,20 +97,8 @@ public class Puzzle extends ApplicationAdapter {
 
 	//TODO temporarily.Added
 	//метод привязывает переменную сдвига картинки по горизонтали к ширине картинки
-	/*private float calculateDeltaX(float x, float f){
-		//TODO temporarily
-		//System.out.println("x: " + x + ". f: " + f);
-
-		//вычисляем размер сдвига куска картинки в зависимости от округленного значения скорости
-		//x = REGION_WIDTH * Math.round(f);
-		x = REGION_WIDTH * Math.round(f);
-		//если картинка ушла за экран по горизонтали, переходим в начало
-		return x < TEXTURE_WIDTH - REGION_WIDTH ? x : 0;
-	}*/
 	private float calculateDeltaX(float f){
 		//вычисляем размер сдвига куска картинки в зависимости от округленного значения скорости
-		//x = REGION_WIDTH * Math.round(f);
-		//float x = REGION_WIDTH * ((int)f % TEXTURE_WIDTH);
 		float x = REGION_WIDTH * ((int)f % regWidth);
 
 		//TODO temporarily
@@ -144,26 +110,23 @@ public class Puzzle extends ApplicationAdapter {
 
 	//Метод рассчитывает сдвиг картинки по вертикали
 	// в зависимости от ухода картинки за экран по горизонтали
-	/*private float calculateDeltaY(float x, float y) {
-		if(x == 0){
-			//если картинка ушла за экран по горизонтали, переходим на строку выше
-			y += REGION_HEIGHT;
-		}
-		//если картинка ушла за экран по вертикали, переходим в начало
-		return y < TEXTURE_HEIGHT ? y : 0;//768 для desktop
-	}*/
 	private float calculateDeltaY(float f) {
-		//int k = Math.round(f / (TEXTURE_WIDTH / REGION_WIDTH));
-		//int k = (int)(f - 1) / regWidth;
+		//рассчитываем коэффициент текущей строки
 		int k = (int)f / regWidth;
 		//если картинка ушла за экран по горизонтали, переходим на строку выше
+		//TODO version 1. Started from the down-left corner
 		float y = REGION_HEIGHT * k;
+		//TODO version 1. Started from the up-left corner
+//		float y = TEXTURE_HEIGHT - REGION_HEIGHT * (k + 1);
 
 		//TODO temporarily
 		//System.out.println("f: " + f + ". k: " + k + ". y: " + y);
 
 		//если картинка ушла за экран по вертикали, переходим в начало
-		return y < TEXTURE_HEIGHT ? y : 0;//768 для desktop
+		//TODO version 1. Started from the down-left corner
+		return y < TEXTURE_HEIGHT ? y : 0;
+		//TODO version 1. Started from the up-left corner
+//		return y >= 0 ? y : TEXTURE_HEIGHT - REGION_HEIGHT;
 	}
 }
 
@@ -174,3 +137,8 @@ public class Puzzle extends ApplicationAdapter {
 //f = 16.501, y = 0 * 16 //k = 16.501 - (0 +1) * 16 = 0.501 >> y=1
 //f = 31.535(32.468), y = 1 * 16 //k = 31.535 - (1 +1) * 16 = -0.465 >> y=0
 //f = 16.501, y = 0 * 16 //k = 16.501 - (0 +1) * 16 = 0.501 >> y=1
+
+//		batch.draw(region, 0, 0);
+//		batch.draw(region, TEXTURE_WIDTH - REGION_WIDTH, 0);
+//		batch.draw(region, 0, TEXTURE_HEIGHT - REGION_HEIGHT);
+//		batch.draw(region, TEXTURE_WIDTH - REGION_WIDTH, TEXTURE_HEIGHT - REGION_HEIGHT);

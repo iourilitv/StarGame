@@ -1,4 +1,4 @@
-package gdx.stargame;
+package gdx.stargame.stargame;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
