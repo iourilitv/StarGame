@@ -17,7 +17,7 @@ public class BaseScreen implements Screen, InputProcessor {
     @Override
     //Метод(интерфейс Screen) подготовки(аналогично методу create())
     public void show() {
-        System.out.println("show");
+        //System.out.println("show");
 
         //устанавливаем в качестве входного процессора(перехватчика событий)
         // самого себя(текущий экран?), чтобы перехватывать и обрабатывать
@@ -41,32 +41,32 @@ public class BaseScreen implements Screen, InputProcessor {
     //width, height - новые значения ширины и высоты, которые сюда автоматически передаются
     //системой при любом изменении экрана
     public void resize(int width, int height) {
-        System.out.println("resize width = " + width + " height = " + height);
+        //System.out.println("resize width = " + width + " height = " + height);
     }
 
     @Override
     //Метод(интерфейс Screen) определяет действия на сворачивание экрана
     public void pause() {
-        System.out.println("pause");
+        //System.out.println("pause");
     }
 
     @Override
     //Метод(интерфейс Screen) определяет действия на разворачивание экрана
     public void resume() {
-        System.out.println("resume");
+        //System.out.println("resume");
     }
 
     @Override
     //Метод(интерфейс Screen) определяет действия на закрытие экрана
     public void hide() {
-        System.out.println("hide");
+        //System.out.println("hide");
         dispose();
     }
 
     @Override
     //Метод(интерфейс Screen) выгрузки из памяти не использующихся объектов
     public void dispose() {
-        System.out.println("dispose");
+        //System.out.println("dispose");
     }
 
     @Override
@@ -100,7 +100,7 @@ public class BaseScreen implements Screen, InputProcessor {
     //pointer - номер пальца, которым прикоснулись
     //button - номер кнопки мыши(правая, левая и т.п.)
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        System.out.println("touchDown screenX = " + screenX + " screenY = " + screenY);
+        //System.out.println("touchDown screenX = " + screenX + " screenY = " + screenY);
         return false;
     }
 
@@ -111,7 +111,7 @@ public class BaseScreen implements Screen, InputProcessor {
     //pointer - номер пальца, которым прикоснулись
     //button - номер кнопки мыши(правая, левая и т.п.)
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        System.out.println("touchUp screenX = " + screenX + " screenY = " + screenY);
+        //System.out.println("touchUp screenX = " + screenX + " screenY = " + screenY);
         return false;
     }
 
@@ -120,7 +120,7 @@ public class BaseScreen implements Screen, InputProcessor {
     //screenX, screenY - координаты точки клика
     //pointer - номер пальца, которым прикоснулись
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        System.out.println("touchDragged screenX = " + screenX + " screenY = " + screenY);
+        //System.out.println("touchDragged screenX = " + screenX + " screenY = " + screenY);
         return false;
     }
 
@@ -135,7 +135,7 @@ public class BaseScreen implements Screen, InputProcessor {
     //Метод(интерфейс InputProcessor) обрабатывающий движение колесика мыши
     //amount - направление(1 и -1) скролинга(пролистывания)
     public boolean scrolled(int amount) {
-        System.out.println("scrolled amount = " + amount);
+        //System.out.println("scrolled amount = " + amount);
         return false;
     }
 }

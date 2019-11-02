@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import gdx.stargame.lessons.lesson2.classfiles.base.BaseScreen;
 
 /**
- * Класс экрана меню. Это страртовый класс.
+ * Класс экрана меню. Это стартовый экран.
  */
 public class MenuScreen extends BaseScreen {
     //объявляем переменную текстуры
@@ -39,7 +39,7 @@ public class MenuScreen extends BaseScreen {
         batch.draw(img, pos.x, pos.y);
         batch.end();
 
-        //огранициваем движение границами скрина
+        //ограничиваем движение границами скрина
         if (Gdx.graphics.getHeight() > pos.y + img.getHeight()
         && Gdx.graphics.getWidth() > pos.x + img.getWidth()) {
             //пересчитываем позицию объекта для следующей итерации
