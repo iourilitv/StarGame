@@ -8,7 +8,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 //import gdx.stargame.stargame.StarGame;
 //import gdx.stargame.lessons.lesson1.StarGame;
 //import gdx.stargame.lessons.lesson2.classfiles.StarGame1;
-import gdx.stargame.lessons.lesson2.classfiles.StarGame;
+//import gdx.stargame.lessons.lesson2.classfiles.StarGame;
+import gdx.stargame.lessons.lesson2.hw.StarGame;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
