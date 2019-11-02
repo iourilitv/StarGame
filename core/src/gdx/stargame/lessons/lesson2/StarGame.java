@@ -15,6 +15,7 @@ public class StarGame extends Game {
 
 	@Override
 	public void create() {
+		//устанавливаем начальный экран приложения
 		setScreen(new MenuScreen());
 	}
 }

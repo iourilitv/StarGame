@@ -7,8 +7,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 //import gdx.stargame.puzzle.Puzzle2;
 //import gdx.stargame.stargame.StarGame;
 //import gdx.stargame.lessons.lesson1.StarGame;
-//import gdx.stargame.lessons.lesson2.StarGame;
-import gdx.stargame.lessons.lesson2.StarGame1;
+//import gdx.stargame.lessons.lesson2.StarGame1;
+import gdx.stargame.lessons.lesson2.StarGame;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
@@ -21,7 +21,7 @@ public class DesktopLauncher {
 
 		//config.fullscreen = true;
 
-		new LwjglApplication(new StarGame1(), config);
+		new LwjglApplication(new StarGame(), config);
 
 		//слишком большой размер картинки - не вмещается в экран
 //		new LwjglApplication(new StarGame(), config);
