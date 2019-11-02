@@ -1,4 +1,4 @@
-package gdx.stargame.lessons.lesson2;
+package gdx.stargame.lessons.lesson2.classfiles;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;

@@ -1,4 +1,4 @@
-package gdx.stargame.lessons.lesson2.base;
+package gdx.stargame.lessons.lesson2.classfiles.base;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;

@@ -1,8 +1,8 @@
-package gdx.stargame.lessons.lesson2;
+package gdx.stargame.lessons.lesson2.classfiles;
 
 import com.badlogic.gdx.Game;
 
-import gdx.stargame.lessons.lesson2.screen.MenuScreen;
+import gdx.stargame.lessons.lesson2.classfiles.screen.MenuScreen;
 
 /**
  * Вебинар.20191028_GB-Разработка_игры_на_LibGDX.Преподаватель: Алексей Кутепов

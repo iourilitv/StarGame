@@ -1,11 +1,11 @@
-package gdx.stargame.lessons.lesson2.screen;
+package gdx.stargame.lessons.lesson2.classfiles.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
-import gdx.stargame.lessons.lesson2.base.BaseScreen;
+import gdx.stargame.lessons.lesson2.classfiles.base.BaseScreen;
 
 /**
  * Класс экрана меню. Это страртовый класс.
