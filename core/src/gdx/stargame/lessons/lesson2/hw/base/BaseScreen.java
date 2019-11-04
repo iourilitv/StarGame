@@ -73,7 +73,7 @@ public class BaseScreen implements Screen, InputProcessor {
     //Метод(интерфейс InputProcessor) обрабатывающий нажатие любой клавиши на клавиатуре
     //keycode - код нажатой клавиши или комбинации клавиш. Не путать с кодом символа на клавише!
     public boolean keyDown(int keycode) {
-        System.out.println("keyDown keycode = " + keycode);
+        //System.out.println("keyDown keycode = " + keycode);
         return false;
     }
 
@@ -81,7 +81,7 @@ public class BaseScreen implements Screen, InputProcessor {
     //Метод(интерфейс InputProcessor) обрабатывающий отпускание нажатой ранее клавиши на клавиатуре
     //keycode - код нажатой клавиши или комбинации клавиш. Не путать с кодом символа на клавише!
     public boolean keyUp(int keycode) {
-        System.out.println("keyUp keycode = " + keycode);
+        //System.out.println("keyUp keycode = " + keycode);
         return false;
     }
 
@@ -89,7 +89,7 @@ public class BaseScreen implements Screen, InputProcessor {
     //Метод(интерфейс InputProcessor) обрабатывающий нажатие конкретной клавиши на клавиатуре
     //character - код символа на клавише
     public boolean keyTyped(char character) {
-        System.out.println("keyTyped character = " + character);
+        //System.out.println("keyTyped character = " + character);
         return false;
     }
 
