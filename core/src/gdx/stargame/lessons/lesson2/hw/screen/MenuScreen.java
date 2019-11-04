@@ -10,7 +10,7 @@ import gdx.stargame.lessons.lesson2.hw.base.BaseScreen;
 
 /**
  * Класс экрана меню. Это стартовый экран.
- */
+ */ //READY
 public class MenuScreen extends BaseScreen {
     //объявляем переменную текстуры
     private Texture img;

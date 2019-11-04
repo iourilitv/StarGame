@@ -2,7 +2,7 @@ package gdx.stargame.lessons.lesson2.hw;
 
 /**
  * Класс констант кодов клавиш направлений движения
- */
+ *///READY
 public enum Direction {
     FORWARD(19),
     BACK(20),

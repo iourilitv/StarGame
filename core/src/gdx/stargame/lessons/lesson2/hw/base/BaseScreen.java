@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * Суперклас для всех экранов, т.к. операции с экраном в общем одни и теже.
  * Реализует методы интерфейсов: Screen для операций с экраном и
  * InputProcessor для обработки входных событий от мыши, клавиатуры, touchscreen etc.
- */
+ *///READY
 public class BaseScreen implements Screen, InputProcessor {
     //объявляем переменную батчера
     protected SpriteBatch batch;

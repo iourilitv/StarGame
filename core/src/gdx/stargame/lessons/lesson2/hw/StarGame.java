@@ -24,7 +24,7 @@ import gdx.stargame.lessons.lesson2.hw.screen.MenuScreen;
  * ext2. Добавлено ускорение при удержании нажатой кнопки направления движения.
  * ext3. Добавлена возможность изменения кнопкок направления движения без переписывания кода -
  *     применен eNum.
- */
+ *///READY
 public class StarGame extends Game {
 
 	@Override
