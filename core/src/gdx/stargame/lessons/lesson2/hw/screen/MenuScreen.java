@@ -27,15 +27,10 @@ public class MenuScreen extends BaseScreen {
     private final float SPEED_FACTOR = 10f;//0f;//2f;
     //объявляем переменную вида управления движением клавишами
     private boolean keyControl;
-
-    //объявляем константу точности позиционирования
-    //private final float PRECISION = 1;//0.5f;
-
     //инициируем константу вектора ускорения(acceleration)
     private final float ACCELERATION = 1.03f;
     //объявляем константу дистанции до точки назначения для включения точного позиционирования
     private final float PRECISION_DISTANCE = 3;//2
-
     //объявляем флаги начала позиционирования
     private boolean isPosModeX;
     private boolean isPosModeY;
@@ -55,16 +50,6 @@ public class MenuScreen extends BaseScreen {
         //инициализируем вектор позиции назначения и вектор скорости
         posDest = new Vector2();
         v = new Vector2();
-
-        //тестирование eNum
-//        System.out.println("Direction.FORWARD.keyCode()=" + Direction.FORWARD.keyCode());
-//        System.out.println("Direction.BACK.keyCode()=" + Direction.BACK.keyCode());
-//        System.out.println("Direction.LEFT.keyCode()=" + Direction.LEFT.keyCode());
-//        System.out.println("Direction.RIGHT.keyCode()=" + Direction.RIGHT.keyCode());
-//
-//        Direction.RIGHT.setKeyCode(99);
-//        System.out.println("Direction.RIGHT.keyCode()=" + Direction.RIGHT.keyCode());
-
     }
 
     @Override
@@ -89,84 +74,27 @@ public class MenuScreen extends BaseScreen {
         //TODO L2hw.Added
         //если управление осуществляется мышью или тачэкраном
         if(!keyControl){
-//            if (Math.abs((int)(posDest.x - pos.x)) > 0 && Math.abs((int)(posDest.y - pos.y)) > 0) {
-//                //пересчитываем позицию объекта для следующей итерации
-//                // к вектору позиции прибавляем вектор скорости при каждом обновлении экрана
-//                pos.add(v);
-//            }
-//            if (Math.abs(Math.round((posDest.x - pos.x) * PRECISION)) > PRECISION &&
-//                    Math.abs(Math.round((posDest.y - pos.y) * PRECISION)) > PRECISION) {
-//                //пересчитываем позицию объекта для следующей итерации
-//                // к вектору позиции прибавляем вектор скорости при каждом обновлении экрана
-//                pos.add(v);
-//            }
-
             //ограничиваем движение точкой назначения
-            //ВНИМАНИЕ! При значении точности менее 0,5 возможно проскакивание точки назначения
-            /*if (Math.abs((posDest.x - pos.x)) > PRECISION ||
-                    Math.abs((posDest.y - pos.y)) > PRECISION) {
-
-                System.out.println("(posDest.x - pos.x)=" +
-                        ((posDest.x - pos.x)) + "(posDest.y - pos.y)=" +
-                        ((posDest.y - pos.y)));
-
-                //пересчитываем позицию объекта для следующей итерации
-                // к вектору позиции прибавляем вектор скорости при каждом обновлении экрана
-                pos.add(v);
-            }*/
             if ((v.x > 0 && posDest.x - pos.x > 0) || (v.y > 0 && posDest.y - pos.y > 0) ||
                     (v.x < 0 && posDest.x - pos.x < 0) || (v.y < 0 && posDest.y - pos.y < 0)) {
-                    //(v.x <= 0 && posDest.x - pos.x < 0) || (v.y <= 0 && posDest.y - pos.y < 0)
-//                System.out.println("(posDest.x - pos.x)=" +
-//                        ((posDest.x - pos.x)) + "(posDest.y - pos.y)=" +
-//                        ((posDest.y - pos.y)));
-
-                //добавляем прецизионное торможение перед точкой назначения
-                /*if(Math.abs(posDest.x - pos.x) < PRECISION_DISTANCE){
-                    System.out.println("posDest.x - pos.x=" +
-                            (posDest.x - pos.x) + ". v.x=" + v.x);
-
-                    v.x /= ACCELERATION;
-
-                    System.out.println("v.x /= ACCELERATION. v.x=" + v.x + "\n");
-                }
-                if(Math.abs(posDest.y - pos.y) < PRECISION_DISTANCE){
-                    System.out.println("posDest.y - pos.y=" +
-                            (posDest.y - pos.y) + ". v.y=" + v.y);
-
-                    v.y /= ACCELERATION;
-
-                    System.out.println("v.y /= ACCELERATION. v.y=" + v.y + "\n");
-                }*/
+                //добавляем прецизионное торможение перед точкой назначения по X
                 if(!isPosModeX && Math.abs(posDest.x - pos.x) < Math.abs(v.x * PRECISION_DISTANCE)){
-
-                    System.out.println("posDest.x - pos.x=" +
-                            (posDest.x - pos.x) + ". v.x=" + v.x);
-
                     //устанавливаем признак начала торможения по X
                     isPosModeX = true;
-
+                    //нормализуем скорость по X
                     v.x /= SPEED_FACTOR;
-
-                    System.out.println("v.x /= SPEED_FACTOR. v.x=" + v.x + "\n");
                 }
+                //добавляем прецизионное торможение перед точкой назначения по Y
                 if(!isPosModeY && Math.abs(posDest.y - pos.y) < Math.abs(v.y * PRECISION_DISTANCE)){
-
-                    System.out.println("posDest.y - pos.y=" +
-                            (posDest.y - pos.y) + ". v.y=" + v.y);
-
                     //устанавливаем признак начала торможения по Y
                     isPosModeY = true;
-
+                    //нормализуем скорость по Y
                     v.y /= SPEED_FACTOR;
-
-                    System.out.println("v.y /= SPEED_FACTOR. v.y=" + v.y + "\n");
                 }
-
                 //пересчитываем позицию объекта для следующей итерации
                 // к вектору позиции прибавляем вектор скорости при каждом обновлении экрана
                 pos.add(v);
-            //если приблизились к точке назначения и остановились
+            //если приблизились к точке назначения и остановились или SPEED_FACTOR равен 0
             } else {
                 //устанавливаем позицию, чтобы добиться абсолютной точности
                 pos.x = posDest.x;
@@ -198,7 +126,7 @@ public class MenuScreen extends BaseScreen {
         //передаем управление от мыши к клавиатуре
         keyControl = true;
         //устанавливаем значения вектора скорости в зависимости от нажатой клавиши
-        //ВНИМАНИЕ! switch/case испотзовать нельзя, т.к. case требует константу!
+        //ВНИМАНИЕ! switch/case использовать нельзя, т.к. case требует константу!
         if(keycode == Direction.FORWARD.keyCode()){
             v.x = 0;
             v.y = 1;
@@ -251,46 +179,27 @@ public class MenuScreen extends BaseScreen {
         v.y = 0;
         //возвращаем управление мыши
         keyControl = false;
-
         //устанавливаем позиции назначения значения текущей позиции, чтобы не было скачков
         posDest.x = pos.x;
         posDest.y = pos.y;
-
-//        System.out.println("(posDest.x - pos.x)=" +
-//                        (posDest.x - pos.x) + " (posDest.y - pos.y)=" +
-//                (posDest.y - pos.y));
-
         return false;
     }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         super.touchDown(screenX, screenY, pointer, button);
-
         //сбрасываем признак начала торможения по X
         isPosModeX = false;
         //сбрасываем признак начала торможения по Y
         isPosModeY = false;
-
         //устанавливаем координаты клика конечной позицией
         posDest.x = screenX;
         posDest.y = Gdx.graphics.getHeight() - screenY;//пересчет на лево-низ сетку координат
-
-        //System.out.println("posDest.x=" + posDest.x + "; " + "posDest.y=" + posDest.y);
-
         //***вычисляем вектор скорости***
         //сначала из копии вектора конечной позиции вычитаем вектор текущей и нормализуем его
         v = posDest.cpy().sub(pos).nor();
-
-        //System.out.println("v = posDest.cpy().sub(pos); v.x=" + v.x + "; " + "v.y=" + v.y + "; v.len()=" + v.len());
-        //System.out.println("/= v.len(); v.x=" + v.x + "; " + "v.y=" + v.y + "; v.len()=" + v.len());
-
         //добавляем коэффициент изменения величины скорости
         v.scl(SPEED_FACTOR);
-
-//        System.out.println("v.scl(speedFactor); v.x=" + v.x + "; " + "v.y=" + v.y + "; v.len()=" + v.len());
-//        System.out.println();
-
         return false;
     }
 }
