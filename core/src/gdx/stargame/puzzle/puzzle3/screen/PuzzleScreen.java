@@ -1,17 +1,18 @@
-package gdx.stargame.puzzle;
+package gdx.stargame.puzzle.puzzle3.screen;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import gdx.stargame.puzzle.puzzle3.base.BaseScreen;
+
 /** NOT RELEASED!
  * Puzzle3.
  * Screen filling with pieces of the picture in random order.
  */
-public class Puzzle3 extends ApplicationAdapter {
+public class PuzzleScreen extends BaseScreen {
 	private SpriteBatch batch;
 	private Texture imgBG;
 	private TextureRegion region;
@@ -38,7 +39,7 @@ public class Puzzle3 extends ApplicationAdapter {
 	private int regHeight = TEXTURE_HEIGHT / REGION_HEIGHT;
 
 	@Override
-	public void create () {
+	public void show () {
 		//инициализируем партию(группу) картинок
 		batch = new SpriteBatch();
 		//инициируем объекты текстур на основе картинок в папке android/assets/
@@ -55,7 +56,7 @@ public class Puzzle3 extends ApplicationAdapter {
 	}
 
 	@Override
-	public void render () {
+	public void render (float delta) {
 		//устанавливаем цвет и прозрачность фона при очищении экрана
 		// (0,0,0 - черный, 1,1,1 - белый, 0f - полностью прозрачный, - 1f - полностью не прозрачный
 		Gdx.gl.glClearColor(0, 0, 0, 1);
