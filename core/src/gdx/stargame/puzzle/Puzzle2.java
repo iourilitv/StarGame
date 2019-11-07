@@ -22,8 +22,8 @@ public class Puzzle2 extends ApplicationAdapter {
 	private final int REGION_WIDTH = 128;
 	private final int REGION_HEIGHT = 128;
 	//ширина и высота текстуры(картинки)
-	private final int TEXTURE_WIDTH = 2048 - REGION_WIDTH * 2;
-	private final int TEXTURE_HEIGHT = 1024;
+	private final int TEXTURE_WIDTH = 1024;//2048 - REGION_WIDTH * 2;
+	private final int TEXTURE_HEIGHT = 512;//1024;
 
 	//переменная сдвига картинки по горизонтали и по вертикали
 	private float deltaX;
@@ -39,12 +39,17 @@ public class Puzzle2 extends ApplicationAdapter {
 	private int regWidth = TEXTURE_WIDTH / REGION_WIDTH;
 	private int regHeight = TEXTURE_HEIGHT / REGION_HEIGHT;
 
+	//TODO temporarily.
+    private float d = 0f;
+    private float rgb = 0f;
+
 	@Override
 	public void create () {
 		//инициализируем партию(группу) картинок
 		batch = new SpriteBatch();
 		//инициируем объекты текстур на основе картинок в папке android/assets/
-		imgBG = new Texture("background-h-2048-1024.png");
+		//imgBG = new Texture("background-h-2048-1024.png");
+		imgBG = new Texture("background-h-1024-512.png");
 		//инициируем массив кусков картинки
 		regions = new TextureRegion[regHeight][regWidth];
 		//наполняем массив кусков картинки
@@ -60,13 +65,26 @@ public class Puzzle2 extends ApplicationAdapter {
 	public void render () {
 		//устанавливаем цвет и прозрачность фона при очищении экрана
 		// (0,0,0 - черный, 1,1,1 - белый, 0f - полностью прозрачный, - 1f - полностью не прозрачный
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		//Gdx.gl.glClearColor(0, 0, 0, 1f);
+
 
 		//если заполнили весь экран кусками картинки
-		if(f > regWidth * regHeight){
+		if(f > 8/*regWidth * regHeight*/){
 			//обнуляем счетчик
 			f = 0f;
+
+			//TODO temporarily.
+			//d = 300;
+			if(rgb == 0f){
+			    rgb = 1f;
+            } else{
+			    rgb = 0f;
+            }
+            Gdx.gl.glClearColor(rgb, rgb, rgb, 1f);
+
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);//команда на обновление экрана
+
+            System.out.println("if. f=" + f + " . rgb=" + rgb);
 		}
 
 		//***подготовка кусков картинки***
@@ -74,20 +92,26 @@ public class Puzzle2 extends ApplicationAdapter {
 		deltaX = calculateDeltaX(f);
 		//привязываем переменную сдвига картинки по вертикали к уходу картинки за экран по горизонтали
 		deltaY = calculateDeltaY(f);
-		//задаем переменную скорости от частоты очищения экрана
-		f += Gdx.graphics.getDeltaTime();
 
-		//TODO temporarily
-		//System.out.println("f: " + f + ". deltaX: " + deltaX + ". deltaY: " + deltaY);
+        //TODO temporarily
+        //System.out.println("f: " + f + ". deltaX: " + deltaX + ". deltaY: " + deltaY);
 
-		//в блоке begin...end располагаются все прорисовки
-		batch.begin();
-		//присваиваем текущей переменной кусок картинки из массива
-		region = regions[regHeight - 1 - (int)deltaY / REGION_HEIGHT][(int)deltaX / REGION_WIDTH];
-		//выводим на экран кусок картинки
-		batch.draw(region, deltaX, deltaY);
+        //присваиваем текущей переменной кусок картинки из массива
+        region = regions[regHeight - 1 - (int)deltaY / REGION_HEIGHT][(int)deltaX / REGION_WIDTH];
 
-		batch.end();
+        //в блоке begin...end располагаются все прорисовки
+        batch.begin();
+
+        //выводим на экран кусок картинки
+        batch.draw(region, deltaX, deltaY);
+
+        //выводим на экран кусок картинки
+//        batch.draw(imgBG, d, d);
+
+        batch.end();
+
+        //задаем переменную скорости от частоты очищения экрана
+        f += Gdx.graphics.getDeltaTime();
 
 	}
 

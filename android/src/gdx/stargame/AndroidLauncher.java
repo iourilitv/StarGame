@@ -14,10 +14,10 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new StarGame(), config);
 
 
+//		initialize(new StarGame(), config);
 //        initialize(new Puzzle1(), config);
-//		initialize(new Puzzle2(), config);
+		initialize(new Puzzle2(), config);
 	}
 }

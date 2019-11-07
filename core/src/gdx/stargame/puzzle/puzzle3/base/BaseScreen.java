@@ -5,6 +5,8 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import gdx.stargame.puzzle.puzzle3.Puzzle3;
+
 /**
  * Суперклас для всех экранов, т.к. операции с экраном в общем одни и те же.
  * Реализует методы интерфейсов: Screen для операций с экраном и
@@ -13,6 +15,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class BaseScreen implements Screen, InputProcessor {
     //объявляем переменную батчера
     protected SpriteBatch batch;
+    //принимаем экземпляр игры
+    private Puzzle3 game;
+
+    public BaseScreen(Puzzle3 game) {
+        this.game = game;
+    }
 
     @Override
     //Метод(интерфейс Screen) подготовки(аналогично методу create())
@@ -32,7 +40,12 @@ public class BaseScreen implements Screen, InputProcessor {
     //Здесь реализуется вся логика отображения игры.
     //delta - это отрезок времени при обновлении кадров. Нужен для организации таймеров.
     public void render(float delta) {
-
+        //TODO temporarily.
+        /*if(Gdx.input.isKeyPressed(Keys.SPACE)){
+            //game.setScreen(new PuzzleScreen(game));
+            System.out.println("game.setScreen(game.getScreen())= " +
+                    game.getScreen().toString());
+        }*/
     }
 
     @Override
@@ -138,4 +151,6 @@ public class BaseScreen implements Screen, InputProcessor {
         //System.out.println("scrolled amount = " + amount);
         return false;
     }
+
+
 }
