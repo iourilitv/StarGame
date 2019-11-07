@@ -92,7 +92,7 @@ public class BaseScreen implements Screen, InputProcessor {
             this.pause();
             act.continueGame();
         }
-        //Вызываем скрин меню
+        //Вызываем скрин меню//FIXME зависает при вызове!
         if (keycode == KeyControl.GO_TO_MENU.keyCode()){
             this.pause();
             act.getGame().setScreen(new MenuScreen(act));
