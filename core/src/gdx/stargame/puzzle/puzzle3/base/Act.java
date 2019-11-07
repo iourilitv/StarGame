@@ -1,6 +1,5 @@
 package gdx.stargame.puzzle.puzzle3.base;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 
 import java.util.HashMap;
@@ -21,12 +20,6 @@ public class Act {
     //объявляем стэк активных скринов
     private Stack<Screen> screensStack;
 
-    /*public Act(Source picture) {
-        this.picture = picture;
-        this.screens = new HashMap<>();
-        this.screensStack = new Stack<>();
-    }*/
-
     public Act(Puzzle3 game, Source picture) {
         this.game = game;
         this.picture = picture;
@@ -35,6 +28,7 @@ public class Act {
         init();
     }
 
+    //Метод инициализации начального экрана(экран меню)
     private void init(){
         //устанавливаем начальный экран приложения
         Screen screen = new MenuScreen(this);
@@ -43,7 +37,7 @@ public class Act {
         game.setScreen(screen);
     }
 
-
+    //Метод инициализации нового акта игры
     void startNewGame(){
         Screen screen = new PuzzleScreen(this);
         screens.put("PuzzleScreen", screen);
@@ -51,6 +45,7 @@ public class Act {
         game.setScreen(screen);
     }
 
+    //Метод возврата к предыдущему скрину
     void goToPreviousScreen(){
         if(!screensStack.empty()){
             screensStack.pop();
@@ -60,6 +55,7 @@ public class Act {
         }
     }
 
+    //Метод вызова прерванного акта игры
     void continueGame(){
         //запоминаем ссылку на скрин объекта игры
         Screen screen = screens.get("PuzzleScreen");
@@ -79,18 +75,6 @@ public class Act {
     public void setPicture(Source picture) {
         this.picture = picture;
     }
-
-
-    /*@Override
-    public void create() {
-        //устанавливаем начальный экран приложения
-//		Screen screen = new MenuScreen(this);
-        Screen screen = new PuzzleScreen(this);
-        screens.put("MenuScreen", screen);
-		screensStack.push(screen);
-        setScreen(screen);
-
-    }*/
 
     public HashMap<String, Screen> getScreens() {
         return screens;
