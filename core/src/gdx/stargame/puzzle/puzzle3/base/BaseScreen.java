@@ -5,7 +5,9 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import gdx.stargame.puzzle.puzzle3.Puzzle3;
+import gdx.stargame.puzzle.puzzle3.constants.KeyControl;
+import gdx.stargame.puzzle.puzzle3.screen.MenuScreen;
+import gdx.stargame.puzzle.puzzle3.screen.PuzzleScreen;
 
 /**
  * Суперклас для всех экранов, т.к. операции с экраном в общем одни и те же.
@@ -16,17 +18,19 @@ public class BaseScreen implements Screen, InputProcessor {
     //объявляем переменную батчера
     protected SpriteBatch batch;
     //принимаем экземпляр игры
-    private Puzzle3 game;
+    //private Puzzle3 game;
+    private Act act;
 
-    public BaseScreen(Puzzle3 game) {
+    /*public BaseScreen(Puzzle3 game) {
         this.game = game;
+    }*/
+    public BaseScreen(Act act) {
+        this.act = act;
     }
 
     @Override
     //Метод(интерфейс Screen) подготовки(аналогично методу create())
     public void show() {
-        //System.out.println("show");
-
         //устанавливаем в качестве входного процессора(перехватчика событий)
         // самого себя(текущий экран?), чтобы перехватывать и обрабатывать
         // пользовательские события на экране
@@ -87,6 +91,26 @@ public class BaseScreen implements Screen, InputProcessor {
     //keycode - код нажатой клавиши или комбинации клавиш. Не путать с кодом символа на клавише!
     public boolean keyDown(int keycode) {
         //System.out.println("keyDown keycode = " + keycode);
+        if (keycode == KeyControl.NEW_GAME.keyCode()){
+            this.pause();
+            act.startNewGame();
+        }
+        if (keycode == KeyControl.CONTINUE_GAME.keyCode()){
+            this.pause();
+            act.continueGame();
+        }
+        if (keycode == KeyControl.QUIT_GAME.keyCode()){
+            hide();
+        }
+        if (keycode == KeyControl.GO_TO_MENU.keyCode()){
+            this.pause();
+            act.getGame().setScreen(new MenuScreen(act));
+        }
+        if (keycode == KeyControl.GO_BACK.keyCode()){
+            this.pause();
+            act.goToPreviousScreen();
+            //this.hide();
+        }
         return false;
     }
 

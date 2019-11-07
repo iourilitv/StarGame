@@ -1,26 +1,47 @@
 package gdx.stargame.puzzle.puzzle3;
 
+import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Screen;
 
+import gdx.stargame.puzzle.puzzle3.base.Act;
 import gdx.stargame.puzzle.puzzle3.constants.Source;
-import gdx.stargame.puzzle.puzzle3.screen.PuzzleScreen;
 import gdx.stargame.puzzle.puzzle3.screen.MenuScreen;
+import gdx.stargame.puzzle.puzzle3.screen.PuzzleScreen;
 
-/** NOT RELEASED!
+/**
  * Puzzle3.
  * Screen filling with pieces of the picture in random order.
  */
 public class Puzzle3 extends Game {
+//public class Puzzle3 extends ApplicationAdapter {
 	private String launcher;
 	private Source picture;
+	private Act act;
 
+    public Puzzle3(String launcher, Source picture) {
+        this.launcher = launcher;
+        this.picture = picture;
 
-	public Puzzle3(String launcher, Source picture) {
+    }
+
+    @Override
+    public void create() {
+        act = new Act(this, picture);
+/*        //устанавливаем начальный экран приложения
+        Screen screen = new MenuScreen(act);
+        act.getScreens().put("MenuScreen", screen);
+        act.getScreensStack().push(screen);
+        setScreen(screen);
+        //Screen screen = new PuzzleScreen(act);*/
+    }
+
+    /*public Puzzle3(String launcher, Source picture) {
 		this.launcher = launcher;
 		this.picture = picture;
 
 		//System.out.println("Puzzle3.launcher=" + launcher);
-	}
+	}*/
 
 
 	/*
@@ -46,13 +67,13 @@ public class Puzzle3 extends Game {
 		System.out.println("launcherObject...simpleClassName=" + launcherObject.getClass().getSimpleName());
 	}*/
 
-	@Override
+	/*@Override
 	public void create() {
 		//устанавливаем начальный экран приложения
 		setScreen(new PuzzleScreen(this));
 
 //		setScreen(new MenuScreen(this));
-	}
+	}*/
 
 	public String getLauncher() {
 		return launcher;
@@ -61,6 +82,10 @@ public class Puzzle3 extends Game {
 	public Source getPicture() {
 		return picture;
 	}
+
+    public Act getAct() {
+        return act;
+    }
 }
 
 

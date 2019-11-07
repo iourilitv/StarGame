@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 import gdx.stargame.puzzle.puzzle3.Puzzle3;
+import gdx.stargame.puzzle.puzzle3.base.Act;
 import gdx.stargame.puzzle.puzzle3.base.BaseScreen;
 import gdx.stargame.puzzle.puzzle3.constants.Fragment;
 import gdx.stargame.puzzle.puzzle3.constants.ScreenSettings;
@@ -23,8 +24,8 @@ public class PuzzleScreen extends BaseScreen {
 	//private TextureRegion region;
 
 	//ширина и высота куска
-	private final int REGION_WIDTH = ScreenSettings.FRAGMENT_DIMENTIONS.getFragmentWidth();//128;
-	private final int REGION_HEIGHT = ScreenSettings.FRAGMENT_DIMENTIONS.getFragmentHeight();//128;
+	private final int REGION_WIDTH = ScreenSettings.FRAGMENT_DIMENSIONS.getFragmentWidth();//128;
+	private final int REGION_HEIGHT = ScreenSettings.FRAGMENT_DIMENSIONS.getFragmentHeight();//128;
 	//ширина и высота текстуры(картинки)
 	//private final int TEXTURE_WIDTH = game.getPicture().width();//2048 - REGION_WIDTH * 2;
 	//private final int TEXTURE_HEIGHT = game.getPicture().height();//1024;
@@ -48,7 +49,7 @@ public class PuzzleScreen extends BaseScreen {
 	private int regWidth = TEXTURE_WIDTH / REGION_WIDTH;
 	private int regHeight = TEXTURE_HEIGHT / REGION_HEIGHT;
 
-	public PuzzleScreen(Puzzle3 game) {
+	/*public PuzzleScreen(Puzzle3 game) {
 		super(game);
         fragments = new Fragment[regHeight][regWidth];
         //Инициируем таблицу индексов фрагментов картинки
@@ -69,7 +70,13 @@ public class PuzzleScreen extends BaseScreen {
 		//this.pause();
 		//this.hide();
 		//game.setScreen(new MenuScreen(game));
-	}
+	}*/
+    public PuzzleScreen(Act act) {
+        super(act);
+        fragments = new Fragment[regHeight][regWidth];
+        //Инициируем таблицу индексов фрагментов картинки
+        currentFragments = new ArrayList<>();
+    }
 
 	@Override
 	public void show () {

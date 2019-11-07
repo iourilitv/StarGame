@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
 import gdx.stargame.puzzle.puzzle3.Puzzle3;
+import gdx.stargame.puzzle.puzzle3.base.Act;
 import gdx.stargame.puzzle.puzzle3.base.BaseScreen;
 import gdx.stargame.puzzle.puzzle3.constants.Direction;
 
@@ -19,7 +20,6 @@ public class MenuScreen extends BaseScreen {
     //объявляем переменную вектора текущей позиции
     private Vector2 pos;
 
-    //TODO L2hw.Added
     //объявляем переменную вектора позиции точки назначения
     private Vector2 posDest;
     //объявляем переменную вектора скорости
@@ -37,8 +37,8 @@ public class MenuScreen extends BaseScreen {
     private boolean isPosModeX;
     private boolean isPosModeY;
 
-    public MenuScreen(Puzzle3 puzzle3) {
-        super(puzzle3);
+    public MenuScreen(Act act) {
+        super(act);
     }
 
     @Override

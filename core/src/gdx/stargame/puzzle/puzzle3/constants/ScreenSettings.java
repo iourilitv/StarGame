@@ -2,7 +2,7 @@ package gdx.stargame.puzzle.puzzle3.constants;
 
 public enum ScreenSettings {
     CURRENT_PICTURE(Source.PICTURE_1024X512),
-    FRAGMENT_DIMENTIONS(128, 128);
+    FRAGMENT_DIMENSIONS(128, 128);
 
     private Source picture;
     private int fragmentWidth;
