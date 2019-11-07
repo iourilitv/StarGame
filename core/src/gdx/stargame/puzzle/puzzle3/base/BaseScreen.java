@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import gdx.stargame.puzzle.puzzle3.constants.KeyControl;
 import gdx.stargame.puzzle.puzzle3.screen.MenuScreen;
-import gdx.stargame.puzzle.puzzle3.screen.PuzzleScreen;
 
 /**
  * Суперклас для всех экранов, т.к. операции с экраном в общем одни и те же.
@@ -17,8 +16,7 @@ import gdx.stargame.puzzle.puzzle3.screen.PuzzleScreen;
 public class BaseScreen implements Screen, InputProcessor {
     //объявляем переменную батчера
     protected SpriteBatch batch;
-    //принимаем экземпляр игры
-    //private Puzzle3 game;
+    //принимаем экземпляр акта игры
     private Act act;
 
     /*public BaseScreen(Puzzle3 game) {
@@ -44,12 +42,6 @@ public class BaseScreen implements Screen, InputProcessor {
     //Здесь реализуется вся логика отображения игры.
     //delta - это отрезок времени при обновлении кадров. Нужен для организации таймеров.
     public void render(float delta) {
-        //TODO temporarily.
-        /*if(Gdx.input.isKeyPressed(Keys.SPACE)){
-            //game.setScreen(new PuzzleScreen(game));
-            System.out.println("game.setScreen(game.getScreen())= " +
-                    game.getScreen().toString());
-        }*/
     }
 
     @Override
@@ -90,26 +82,29 @@ public class BaseScreen implements Screen, InputProcessor {
     //Метод(интерфейс InputProcessor) обрабатывающий нажатие любой клавиши на клавиатуре
     //keycode - код нажатой клавиши или комбинации клавиш. Не путать с кодом символа на клавише!
     public boolean keyDown(int keycode) {
-        //System.out.println("keyDown keycode = " + keycode);
+        //Начинаем новый акт игры
         if (keycode == KeyControl.NEW_GAME.keyCode()){
             this.pause();
             act.startNewGame();
         }
+        //Продолжаем прерванный акт игры
         if (keycode == KeyControl.CONTINUE_GAME.keyCode()){
             this.pause();
             act.continueGame();
         }
-        if (keycode == KeyControl.QUIT_GAME.keyCode()){
-            hide();
-        }
+        //Вызываем скрин меню
         if (keycode == KeyControl.GO_TO_MENU.keyCode()){
             this.pause();
             act.getGame().setScreen(new MenuScreen(act));
         }
+        //Переходим к предыдущему скрину
         if (keycode == KeyControl.GO_BACK.keyCode()){
             this.pause();
             act.goToPreviousScreen();
-            //this.hide();
+        }
+        //сворачиваем приложение//FIXME ошибка при вызове!
+        if (keycode == KeyControl.QUIT_GAME.keyCode()){
+            hide();
         }
         return false;
     }
