@@ -6,13 +6,22 @@ import com.badlogic.gdx.math.Vector2;
 
 import gdx.stargame.lessons.lesson3.classfiles.math.Rect;
 
+/**
+ * Родительский класс для всех объектов игры. Все объекты - по сути, прямоугольники.
+ */
 public class Sprite extends Rect {
 
-    protected float angle;
-    protected float scale = 1f;
+    protected float angle;//угол поворота
+    protected float scale = 1f;//масштабирование (по умолчанию 100%)
+    //массив картинок кадров объекта для анимации(раскадровки) взрыва(длина 1 - объект целый)
     protected TextureRegion[] regions;
+    //текущий кадр массива regions
     protected int frame;
 
+    /**
+     * Конструктор для объекта в виде одной картинки
+     * @param region - картинка объекта
+     */
     public Sprite(TextureRegion region) {
         if (region == null) {
             throw new NullPointerException("region is null");
@@ -21,27 +30,43 @@ public class Sprite extends Rect {
         regions[0] = region;
     }
 
+    /**
+     * Метод отрисовки объекта(спрайт сам себя отрисовывает)
+     * @param batch - текущий батч
+     */
     public void draw(SpriteBatch batch) {
         batch.draw(
                 regions[frame],
-                getLeft(), getBottom(),
-                halfWidth, halfHeight,
+                getLeft(), getBottom(),/*координаты левого нижнего угла картинки*/
+                halfWidth, halfHeight,/*координаты точки вращения(по центру)*/
                 getWidth(), getHeight(),
-                scale, scale,
-                angle
+                scale, scale,/*масштаб*/
+                angle/*угол попорота объекта*/
         );
     }
 
+    /**
+     * Метод установки размеров объекта с учетом соотношения ширины к высоте
+     * @param height - новая высота объекта
+     */
     public void setHeightProportion(float height) {
         setHeight(height);
         float aspect = regions[frame].getRegionWidth() / (float) regions[frame].getRegionHeight();
         setWidth(height * aspect);
     }
 
+    /**
+     * Метод преобразования спрайта
+     * @param delta - отрезок времени между кадрами
+     */
     public void update(float delta) {
 
     }
 
+    /**
+     * Метод обработки события
+     * @param worldBounds - новые
+     */
     public void resize(Rect worldBounds) {
 
     }

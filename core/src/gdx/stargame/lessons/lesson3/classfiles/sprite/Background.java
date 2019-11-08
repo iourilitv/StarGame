@@ -9,6 +9,8 @@ public class Background extends Sprite {
 
     public Background(TextureRegion region) {
         super(region);
+        //сразу устанавливаем размер фоновой картинки по высоте экрана
+        // (за ширину экрана картинка может выходить)
         setHeightProportion(1f);
     }
 
@@ -16,6 +18,7 @@ public class Background extends Sprite {
     public void resize(Rect worldBounds) {
         super.resize(worldBounds);
         setHeightProportion(1f);
+        //выравниваем текстуру(картинку) по центру
         this.pos.set(worldBounds.pos);
     }
 }

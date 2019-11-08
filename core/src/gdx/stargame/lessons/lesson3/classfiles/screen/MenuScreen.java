@@ -24,8 +24,11 @@ public class MenuScreen extends BaseScreen {
         super.show();
         img = new Texture("badlogic.jpg");
         bg = new Texture("textures/bg.png");
+        //инициируем спрайт для лого в виде одной картинки
         logo = new Logo(new TextureRegion(img));
+        //устанавливаем лого новые размеры
         logo.setHeightProportion(0.5f);
+        //инициируем спрайт для заднего фона в виде одной картинки
         background = new Background(new TextureRegion(bg));
 
         //TODO not necessary.Tested OpenGL coordinate grid.
@@ -61,6 +64,7 @@ public class MenuScreen extends BaseScreen {
     @Override
     public void resize(Rect worldBounds) {
         super.resize(worldBounds);
+        //пересчитываем положение фона под актуальные границы(размеры) мира
         background.resize(worldBounds);
     }
 
