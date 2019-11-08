@@ -3,12 +3,33 @@ package gdx.stargame.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-import gdx.stargame.puzzle.puzzle3.Puzzle3;
-import gdx.stargame.puzzle.puzzle3.constants.ScreenSettings;
-import gdx.stargame.puzzle.puzzle3.constants.Source;
+import gdx.stargame.lessons.lesson3.classfiles.StarGame;
 
 public class DesktopLauncher {
-	public static void main (String[] arg) {
+    public static void main (String[] arg) {
+        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+        config.height = 600;
+        config.width = 600;
+        config.resizable = false;
+        new LwjglApplication(new StarGame(), config);
+    }
+
+}
+
+//***for .lessons.lesson3.classfiles.***
+/*public static void main (String[] arg) {
+    LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+    config.height = 600;
+    config.width = 600;
+    config.resizable = false;
+    new LwjglApplication(new StarGame(), config);
+}*/
+
+//***for .puzzle.puzzle3.***
+//import gdx.stargame.puzzle.puzzle3.Puzzle3;
+//import gdx.stargame.puzzle.puzzle3.constants.ScreenSettings;
+//import gdx.stargame.puzzle.puzzle3.constants.Source;
+    /*public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
 		//создаем объект картинки
@@ -22,11 +43,19 @@ public class DesktopLauncher {
 
         new LwjglApplication(new Puzzle3(DesktopLauncher.class.getSimpleName(), picture), config);
 
-    }
+    }*/
 
-}
-
+//***for .lessons.lesson2.hw.***
 //import gdx.stargame.lessons.lesson2.hw.StarGame;
+/*public static void main (String[] arg) {
+    LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+    config.height = 600;
+    config.width = 600;
+    config.resizable = false;
+    new LwjglApplication(new StarGame(), config);
+}*/
+
+
 
 //		config.fullscreen = true;
 
