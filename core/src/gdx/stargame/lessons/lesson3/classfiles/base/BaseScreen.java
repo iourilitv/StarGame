@@ -11,14 +11,22 @@ import com.badlogic.gdx.math.Vector2;
 import gdx.stargame.lessons.lesson3.classfiles.math.MatrixUtils;
 import gdx.stargame.lessons.lesson3.classfiles.math.Rect;
 
+/**
+ * Экран-родитель для всех скринов.
+ */
 public class BaseScreen implements Screen, InputProcessor {
 
     protected SpriteBatch batch;
+    //экранная(скрина) координатная сетка
     private Rect screenBounds;
+    //координатная сетка мировой системы координат
     private Rect worldBounds;
+    //координатная сетка системы координат OpenGL
     private Rect glBounds;
 
+    //матрица предобразования для трехмерной системы координат(default in OpenGL)
     private Matrix4 worldToGl;
+    //матрица предобразования для двумерной системы координат
     private Matrix3 screenToWorld;
 
     private Vector2 touch;
@@ -47,21 +55,34 @@ public class BaseScreen implements Screen, InputProcessor {
     @Override
     public void resize(int width, int height) {
         System.out.println("resize width = " + width + " height = " + height);
+        //устанавливаем размеры текущего окна размерами системы координат скрина
         screenBounds.setSize(width, height);
+        //устаналиваем координаты начала системы координат скрина
         screenBounds.setLeft(0);
         screenBounds.setBottom(0);
 
+        //инициируем переменную соотношения ширины к высоте скрина - позволяет адаптировать скрин
+        //к устройству с любым разрешением экрана
         float aspect = width / (float) height;
+        //задаем размеры прямоугольника мировой координатной сетки
         worldBounds.setHeight(1f);
         worldBounds.setWidth(1f * aspect);
+        //вычисляем матрицу перехода из мировой системы координат в систему координат OpenGL
         MatrixUtils.calcTransitionMatrix(worldToGl, worldBounds, glBounds);
+        // и применяем матрицу преобразований
         batch.setProjectionMatrix(worldToGl);
+        //вычисляем матрицу перехода из системы координат скрина в мировую систему координат
         MatrixUtils.calcTransitionMatrix(screenToWorld, screenBounds, worldBounds);
+        //пересчитываем размеры скрина в мировую систему координат с помощью перегруженного метода
         resize(worldBounds);
     }
 
+    /**
+     * Перегруженный метод изменения размеров скрина
+     * @param worldBounds - координатная сетка мировой системы координат
+     */
     public void resize(Rect worldBounds) {
-
+        //FIXME
     }
 
     @Override
@@ -107,11 +128,20 @@ public class BaseScreen implements Screen, InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         System.out.println("touchDown screenX = " + screenX + " screenY = " + screenY);
+        //устанавливаем вектору точки касания новые координаты с учетом разного отсчета по y
+        //и умножаем его на матрицу преобразования скрина в мировые координаты
         touch.set(screenX, screenBounds.getHeight() - screenY).mul(screenToWorld);
+        //
         touchDown(touch, pointer);
         return false;
     }
 
+    /**
+     * Перегруженный метод отработки касания в мировой системе координат
+     * @param touch - вектор точки касания
+     * @param pointer - палец
+     * @return - не важно
+     */
     public boolean touchDown(Vector2 touch, int pointer) {
         System.out.println("touchDown touchX = " + touch.x + " touchY = " + touch.y);
         return false;
