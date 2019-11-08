@@ -86,8 +86,8 @@ public class Rect {
     }
 
     /**
-     *
-     * @param from
+     * Метод устанавливает координаты и размеры прямоугольника по заданному прямоугольнику-образцу
+     * @param from - прямоугольник-образец
      */
     public void set(Rect from) {
         pos.set(from.pos);
