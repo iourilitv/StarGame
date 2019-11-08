@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 
-import gdx.stargame.lessons.lesson3.classfiles.StarGame;
+import gdx.stargame.lessons.lesson3.hw.StarGame;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override
