@@ -23,22 +23,6 @@ public class MatrixUtils {
         float scaleX = dst.getWidth() / src.getWidth();
         float scaleY = dst.getHeight() / src.getHeight();
         //расчитываем матрицу по следующей схеме(с лева на право)
-//        //idt() - делаем матрицу единичной, на случай, если она была не нулевая
-//        //translate(...) - пересчитываем матрицу, чтобы сместить исходный квадрат в новые координаты
-//        //scale(...) - пересчитываем матрицу, чтобы пропорционально смасштабировать исходный квадрат
-//        //translate(...) - пересчитываем матрицу, чтобы сместить квадрат итоговый в начало координат
-//        mat.idt().translate(dst.pos.x, dst.pos.y, 0f).
-//                scale(scaleX, scaleY, 1f).translate(-src.pos.x, -src.pos.y, 0f);
-
-        //TODO temporarily
-//        System.out.println("initial mat.\n" + mat);
-        //initial mat.
-        //[2.0|0.0|0.0|0.0]
-        //[0.0|2.0|0.0|0.0]
-        //[0.0|0.0|1.0|0.0]
-        //[0.0|0.0|0.0|1.0]
-
-        //TODO temporarily
         //приведем к нарисованной схеме
         //idt() - делаем матрицу единичной, на случай, если она была не нулевая
         //translate(...) - пересчитываем матрицу, чтобы сместить квадрат итоговый в начало координат
@@ -46,14 +30,6 @@ public class MatrixUtils {
         //translate(...) - пересчитываем матрицу, чтобы сместить исходный квадрат в новые координаты
         mat.idt().translate(-src.pos.x, -src.pos.y, 0f).
                 scale(scaleX, scaleY, 1f).translate(dst.pos.x, dst.pos.y, 0f);
-
-        //TODO temporarily
-//        System.out.println("updated mat.\n" + mat);
-        //updated mat.
-        //[2.0|0.0|0.0|0.0]
-        //[0.0|2.0|0.0|0.0]
-        //[0.0|0.0|1.0|0.0]
-        //[0.0|0.0|0.0|1.0]
     }
 
     /**

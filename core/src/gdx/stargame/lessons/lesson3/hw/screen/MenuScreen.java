@@ -30,11 +30,6 @@ public class MenuScreen extends BaseScreen {
         logo.setHeightProportion(0.5f);
         //инициируем спрайт для заднего фона в виде одной картинки
         background = new Background(new TextureRegion(bg));
-
-        //TODO not necessary.Tested OpenGL coordinate grid.
-        //чтобы применить координатную сетку OpenGL применяем единичную матрицу
-        // (в главной диагонале 1, остальные 0)
-        //batch.getProjectionMatrix().idt();
     }
 
     @Override
@@ -45,12 +40,6 @@ public class MenuScreen extends BaseScreen {
         batch.begin();
         background.draw(batch);
         logo.draw(batch);
-
-        //TODO not necessary.Tested OpenGL coordinate grid.
-        //картинка выводится в правую верхнюю четверть координатной сетки
-        //Внимание! Пропорции картинки НЕ сохраняются!
-        //batch.draw(img, pos.x, pos.y, 1f, 1f);
-
         batch.end();
     }
 
