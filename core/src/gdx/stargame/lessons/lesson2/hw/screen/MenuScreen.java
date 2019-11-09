@@ -12,28 +12,42 @@ import gdx.stargame.lessons.lesson2.hw.base.BaseScreen;
  * Класс экрана меню. Это стартовый экран.
  */
 public class MenuScreen extends BaseScreen {
+    //TODO L2hw update.Use vector length size.Added
+    //инициируем константу длины вектора скорости
+    //если 0 - мгновенный переход в точку назначения
+    private static final float SPEED_LENGTH = 5f;//2f;
+
     //объявляем переменную текстуры
     private Texture img;
     //объявляем переменную вектора текущей позиции
     private Vector2 pos;
+
+    //TODO L2hw update.Use vector length size.Added
+    //объявляем переменную временного вектора
+    private Vector2 buff;
 
     //TODO L2hw.Added
     //объявляем переменную вектора позиции точки назначения
     private Vector2 posDest;
     //объявляем переменную вектора скорости
     private Vector2 v;
+
+    //TODO L2hw update.Use vector length size.Deleted
     //инициируем константу коэффициента изменения вектора скорости
     //если 0 - мгновенный переход в точку назначения
-    private final float SPEED_FACTOR = 10f;//0f;//2f;
+    //private final float SPEED_FACTOR = 10f;//0f;//2f;
+
     //объявляем переменную вида управления движением клавишами
     private boolean keyControl;
     //инициируем константу вектора ускорения(acceleration)
     private final float ACCELERATION = 1.03f;
+
+    //TODO L2hw update.Use vector length size.Deleted
     //объявляем константу дистанции до точки назначения для включения точного позиционирования
-    private final float PRECISION_DISTANCE = 3;//2
+    //private final float PRECISION_DISTANCE = 3;
     //объявляем флаги начала позиционирования
-    private boolean isPosModeX;
-    private boolean isPosModeY;
+    //private boolean isPosModeX;
+    //private boolean isPosModeY;
 
     @Override
     public void show() {
@@ -50,11 +64,16 @@ public class MenuScreen extends BaseScreen {
         //инициализируем вектор позиции назначения и вектор скорости
         posDest = new Vector2();
         v = new Vector2();
+
+        //TODO L2hw update.Use vector length size.Added
+        //инициализируем объект временного вектора
+        buff = new Vector2();
     }
 
     @Override
     //Переопределенный родительский метод обновления экрана
-    public void render(float delta) {
+    //TODO L2hw update.Use vector length size.Deleted
+    /*public void render(float delta) {
         super.render(delta);
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -64,13 +83,13 @@ public class MenuScreen extends BaseScreen {
         batch.end();
 
         //TODO L2hw.Deleted
-        /*//огранициваем движение границами скрина
-        if (Gdx.graphics.getHeight() > pos.y + img.getHeight()
-        && Gdx.graphics.getWidth() > pos.x + img.getWidth()) {
-            //пересчитываем позицию объекта для следующей итерации
-            // к вектору позиции прибавляем вектор скорости при каждом обновлении экрана
-            pos.add(v);
-        }*/
+//        //огранициваем движение границами скрина
+//        if (Gdx.graphics.getHeight() > pos.y + img.getHeight()
+//        && Gdx.graphics.getWidth() > pos.x + img.getWidth()) {
+//            //пересчитываем позицию объекта для следующей итерации
+//            // к вектору позиции прибавляем вектор скорости при каждом обновлении экрана
+//            pos.add(v);
+//        }
         //TODO L2hw.Added
         //если управление осуществляется мышью или тачэкраном
         if(!keyControl){
@@ -111,11 +130,51 @@ public class MenuScreen extends BaseScreen {
             pos.y += v.y + Gdx.graphics.getHeight() - img.getHeight();
             pos.y %= Gdx.graphics.getHeight() - img.getHeight();
         }
+    }*/
+    //TODO L2hw update.Use vector length size.Added
+    public void render(float delta) {
+        super.render(delta);
+        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        batch.begin();
+        batch.draw(img, pos.x, pos.y);
+        batch.end();
+
+        //если управление осуществляется мышью или тачэкраном
+        if(!keyControl){
+            //ограничиваем движение точкой назначения
+            if (buff.len() > SPEED_LENGTH) {
+                //пересчитываем позицию объекта для следующей итерации
+                // к вектору позиции прибавляем вектор скорости при каждом обновлении экрана
+                pos.add(v);
+                //уменьшаем промежуточный вектор на размер вектра скорости(шаг)
+                buff.sub(v);
+                //если приблизились к точке назначения и остановились или SPEED_FACTOR равен 0
+            } else {
+                //устанавливаем позицию, чтобы добиться абсолютной точности
+                pos.x = posDest.x;
+                pos.y = posDest.y;
+            }
+            //если управление клавишами клавиатуры
+        } else{
+            //добавляем ускорение при удержании клавиши нажатой
+            v.scl(ACCELERATION);
+            //расчитываем координаты новой позиции, в т.ч. для отрицательных координат
+            pos.x += v.x + Gdx.graphics.getWidth() - img.getWidth();
+            //с зацикливанием при попытке картинки выйти за границы скрина
+            pos.x %= Gdx.graphics.getWidth() - img.getWidth();
+            pos.y += v.y + Gdx.graphics.getHeight() - img.getHeight();
+            pos.y %= Gdx.graphics.getHeight() - img.getHeight();
+        }
     }
+
 
     @Override
     public void dispose() {
-        batch.dispose();
+        //TODO L2hw update.Fixing not corrected dispose.Deleted
+        //batch.dispose();
+
         img.dispose();
         super.dispose();
     }
@@ -123,6 +182,12 @@ public class MenuScreen extends BaseScreen {
     @Override
     public boolean keyDown(int keycode) {
         super.keyDown(keycode);
+
+        //TODO L2hw update.Fixing the not necessary moving caused with
+        // the first keyDown of not direction key.Added
+        //обнуляем вектор скорости(на всякий случай, но работает и без этого)
+        v.scl(0);
+
         //передаем управление от мыши к клавиатуре
         keyControl = true;
         //устанавливаем значения вектора скорости в зависимости от нажатой клавиши
@@ -141,6 +206,11 @@ public class MenuScreen extends BaseScreen {
             v.y = 0;
         } else {
             System.out.println("Not supported key for moving direction: " + keycode);
+
+            //TODO L2hw update.Fixing the not necessary moving caused with
+            // the first keyDown of not direction key.Added
+            //НЕ передаем управление от мыши к клавиатуре
+            keyControl = false;
         }
 
         /*switch (keycode){
@@ -188,18 +258,33 @@ public class MenuScreen extends BaseScreen {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         super.touchDown(screenX, screenY, pointer, button);
+
+        //TODO L2hw update.Use vector length size.Deleted
         //сбрасываем признак начала торможения по X
-        isPosModeX = false;
+        //isPosModeX = false;
         //сбрасываем признак начала торможения по Y
-        isPosModeY = false;
+        //isPosModeY = false;
+
         //устанавливаем координаты клика конечной позицией
         posDest.x = screenX;
         posDest.y = Gdx.graphics.getHeight() - screenY;//пересчет на лево-низ сетку координат
         //***вычисляем вектор скорости***
+        //TODO L2hw update.Use vector length size.Deleted
         //сначала из копии вектора конечной позиции вычитаем вектор текущей и нормализуем его
-        v = posDest.cpy().sub(pos).nor();
+        //v = posDest.cpy().sub(pos).nor();
+        //TODO L2hw update.Use vector length size.Added
+        //сначала из копии вектора конечной позиции вычитаем вектор текущей и
+        // запоминаем значение во временном векторе
+        buff = posDest.cpy().sub(pos);
+        //копируем временный в вектор скорости
+        v = buff.cpy();
+        // устанавливаем длину вектора скорости по константе
+        v.setLength(SPEED_LENGTH);
+
+        //TODO L2hw update.Use vector length size.Deleted
         //добавляем коэффициент изменения величины скорости
-        v.scl(SPEED_FACTOR);
+        //v.scl(SPEED_FACTOR);
+
         return false;
     }
 }

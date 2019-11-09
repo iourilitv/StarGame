@@ -67,6 +67,8 @@ public class BaseScreen implements Screen, InputProcessor {
     //Метод(интерфейс Screen) выгрузки из памяти не использующихся объектов
     public void dispose() {
         //System.out.println("dispose");
+        //TODO L2hw update.Fixing not corrected dispose.Added
+        batch.dispose();
     }
 
     @Override
