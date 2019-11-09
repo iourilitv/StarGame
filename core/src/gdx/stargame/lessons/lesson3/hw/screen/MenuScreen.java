@@ -41,6 +41,9 @@ public class MenuScreen extends BaseScreen {
         background.draw(batch);
         logo.draw(batch);
         batch.end();
+
+        //пересчитываем вектора скорости для следующего шага
+        logo.update(delta);
     }
 
     @Override
@@ -59,6 +62,10 @@ public class MenuScreen extends BaseScreen {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
+        //System.out.println("MS2. touchDown touchX = " + touch.x + " touchY = " + touch.y);
+
+        //передаем вектор позиции касания в объект лого
+        logo.touchDown(touch, pointer);
         return false;
     }
 }

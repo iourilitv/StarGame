@@ -127,11 +127,11 @@ public class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        System.out.println("touchDown screenX = " + screenX + " screenY = " + screenY);
+        //System.out.println("BS1. touchDown screenX = " + screenX + " screenY = " + screenY);
         //устанавливаем вектору точки касания новые координаты с учетом разного отсчета по y
         //и умножаем его на матрицу преобразования скрина в мировые координаты
         touch.set(screenX, screenBounds.getHeight() - screenY).mul(screenToWorld);
-        //
+        //вызываем перегруженный метод активного скрина
         touchDown(touch, pointer);
         return false;
     }
@@ -143,20 +143,20 @@ public class BaseScreen implements Screen, InputProcessor {
      * @return - не важно
      */
     public boolean touchDown(Vector2 touch, int pointer) {
-        System.out.println("touchDown touchX = " + touch.x + " touchY = " + touch.y);
+        //System.out.println("BS2. touchDown touchX = " + touch.x + " touchY = " + touch.y);
         return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        System.out.println("touchUp screenX = " + screenX + " screenY = " + screenY);
+        //System.out.println("BS1. touchUp screenX = " + screenX + " screenY = " + screenY);
         touch.set(screenX, screenBounds.getHeight() - screenY).mul(screenToWorld);
         touchUp(touch, pointer);
         return false;
     }
 
     public boolean touchUp(Vector2 touch, int pointer) {
-        System.out.println("touchUp touchX = " + touch.x + " touchY = " + touch.y);
+        //System.out.println("BS2. touchUp touchX = " + touch.x + " touchY = " + touch.y);
         return false;
     }
 
