@@ -57,12 +57,9 @@ public class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
-        System.out.println("resize width = " + width + " height = " + height);
-
         //инициализируем переменную для хранения пропорции экрана для подгонки спрайтов
         // под экраны с разными пропорциями
         screenProportion = height / (float)width;
-        //System.out.println("BS.resize() screenProportion= " + screenProportion);
 
         //устанавливаем размеры текущего окна размерами системы координат скрина
         screenBounds.setSize(width, height);

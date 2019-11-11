@@ -25,12 +25,6 @@ public class MenuScreen extends BaseScreen {
         bg = new Texture("textures/bg.png");
         //инициируем спрайт для лого в виде одной картинки
         logo = new Logo(new TextureRegion(img));
-
-        //System.out.println("MS.show screenProportion= " + super.screenProportion);
-
-        //устанавливаем лого новые размеры
-        //logo.setHeightProportion(logo.SPRITE_HEIGHT * screenProportion);
-
         //инициируем спрайт для заднего фона в виде одной картинки
         background = new Background(new TextureRegion(bg));
     }
