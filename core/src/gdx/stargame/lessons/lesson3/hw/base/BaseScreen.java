@@ -23,7 +23,7 @@ public class BaseScreen implements Screen, InputProcessor {
     //экранная(скрина) координатная сетка
     private Rect screenBounds;
     //координатная сетка мировой системы координат
-    private Rect worldBounds;
+    protected Rect worldBounds;
     //координатная сетка системы координат OpenGL
     private Rect glBounds;
 
@@ -189,4 +189,5 @@ public class BaseScreen implements Screen, InputProcessor {
         System.out.println("scrolled amount = " + amount);
         return false;
     }
+
 }

@@ -24,9 +24,9 @@ public class MenuScreen extends BaseScreen {
         img = new Texture("badlogic.jpg");
         bg = new Texture("textures/bg.png");
         //инициируем спрайт для лого в виде одной картинки
-        logo = new Logo(new TextureRegion(img));
+        logo = new Logo(new TextureRegion(img), worldBounds);
         //инициируем спрайт для заднего фона в виде одной картинки
-        background = new Background(new TextureRegion(bg));
+        background = new Background(new TextureRegion(bg), worldBounds);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class MenuScreen extends BaseScreen {
         //пересчитываем положение фона под актуальные границы(размеры) мира
         background.resize(worldBounds);
 
-        System.out.println("MS.resize() screenProportion= " + super.screenProportion);
+        System.out.println("MS.resize() screenProportion= " + screenProportion);
         //устанавливаем лого новые размеры
         logo.setHeightProportion(logo.SPRITE_HEIGHT / screenProportion);
     }
@@ -69,4 +69,6 @@ public class MenuScreen extends BaseScreen {
         logo.touchDown(touch, pointer);
         return false;
     }
+
+
 }

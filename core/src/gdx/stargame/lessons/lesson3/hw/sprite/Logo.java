@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import gdx.stargame.lessons.lesson3.hw.base.Mobility;
 import gdx.stargame.lessons.lesson3.hw.base.Sprite;
+import gdx.stargame.lessons.lesson3.hw.math.Rect;
 
 public class Logo extends Sprite implements Mobility {
     //инициируем константу длины вектора скорости
@@ -20,8 +21,8 @@ public class Logo extends Sprite implements Mobility {
     //объявляем временный вектор скорости(сколько осталось)
     private Vector2 restDistance;
 
-    public Logo(TextureRegion region) {
-        super(region);
+    public Logo(TextureRegion region, Rect screenBounds) {
+        super(region, screenBounds);
         //инициируем вектор позиции назначения
         destination = new Vector2();
         //инициируем вектор скорости
@@ -30,10 +31,10 @@ public class Logo extends Sprite implements Mobility {
         restDistance = new Vector2();
     }
 
-
     @Override
     public void update(float delta) {
         super.update(delta);
+
         //если скорость равна нулю и
         // если еще не достигли точки назначения
         if (v.len() != 0 && !isAboutDestination(restDistance, v)){
@@ -41,19 +42,11 @@ public class Logo extends Sprite implements Mobility {
             pos.add(v);
             //обновляем остаток пути до точки назначения
             restDistance = updateRestDistance(restDistance, v);
-
-//            System.out.println("Logo.update. buffer.x= " + restDistance.x + ", " + "buffer.y= " + restDistance.y +
-//                    ", buffer.len()= " + restDistance.len());
-
         } else{
             //устанавливаем текущую позицию на точку назначения
             pos.x = destination.x;
             pos.y = destination.y;
-
-//            System.out.println("Logo.update. destination.x= " + destination.x + ", " + "destination.y= " + destination.y);
-//            System.out.println("Logo.update. pos.x= " + pos.x + ", " + "pos.y= " + pos.y);
         }
-
     }
 
     @Override
@@ -61,11 +54,35 @@ public class Logo extends Sprite implements Mobility {
         super.touchDown(touch, pointer);
         //устанавливаем вектор позиции назначения по переданному вектору касания
         destination = setDestination(touch);
+
+        //корректируем вектор точки назначения, чтобы спрайт не выходил за границы скрина
+        fitDestinationToScreenBounds(destination, screenBounds);
+
         //рассчитываем временного вектора остаточного растояния до точки назначения
         restDistance = calculateRestDistance(pos, destination);
         //расчитываем вектора скорости для перемещения
         v = calculateVelocity(restDistance, SPEED_LENGTH);
         return false;
+    }
+
+    /**
+     * Метод корректирует вектор точки назначения, чтобы спрайт не выходил за границы скрина
+     * @param destination - вектор точки назначения
+     * @param screenBounds - прямоугольник скрина
+     */
+    private void fitDestinationToScreenBounds(Vector2 destination, Rect screenBounds) {
+        if(destination.x - halfWidth < screenBounds.getLeft()){
+            destination.x = screenBounds.getLeft() + halfWidth;
+        }
+        if(destination.x + halfWidth > screenBounds.getRight()){
+            destination.x = screenBounds.getRight() - halfWidth;
+        }
+        if(destination.y + halfHeight > screenBounds.getTop()){
+            destination.y = screenBounds.getTop() - halfHeight;
+        }
+        if(destination.y - halfHeight < screenBounds.getBottom()){
+            destination.y = screenBounds.getBottom() + halfHeight;
+        }
     }
 
     @Override
