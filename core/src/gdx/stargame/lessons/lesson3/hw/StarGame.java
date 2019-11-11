@@ -13,7 +13,7 @@ import gdx.stargame.lessons.lesson3.hw.screen.MenuScreen;
  * @author Yuriy Litvinenko
  * Homework.
  * DONE 1. Разобраться с темой урока.
- * 2. Адаптировать ДЗ урока2 к новой архитектуре проекта. Желательно всю логику,
+ * DONE 2. Адаптировать ДЗ урока2 к новой архитектуре проекта. Желательно всю логику,
  * 		которая касается обработки логотипа по максимуму разместить в классе Logo.
  */
 public class StarGame extends Game {

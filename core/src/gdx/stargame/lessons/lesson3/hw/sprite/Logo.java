@@ -10,6 +10,8 @@ public class Logo extends Sprite implements Mobility {
     //инициируем константу длины вектора скорости
     //если 0 - мгновенный переход в точку назначения
     private final float SPEED_LENGTH = 0.02f;//1f, 5f, 2f - Слишком большие!;
+    //инициируем константу высоты спрайта
+    public final float SPRITE_HEIGHT = 0.2f;//0.5f;
 
     //объявляем вектор позиции назначения
     private Vector2 destination;

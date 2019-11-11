@@ -16,6 +16,9 @@ import gdx.stargame.lessons.lesson3.hw.math.Rect;
  */
 public class BaseScreen implements Screen, InputProcessor {
 
+    //объявим переменную для хранения пропорции экрана для подгонки спрайтов под разные экраны
+    protected float screenProportion;
+
     protected SpriteBatch batch;
     //экранная(скрина) координатная сетка
     private Rect screenBounds;
@@ -55,6 +58,12 @@ public class BaseScreen implements Screen, InputProcessor {
     @Override
     public void resize(int width, int height) {
         System.out.println("resize width = " + width + " height = " + height);
+
+        //инициализируем переменную для хранения пропорции экрана для подгонки спрайтов
+        // под экраны с разными пропорциями
+        screenProportion = height / (float)width;
+        //System.out.println("BS.resize() screenProportion= " + screenProportion);
+
         //устанавливаем размеры текущего окна размерами системы координат скрина
         screenBounds.setSize(width, height);
         //устаналиваем координаты начала системы координат скрина
@@ -155,7 +164,7 @@ public class BaseScreen implements Screen, InputProcessor {
         return false;
     }
 
-    public boolean touchUp(Vector2 touch, int pointer) {
+    private boolean touchUp(Vector2 touch, int pointer) {
         //System.out.println("BS2. touchUp touchX = " + touch.x + " touchY = " + touch.y);
         return false;
     }
@@ -168,7 +177,7 @@ public class BaseScreen implements Screen, InputProcessor {
         return false;
     }
 
-    public boolean touchDragged(Vector2 touch, int pointer) {
+    private boolean touchDragged(Vector2 touch, int pointer) {
         System.out.println("touchDragged touchX = " + touch.x + " touchY = " + touch.y);
         return false;
     }
