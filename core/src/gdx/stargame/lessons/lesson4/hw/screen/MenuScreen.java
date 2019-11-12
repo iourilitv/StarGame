@@ -17,16 +17,12 @@ import gdx.stargame.lessons.lesson4.hw.sprite.Star;
 
 public class MenuScreen extends BaseScreen {
 
-    private static final int STAR_COUNT = 256;
-
     private Game game;
 
     private Texture bg;
     private TextureAtlas atlas;
 
     private Background background;
-    //объявляем массив звезд
-    private Star[] stars;
     //объявляем объект кнопки Выйти из игры
     private ButtonExit buttonExit;
     //объявляем объект кнопки Начать игру
@@ -42,12 +38,7 @@ public class MenuScreen extends BaseScreen {
         bg = new Texture("textures/bg.png");
         background = new Background(new TextureRegion(bg));
         atlas = new TextureAtlas("textures/menuAtlas.tpack");
-        //инициализируем массив звезд
-        stars = new Star[256];
-        //наполняем массив звезд объектами звезд
-        for (int i = 0; i < STAR_COUNT; i++) {
-            stars[i] = new Star(atlas);
-        }
+
         //инициируем объекты кнопок Выйти из игры и Начать игру
         buttonExit = new ButtonExit(atlas);
         buttonPlay = new ButtonPlay(atlas, game);
@@ -72,9 +63,7 @@ public class MenuScreen extends BaseScreen {
         super.resize(worldBounds);
         //передаем координатную сетку игрового мира во все спрайты
         background.resize(worldBounds);
-        for (Star star : stars) {
-            star.resize(worldBounds);
-        }
+
         buttonExit.resize(worldBounds);
         buttonPlay.resize(worldBounds);
     }
@@ -95,10 +84,9 @@ public class MenuScreen extends BaseScreen {
     }
 
     private void update(float delta) {
-        //вызываем методы обновления каждого объекта звезды
-        for (Star star : stars) {
-            star.update(delta);
-        }
+        //вызываем методы обновления фона со звездами
+        background.update(delta);
+
     }
 
     private void draw() {
@@ -107,9 +95,7 @@ public class MenuScreen extends BaseScreen {
         batch.begin();
         //вызываем методы прорисовки у каждого спрайта
         background.draw(batch);
-        for (Star star : stars) {
-            star.draw(batch);
-        }
+
         buttonExit.draw(batch);
         buttonPlay.draw(batch);
         batch.end();
