@@ -4,7 +4,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Родительский класс для кнопок.
+ * Родительский класс для кнопок. Класс абстрактный,
+ * поэтому конструкторы наследников могут отличаться!
  */
 public abstract class ScaledTouchUpButton extends Sprite {
 
