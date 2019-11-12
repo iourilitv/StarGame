@@ -15,7 +15,7 @@ public class MenuScreen extends BaseScreen {
     //TODO L2hw update.Use vector length size.Added
     //инициируем константу длины вектора скорости
     //если 0 - мгновенный переход в точку назначения
-    private static final float SPEED_LENGTH = 5f;//2f;
+    private static final float SPEED_LENGTH = 0f;//5f, 2f;
 
     //объявляем переменную текстуры
     private Texture img;
@@ -144,7 +144,7 @@ public class MenuScreen extends BaseScreen {
         //если управление осуществляется мышью или тачэкраном
         if(!keyControl){
             //ограничиваем движение точкой назначения
-            if (buff.len() > SPEED_LENGTH) {
+            if (v.len() != 0 && buff.len() > SPEED_LENGTH) {//TODO L2HW update.Added (v.len() != 0 &&...
                 //пересчитываем позицию объекта для следующей итерации
                 // к вектору позиции прибавляем вектор скорости при каждом обновлении экрана
                 pos.add(v);
