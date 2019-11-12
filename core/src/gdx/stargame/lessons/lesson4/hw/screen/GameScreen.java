@@ -72,7 +72,9 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
-        return super.touchDown(touch, pointer);
+        //передаем вектор позиции касания в объект лого
+        main_ship.touchDown(touch, pointer);
+        return false;
     }
 
     @Override

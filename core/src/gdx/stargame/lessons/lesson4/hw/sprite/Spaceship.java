@@ -1,5 +1,6 @@
 package gdx.stargame.lessons.lesson4.hw.sprite;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -13,6 +14,8 @@ public class Spaceship extends Sprite {
     private final float VELOCITY_LENGTH = 0.02f;
     //инициируем константу высоты спрайта
     private final float SPRITE_HEIGHT = 0.2f;
+    //инициируем константу вектора пропорций начальной позиции относительно центра мира
+    private final Vector2 START_POSITION = new Vector2(0, -0.66f);
 
     //инициируем константу количества состояний спрайта(сколько его картинок в атласе)
     private static final int IMAGES_NUMBER = 2;
@@ -36,17 +39,11 @@ public class Spaceship extends Sprite {
         super(new TextureRegion[IMAGES_NUMBER]);
 
         TextureRegion shipImages = new TextureRegion(atlas.findRegion("main_ship"));
-        //shipImages.getRegionWidth()= 390
-        //shipImages.getRegionHeight()= 287
         //нарезаем фрагмент атлас корабля на части по количеству образов его состояний
         int widthStep = shipImages.getRegionWidth() / IMAGES_NUMBER;
         for (int i = 0; i < regions.length; i++) {
             regions[i] = new TextureRegion(shipImages, i * widthStep, 0,
                     widthStep, shipImages.getRegionHeight());
-
-//            System.out.println("regions[" + i + "]. " +
-//                    "getRegionWidth()= " + regions[i].getRegionWidth() +
-//                    ". getRegionHeight()= " + regions[i].getRegionHeight());
         }
 
 
@@ -128,9 +125,28 @@ public class Spaceship extends Sprite {
         // под экраны с разными пропорциями
         screenProportion = screenBounds.getHeight() / screenBounds.getWidth();
 
-        System.out.println("Spaceship.resize() screenProportion= " + screenProportion);
+        //System.out.println("Spaceship.resize() screenProportion= " + screenProportion);
 
         //устанавливаем лого новые размеры
         setHeightProportion(SPRITE_HEIGHT / screenProportion);
+
+        //устанавливаем корабль в начальную позицию
+        setStartPosition(screenBounds, START_POSITION.x, START_POSITION.y);
+
+        System.out.println("Spaceship.resize() getBottom()=" + getBottom());
+
+    }
+
+    /**
+     * Метод устанавливает корабль в начальную позицию
+     * @param screenBounds - границы игрового мира
+     * @param shiftX - пропорция сдвига по X относительно середины ширины мира
+     * @param shiftY - пропорция сдвига по Y относительно середины высоты мира
+     * @return
+     */
+    private void setStartPosition(Rect screenBounds, float shiftX, float shiftY){
+        Vector2 start = new Vector2(screenBounds.getHalfWidth() * shiftX,
+                screenBounds.getHalfHeight() * shiftY);
+        destination.set(start);
     }
 }
