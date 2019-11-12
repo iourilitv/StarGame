@@ -13,8 +13,8 @@ import gdx.stargame.lessons.lesson4.hw.screen.MenuScreen;
  * Создание кнопок на скрине Menu. Переключение между скринами.
  * @author Yuriy Litvinenko
  * Homework.
- * 1. Реализовать спрайт корабля
- * 2. Разрезать текстуру корабля на 2 части
+ * DONE 1. Реализовать спрайт корабля
+ * DONE 2. Разрезать текстуру корабля на 2 части
  * 3*. Cделать управление кораблём с помощью тача и клавиатуры
  */
 public class StarGame extends Game {

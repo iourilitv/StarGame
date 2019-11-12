@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import gdx.stargame.lessons.lesson4.hw.base.BaseScreen;
 import gdx.stargame.lessons.lesson4.hw.math.Rect;
 import gdx.stargame.lessons.lesson4.hw.sprite.Background;
+import gdx.stargame.lessons.lesson4.hw.sprite.Spaceship;
 
 /**
  * Скрин игрового поля.
@@ -19,8 +20,10 @@ public class GameScreen extends BaseScreen {
     private Texture bg;
     //объявляем объект атласа текструры
     private TextureAtlas atlas;
-
     private Background background;
+    //объявляем объект спрайта корабля
+    private Spaceship main_ship;
+    //private SpaceshipEmitter spaceshipEmitter;
 
     @Override
     public void show() {
@@ -29,6 +32,10 @@ public class GameScreen extends BaseScreen {
         background = new Background(new TextureRegion(bg));
         //инициируем объект атласа текструры
         atlas = new TextureAtlas("textures/mainAtlas.tpack");
+        //spaceshipEmitter = new SpaceshipEmitter(1);
+        //объявляем объект спрайта корабля
+        main_ship = new Spaceship(atlas);
+
     }
 
     @Override
@@ -40,6 +47,8 @@ public class GameScreen extends BaseScreen {
     @Override
     public void resize(Rect worldBounds) {
         background.resize(worldBounds);
+        //передаем размеры мира в объект спрайта корабля
+        main_ship.resize(worldBounds);
     }
 
     @Override
@@ -70,7 +79,8 @@ public class GameScreen extends BaseScreen {
     }
 
     private void update(float delta) {
-
+        //запускаем метод пересчета позиции корабля
+        main_ship.update(delta);
     }
 
     private void draw() {
@@ -78,6 +88,8 @@ public class GameScreen extends BaseScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         background.draw(batch);
+        //запускаем метод прорисовки корабля
+        main_ship.draw(batch);
         batch.end();
     }
 }

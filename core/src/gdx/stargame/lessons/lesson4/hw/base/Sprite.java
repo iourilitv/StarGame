@@ -21,6 +21,11 @@ public class Sprite extends Rect {
         regions[0] = region;
     }
 
+    //конструктор принимающий массив образов состояний спрайта
+    public Sprite(TextureRegion[] regions) {
+        this.regions = regions;
+    }
+
     public void draw(SpriteBatch batch) {
         batch.draw(
                 regions[frame],
