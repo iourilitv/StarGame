@@ -11,9 +11,13 @@ import gdx.stargame.lessons.lesson4.classfiles.base.BaseScreen;
 import gdx.stargame.lessons.lesson4.classfiles.math.Rect;
 import gdx.stargame.lessons.lesson4.classfiles.sprite.Background;
 
+/**
+ * Скрин игрового поля.
+ */
 public class GameScreen extends BaseScreen {
 
     private Texture bg;
+    //объявляем объект атласа текструры
     private TextureAtlas atlas;
 
     private Background background;
@@ -23,6 +27,7 @@ public class GameScreen extends BaseScreen {
         super.show();
         bg = new Texture("textures/bg.png");
         background = new Background(new TextureRegion(bg));
+        //инициируем объект атласа текструры
         atlas = new TextureAtlas("textures/mainAtlas.tpack");
     }
 
