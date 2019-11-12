@@ -25,8 +25,11 @@ public class MenuScreen extends BaseScreen {
     private TextureAtlas atlas;
 
     private Background background;
+    //объявляем массив звезд
     private Star[] stars;
+    //объявляем объект кнопки Выйти из игры
     private ButtonExit buttonExit;
+    //объявляем объект кнопки Начать игру
     private ButtonPlay buttonPlay;
 
     public MenuScreen(Game game) {
@@ -39,10 +42,13 @@ public class MenuScreen extends BaseScreen {
         bg = new Texture("textures/bg.png");
         background = new Background(new TextureRegion(bg));
         atlas = new TextureAtlas("textures/menuAtlas.tpack");
+        //инициализируем массив звезд
         stars = new Star[256];
+        //наполняем массив звезд объектами звезд
         for (int i = 0; i < STAR_COUNT; i++) {
             stars[i] = new Star(atlas);
         }
+        //инициируем объекты кнопок Выйти из игры и Начать игру
         buttonExit = new ButtonExit(atlas);
         buttonPlay = new ButtonPlay(atlas, game);
     }
@@ -64,6 +70,7 @@ public class MenuScreen extends BaseScreen {
     @Override
     public void resize(Rect worldBounds) {
         super.resize(worldBounds);
+        //передаем координатную сетку игрового мира во все спрайты
         background.resize(worldBounds);
         for (Star star : stars) {
             star.resize(worldBounds);
@@ -74,6 +81,7 @@ public class MenuScreen extends BaseScreen {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
+        //передаем нажатие в спрайты кнопок
         buttonExit.touchDown(touch, pointer);
         buttonPlay.touchDown(touch, pointer);
         return false;
@@ -87,6 +95,7 @@ public class MenuScreen extends BaseScreen {
     }
 
     private void update(float delta) {
+        //вызываем методы обновления каждого объекта звезды
         for (Star star : stars) {
             star.update(delta);
         }
@@ -96,6 +105,7 @@ public class MenuScreen extends BaseScreen {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
+        //вызываем методы прорисовки у каждого спрайта
         background.draw(batch);
         for (Star star : stars) {
             star.draw(batch);
