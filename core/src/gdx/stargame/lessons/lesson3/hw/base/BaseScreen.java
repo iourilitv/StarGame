@@ -15,15 +15,15 @@ import gdx.stargame.lessons.lesson3.hw.math.Rect;
  * Экран-родитель для всех скринов.
  */
 public class BaseScreen implements Screen, InputProcessor {
-
-    //объявим переменную для хранения пропорции экрана для подгонки спрайтов под разные экраны
-    protected float screenProportion;
+    //TODO L3hw update.Deleted
+//    //объявим переменную для хранения пропорции экрана для подгонки спрайтов под разные экраны
+//    protected float screenProportion;
 
     protected SpriteBatch batch;
     //экранная(скрина) координатная сетка
     private Rect screenBounds;
     //координатная сетка мировой системы координат
-    protected Rect worldBounds;
+    private Rect worldBounds;
     //координатная сетка системы координат OpenGL
     private Rect glBounds;
 
@@ -57,9 +57,11 @@ public class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
-        //инициализируем переменную для хранения пропорции экрана для подгонки спрайтов
-        // под экраны с разными пропорциями
-        screenProportion = height / (float)width;
+
+        //TODO L3hw update.Deleted
+//        //инициализируем переменную для хранения пропорции экрана для подгонки спрайтов
+//        // под экраны с разными пропорциями
+//        screenProportion = height / (float)width;
 
         //устанавливаем размеры текущего окна размерами системы координат скрина
         screenBounds.setSize(width, height);

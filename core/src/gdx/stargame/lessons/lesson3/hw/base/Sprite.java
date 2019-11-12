@@ -10,8 +10,9 @@ import gdx.stargame.lessons.lesson3.hw.math.Rect;
  * Родительский класс для всех объектов игры. Все объекты - по сути, прямоугольники.
  */
 public class Sprite extends Rect {
-    //принимаем объект скрина
-    protected final Rect screenBounds;
+    //TODO L3hw update.Deleted
+//    //принимаем объект скрина
+//    protected final Rect screenBounds;
 
     protected float angle;//угол поворота
     protected float scale = 1f;//масштабирование (по умолчанию 100%)
@@ -20,14 +21,27 @@ public class Sprite extends Rect {
     //текущий кадр массива regions
     protected int frame;
 
+    //TODO L3hw update.Deleted
+//    /**
+//     Конструктор для объекта в виде одной картинки с рамками экрана
+//     * @param region - картинка объекта
+//     * @param screen - объект скрина
+//     */
+//    public Sprite(TextureRegion region, Rect screenBounds) {
+//        this.screenBounds = screenBounds;
+//
+//        if (region == null) {
+//            throw new NullPointerException("region is null");
+//        }
+//        regions = new TextureRegion[1];
+//        regions[0] = region;
+//    }
+    //TODO L3hw update.Added
     /**
      Конструктор для объекта в виде одной картинки с рамками экрана
      * @param region - картинка объекта
-     * @param screen - объект скрина
      */
-    public Sprite(TextureRegion region, Rect screenBounds) {
-        this.screenBounds = screenBounds;
-
+    public Sprite(TextureRegion region) {
         if (region == null) {
             throw new NullPointerException("region is null");
         }
