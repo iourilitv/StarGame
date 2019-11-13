@@ -16,27 +16,15 @@ public class Background extends Sprite {
     //объявляем массив звезд
     private Star[] stars;
 
-    //объявляем вектор общей сторости для всех звезд
-//    private Vector2 starsVelocity = null;
-
     public Background(TextureRegion region) {
         super(region);
-//        setHeightProportion(1f);
-//        atlas = new TextureAtlas("textures/menuAtlas.tpack");
-
-        //инициализируем массив звезд
-//        stars = new Star[STAR_COUNT];
-////        //наполняем массив звезд объектами звезд
-////        for (int i = 0; i < stars.length; i++) {
-////            stars[i] = new Star(atlas);
-////        }
-        //инициируем звезды с разными векторами скорости
+        //инициируем массив звезд с разными векторами скорости
         initStars(null);
     }
 
     public Background(TextureRegion region, Vector2 starsVelocity) {
         super(region);
-        //инициируем звезды с общим константным вектором скорости
+        //инициируем массив звезд с общим константным вектором скорости
         initStars(starsVelocity);
     }
 
@@ -48,20 +36,14 @@ public class Background extends Sprite {
         stars = new Star[STAR_COUNT];
         //наполняем массив звезд объектами звезд
         for (int i = 0; i < stars.length; i++) {
-
             //если не задан общий вектор скорости для звед
             if(starsVelocity == null){
                 //создаем звезду с произвольным вектором скорости
                 stars[i] = new Star(atlas);
-
             //если задан общий вектор скорости для звед
             } else{
-
-                //System.out.println("Background.if(starsVelocity != null).starsVelocity. " + starsVelocity);
-
                 //устанавливаем вектор скорости звезды по заданному общему вектору
                 stars[i] = new Star(atlas, starsVelocity);
-
             }
         }
     }
@@ -92,9 +74,4 @@ public class Background extends Sprite {
         }
     }
 
-//    public void setStarsVelocity(Vector2 starsVelocity) {
-//        System.out.println("Background.setStarsVelocity.starsVelocity. " + starsVelocity);
-//
-//        this.starsVelocity = new Vector2(starsVelocity);
-//    }
 }

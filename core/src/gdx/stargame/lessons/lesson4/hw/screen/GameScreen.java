@@ -31,15 +31,10 @@ public class GameScreen extends BaseScreen {
     public void show() {
         super.show();
         bg = new Texture("textures/bg.png");
-//        background = new Background(new TextureRegion(bg));
+        //инициируем объект фона со звездами с заданным общим константным вектором скорости
         background = new Background(new TextureRegion(bg), STAR_VELOCITY);
-
-        //устанавливаем константную скорость звезды
-//        background.setStarsVelocity(STAR_VELOCITY);
-
         //инициируем объект атласа текструры
         atlas = new TextureAtlas("textures/mainAtlas.tpack");
-
         //объявляем объект спрайта корабля
         main_ship = new Spaceship(atlas);
     }
