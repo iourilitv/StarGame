@@ -1,11 +1,11 @@
 package gdx.stargame.lessons.lesson4.hw.sprite;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import gdx.stargame.lessons.lesson4.hw.base.Sprite;
+import gdx.stargame.lessons.lesson4.hw.constants.Direction;
 import gdx.stargame.lessons.lesson4.hw.math.Rect;
 
 public class Spaceship extends Sprite {
@@ -34,10 +34,12 @@ public class Spaceship extends Sprite {
     //объявим переменную для хранения пропорции экрана для подгонки спрайтов под разные экраны
     private float screenProportion;
 
-    public Spaceship(TextureAtlas atlas) {
-        //super(atlas.findRegion("main_ship"));
-        super(new TextureRegion[IMAGES_NUMBER]);
+    //объявляем переменную вида управления движением клавишами
+    private boolean keyControl;
 
+    public Spaceship(TextureAtlas atlas) {
+        super(new TextureRegion[IMAGES_NUMBER]);
+        //сохраняем фрагмент с образами корабля из атласа во временную переменную
         TextureRegion shipImages = new TextureRegion(atlas.findRegion("main_ship"));
         //нарезаем фрагмент атлас корабля на части по количеству образов его состояний
         int widthStep = shipImages.getRegionWidth() / IMAGES_NUMBER;
@@ -45,11 +47,8 @@ public class Spaceship extends Sprite {
             regions[i] = new TextureRegion(shipImages, i * widthStep, 0,
                     widthStep, shipImages.getRegionHeight());
         }
-
-
         //устанавливаем индекс образа в массиве образов корабля
         frame = START_FRAME_INDEX;
-
         //инициируем вектор позиции назначения
         destination = new Vector2();
         //инициируем вектор скорости
@@ -58,7 +57,7 @@ public class Spaceship extends Sprite {
         restDistance = new Vector2();
     }
 
-    @Override
+    /*@Override
     public void update(float delta) {
         super.update(delta);
 
@@ -73,6 +72,76 @@ public class Spaceship extends Sprite {
             //устанавливаем текущую позицию на точку назначения
             pos.set(destination);
         }
+    }*/
+    public void update(float delta) {
+        super.update(delta);
+
+        if(keyControl){
+            //корректируем вектор точки назначения, чтобы спрайт не выходил за границы скрина
+            fitDestinationToScreenBounds(pos.add(v), screenBounds);
+            return;
+        }
+
+        //если скорость равна нулю и
+        // если еще не достигли точки назначения
+        if (v.len() != 0 && !isAboutDestination(restDistance, v)){
+            //перемещаем объект картинки на один шаг
+            pos.add(v);
+            //обновляем остаток пути до точки назначения
+            restDistance.sub(v);
+        } else{
+            //устанавливаем текущую позицию на точку назначения
+            pos.set(destination);
+        }
+    }
+
+    public boolean keyDown(int keycode) {
+        System.out.println("Spaceship.keyDown. keycode=" + keycode);
+
+        //передаем управление от мыши к клавиатуре
+        keyControl = true;
+        //устанавливаем значения вектора скорости в зависимости от нажатой клавиши
+        //ВНИМАНИЕ! switch/case использовать нельзя, т.к. case требует константу!
+        if(keycode == Direction.FORWARD.keyCode()){
+//            v.x = 0;
+//            v.y = 1;
+            v.set(0f, VELOCITY_LENGTH);
+
+            System.out.println("FORWARD v.x= " + v.x + ", v.y= " + v.y);
+        } else if(keycode == Direction.BACK.keyCode()){
+//            v.x = 0;
+//            v.y = -1;
+            v.set(0f, -VELOCITY_LENGTH);
+        } else if(keycode == Direction.LEFT.keyCode()){
+//            v.x = -1;
+//            v.y = 0;
+            v.set(-VELOCITY_LENGTH, 0f);
+        } else if(keycode == Direction.RIGHT.keyCode()){
+//            v.x = 1;
+//            v.y = 0;
+            v.set(VELOCITY_LENGTH, 0f);
+        } else {
+            System.out.println("Not supported key for moving direction: " + keycode);
+            //НЕ передаем управление от мыши к клавиатуре
+            keyControl = false;
+        }
+        return false;
+    }
+
+    public boolean keyUp(int keycode) {
+        System.out.println("Spaceship.keyUp. keycode=" + keycode);
+
+        //если клавиша отпущена, обнуляем вектор скорости
+//        v.x = 0;
+//        v.y = 0;
+        v.scl(0);
+        //возвращаем управление мыши
+        keyControl = false;
+        //устанавливаем позиции назначения значения текущей позиции, чтобы не было скачков
+//        posDest.x = pos.x;
+//        posDest.y = pos.y;
+        destination.set(pos);
+        return false;
     }
 
     @Override
@@ -142,11 +211,22 @@ public class Spaceship extends Sprite {
      * @param screenBounds - границы игрового мира
      * @param shiftX - пропорция сдвига по X относительно середины ширины мира
      * @param shiftY - пропорция сдвига по Y относительно середины высоты мира
-     * @return
      */
     private void setStartPosition(Rect screenBounds, float shiftX, float shiftY){
         Vector2 start = new Vector2(screenBounds.getHalfWidth() * shiftX,
                 screenBounds.getHalfHeight() * shiftY);
         destination.set(start);
+    }
+
+    public Vector2 getV() {
+        return v;
+    }
+
+    public void setV(Vector2 v) {
+        this.v = v;
+    }
+
+    public void setV(float x, float y) {
+        this.v.set(x, y);
     }
 }

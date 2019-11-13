@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import gdx.stargame.lessons.lesson4.hw.base.BaseScreen;
+import gdx.stargame.lessons.lesson4.hw.constants.Direction;
 import gdx.stargame.lessons.lesson4.hw.math.Rect;
 import gdx.stargame.lessons.lesson4.hw.sprite.Background;
 import gdx.stargame.lessons.lesson4.hw.sprite.Spaceship;
@@ -62,12 +63,20 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public boolean keyDown(int keycode) {
-        return super.keyDown(keycode);
+        System.out.println("GameScreen.keyDown. keycode=" + keycode);
+
+        //передаем код нажатой клавиши клавиатуры в объект корабля
+        main_ship.keyDown(keycode);
+        return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        return super.keyUp(keycode);
+        System.out.println("GameScreen.keyUp. keycode=" + keycode);
+
+        //передаем код отпущенной клавиши клавиатуры в объект корабля
+        main_ship.keyUp(keycode);
+        return false;
     }
 
     @Override
