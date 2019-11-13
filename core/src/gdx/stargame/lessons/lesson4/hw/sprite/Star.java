@@ -16,7 +16,7 @@ public class Star extends Sprite {
     private Vector2 v = new Vector2();
     private Rect worldBounds;
 
-    public Star(TextureAtlas atlas) {
+    Star(TextureAtlas atlas) {
         super(atlas.findRegion("star"));
         setHeightProportion(Rnd.nextFloat(0.01f, 0.0065f));
         //генерируем случайные параметры вектора скорости звезды
@@ -24,6 +24,19 @@ public class Star extends Sprite {
         float vy = Rnd.nextFloat(-0.005f, -0.001f);
         float vx = Rnd.nextFloat(-0.0005f, 0.0005f);
         v.set(vx, vy);
+    }
+
+    /**
+     * Конструктор для звезды с заданным общим константным вектором скорости.
+     * Так выглядит действительно, как корабль летит на фоне звезд.
+     * @param atlas - атлас звезды
+     * @param starsVelocity - общий константный вектор скорости
+     */
+    Star(TextureAtlas atlas, Vector2 starsVelocity) {
+        super(atlas.findRegion("star"));
+        setHeightProportion(Rnd.nextFloat(0.01f, 0.0065f));
+        //устанавливаем константные параметры вектора скорости звезды
+        v.set(starsVelocity);
     }
 
     @Override
@@ -48,4 +61,5 @@ public class Star extends Sprite {
         if (getTop() < worldBounds.getBottom()) setBottom(worldBounds.getTop());
         if (getBottom() > worldBounds.getTop()) setTop(worldBounds.getBottom());
     }
+
 }

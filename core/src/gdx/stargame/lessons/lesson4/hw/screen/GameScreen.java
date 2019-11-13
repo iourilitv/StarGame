@@ -24,11 +24,19 @@ public class GameScreen extends BaseScreen {
     //объявляем объект спрайта корабля
     private Spaceship main_ship;
 
+    //инициируем константу скорости для всех звезд
+    private final Vector2 STAR_VELOCITY = new Vector2(0, -0.001f);
+
     @Override
     public void show() {
         super.show();
         bg = new Texture("textures/bg.png");
-        background = new Background(new TextureRegion(bg));
+//        background = new Background(new TextureRegion(bg));
+        background = new Background(new TextureRegion(bg), STAR_VELOCITY);
+
+        //устанавливаем константную скорость звезды
+//        background.setStarsVelocity(STAR_VELOCITY);
+
         //инициируем объект атласа текструры
         atlas = new TextureAtlas("textures/mainAtlas.tpack");
 
