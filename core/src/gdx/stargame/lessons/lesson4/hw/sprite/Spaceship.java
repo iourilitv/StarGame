@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import gdx.stargame.lessons.lesson4.hw.base.Sprite;
 import gdx.stargame.lessons.lesson4.hw.constants.Direction;
+import gdx.stargame.lessons.lesson4.hw.constants.ScreenSettings;
 import gdx.stargame.lessons.lesson4.hw.math.Rect;
 
 public class Spaceship extends Sprite {
@@ -161,14 +162,18 @@ public class Spaceship extends Sprite {
         //устанавливаем границы скрина
         screenBounds.set(worldBounds);
 
-        //инициализируем переменную для хранения пропорции экрана для подгонки спрайтов
-        // под экраны с разными пропорциями
-        screenProportion = screenBounds.getHeight() / screenBounds.getWidth();
+//        //инициализируем переменную для хранения пропорции экрана для подгонки спрайтов
+//        // под экраны с разными пропорциями
+//        screenProportion = screenBounds.getHeight() / screenBounds.getWidth();
+//
+//        //System.out.println("Spaceship.resize() screenProportion= " + screenProportion);
+//
+//        //устанавливаем лого новые размеры
+//        setHeightProportion(SPRITE_HEIGHT / screenProportion);
 
-        //System.out.println("Spaceship.resize() screenProportion= " + screenProportion);
-
-        //устанавливаем лого новые размеры
-        setHeightProportion(SPRITE_HEIGHT / screenProportion);
+        //устанавливаем новые размеры фона в зависимости от пропорций экрана
+        setHeightProportion(SPRITE_HEIGHT /
+                ScreenSettings.SCREEN_PROPORTION.getScreenProportion());
 
         //устанавливаем корабль в начальную позицию
         setStartPosition(screenBounds, START_POSITION.x, START_POSITION.y);
