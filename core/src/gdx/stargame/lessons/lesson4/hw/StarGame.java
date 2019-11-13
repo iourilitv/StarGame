@@ -15,7 +15,7 @@ import gdx.stargame.lessons.lesson4.hw.screen.MenuScreen;
  * Homework.
  * DONE 1. Реализовать спрайт корабля
  * DONE 2. Разрезать текстуру корабля на 2 части
- * 3*. Cделать управление кораблём с помощью тача и клавиатуры
+ * DONE 3*. Cделать управление кораблём с помощью тача и клавиатуры
  */
 public class StarGame extends Game {
 

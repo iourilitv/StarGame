@@ -8,11 +8,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import gdx.stargame.lessons.lesson4.hw.base.BaseScreen;
-import gdx.stargame.lessons.lesson4.hw.constants.Direction;
 import gdx.stargame.lessons.lesson4.hw.math.Rect;
 import gdx.stargame.lessons.lesson4.hw.sprite.Background;
 import gdx.stargame.lessons.lesson4.hw.sprite.Spaceship;
-import gdx.stargame.lessons.lesson4.hw.sprite.Star;
 
 /**
  * Скрин игрового поля.
