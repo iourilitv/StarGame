@@ -173,7 +173,7 @@ public class Spaceship extends Sprite {
         //устанавливаем корабль в начальную позицию
         setStartPosition(screenBounds, START_POSITION.x, START_POSITION.y);
 
-        System.out.println("Spaceship.resize() getBottom()=" + getBottom());
+        //System.out.println("Spaceship.resize() getBottom()=" + getBottom());
 
     }
 

@@ -8,8 +8,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import gdx.stargame.lessons.lesson4.hw.base.BaseScreen;
+import gdx.stargame.lessons.lesson4.hw.constants.ScreenSettings;
+import gdx.stargame.lessons.lesson4.hw.constants.Source;
 import gdx.stargame.lessons.lesson4.hw.math.Rect;
 import gdx.stargame.lessons.lesson4.hw.sprite.Background;
+import gdx.stargame.lessons.lesson4.hw.sprite.BackgroundGalaxy;
 import gdx.stargame.lessons.lesson4.hw.sprite.Spaceship;
 
 /**
@@ -17,22 +20,38 @@ import gdx.stargame.lessons.lesson4.hw.sprite.Spaceship;
  */
 public class GameScreen extends BaseScreen {
 
-    private Texture bg;
+    //объявляем тектуру картинки фона с галактикой
+    private Texture bgGalaxy;
+//    private Texture bg;
+
     //объявляем объект атласа текструры
     private TextureAtlas atlas;
-    private Background background;
+
+    //объявляем объект спрайта фона
+//    private Background background;
+    private BackgroundGalaxy background;
+
     //объявляем объект спрайта корабля
     private Spaceship main_ship;
 
-    //инициируем константу скорости для всех звезд
-    private final Vector2 STAR_VELOCITY = new Vector2(0, -0.001f);
+//    //инициируем константу скорости для всех звезд
+//    private final Vector2 STAR_VELOCITY = new Vector2(0, -0.001f);
+    //инициируем константный вектор скорости сдвига фона
+    private final Vector2 SHIFT_VELOCITY = new Vector2(0, -0.001f);
 
     @Override
     public void show() {
         super.show();
-        bg = new Texture("textures/bg.png");
-        //инициируем объект фона со звездами с заданным общим константным вектором скорости
-        background = new Background(new TextureRegion(bg), STAR_VELOCITY);
+//        bg = new Texture("textures/bg.png");
+//        //инициируем объект фона со звездами с заданным общим константным вектором скорости
+//        background = new Background(new TextureRegion(bg), STAR_VELOCITY);
+
+        //инициируем текстуру картинки фона галактики
+        bgGalaxy = new Texture(ScreenSettings.CURRENT_BACKGROUND.getPicture().sourceName());
+        //инициируем объект региона всей картинки фона
+        // с заданным константным вектором скорости сдвига
+        background = new BackgroundGalaxy(new TextureRegion(bgGalaxy), SHIFT_VELOCITY);
+
         //инициируем объект атласа текструры
         atlas = new TextureAtlas("textures/mainAtlas.tpack");
         //объявляем объект спрайта корабля
@@ -57,7 +76,8 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void dispose() {
-        bg.dispose();
+//        bg.dispose();
+        bgGalaxy.dispose();
         atlas.dispose();
         super.dispose();
     }

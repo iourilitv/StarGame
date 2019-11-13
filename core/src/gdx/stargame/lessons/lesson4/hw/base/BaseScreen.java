@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 
+import gdx.stargame.lessons.lesson4.hw.constants.ScreenSettings;
 import gdx.stargame.lessons.lesson4.hw.math.MatrixUtils;
 import gdx.stargame.lessons.lesson4.hw.math.Rect;
 
@@ -22,6 +23,9 @@ public class BaseScreen implements Screen, InputProcessor {
     private Matrix3 screenToWorld;
 
     private Vector2 touch;
+
+    //объявим переменную для хранения пропорции экрана для подгонки спрайтов под разные экраны
+//    private float screenProportion;
 
     public BaseScreen() {
         this.screenBounds = new Rect();
@@ -61,7 +65,14 @@ public class BaseScreen implements Screen, InputProcessor {
     }
 
     public void resize(Rect worldBounds) {
+        //инициализируем переменную для хранения пропорции экрана для подгонки спрайтов
+        // под экраны с разными пропорциями
+//        screenProportion = worldBounds.getHeight() / worldBounds.getWidth();
+        ScreenSettings.SCREEN_PROPORTION.setScreenProportion(
+                worldBounds.getHeight() / worldBounds.getWidth());
 
+        System.out.println("BS.resize() ScreenSettings.SCREEN_PROPORTION.getScreenProportion()= " +
+                ScreenSettings.SCREEN_PROPORTION.getScreenProportion());
     }
 
     @Override
