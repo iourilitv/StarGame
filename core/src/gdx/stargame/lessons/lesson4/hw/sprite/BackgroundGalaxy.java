@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.ArrayDeque;
+
 import gdx.stargame.lessons.lesson4.hw.base.Sprite;
 import gdx.stargame.lessons.lesson4.hw.math.Rect;
 
@@ -37,7 +39,9 @@ public class BackgroundGalaxy extends Sprite {
     private float counterY;
     //инициируем начальный индекс показа массива фрагментов
     // (начинаем показывать со второго фрагмента)
-    private int startIndex = 1;
+    private int startIndex = 0;
+    //очередь индексов фрагментов
+    ArrayDeque<Integer> deque;
 
     public BackgroundGalaxy(TextureRegion region) {
         super(region);
@@ -60,13 +64,28 @@ public class BackgroundGalaxy extends Sprite {
         tiles = galaxy.split(galaxy.getRegionWidth() / TILES_X_NUMBER,
                 galaxy.getRegionHeight() / TILES_Y_NUMBER);
 
+        //заменяет тоже самое
+//        tiles = new TextureRegion[TILES_Y_NUMBER][TILES_X_NUMBER];
+//        int heightStep = galaxy.getRegionHeight() / TILES_Y_NUMBER;
+//        for (int i = 0; i < TILES_Y_NUMBER; i++) {
+//            tiles[i][0] = new TextureRegion(galaxy, 0, i * heightStep,
+//                    0, heightStep);
+//        }
+
+
         //устанавливаем значения вектора скачка скорости в зависимости от нарезки тектуры
 //        jumpV.x = TILES_X_NUMBER > 1 ? tile.getRegionWidth() : 0;
 //        jumpV.y = TILES_Y_NUMBER > 1 ? tile.getRegionHeight() : 0;
-        jumpV.set(tileWidth, tileHeight);
+//        jumpV.set(tileWorldWidth, tileWorldHeight);
 
 //        System.out.println("galaxy.getRegionHeight()= " + galaxy.getRegionHeight());
 //        System.out.println("jumpV " + jumpV);
+
+        deque = new ArrayDeque<>();
+        for (int i = 0; i < tiles.length; i++) {
+
+            deque.add(i);
+        }
 
     }
 
@@ -105,61 +124,79 @@ public class BackgroundGalaxy extends Sprite {
 //        System.out.println("BgGal.resize getWidth()= " + getWidth() +
 //                ", getHeight()= " + getHeight());
 
-        for (int i = 0; i < tiles.length; i++) {
-            tiles[i][0].setRegionWidth(tileWidth);
-            tiles[i][0].setRegionHeight(tileHeight);
-        }
+//        for (int i = 0; i < tiles.length; i++) {
+//
+////            System.out.println("tiles[" + i + "][0].getRegionWidth()=" +
+////                    tiles[i][0].getRegionWidth() + ", .getRegionHeight()=" +
+////                    tiles[i][0].getRegionHeight());
+//
+//            tiles[i][0].setRegionWidth(tileWidth);
+//            tiles[i][0].setRegionHeight(tileHeight);
+//
+////            System.out.println("tiles[" + i + "][0].setRegionWidth(tileWidth)=" +
+////                    tiles[i][0].getRegionWidth() + ", .setRegionHeight(tileHeight)=" +
+////                    tiles[i][0].getRegionHeight());
+//
+//        }
 
 //        System.out.println("BgGal.resize tiles[0][0]. " +
 //                "getRegionWidth()= " + tiles[0][0].getRegionWidth() +
 //                ", getRegionHeight()= " + tiles[0][0].getRegionHeight());
+
+        //устанавливаем значения вектора скачка скорости в зависимости от нарезки тектуры
+        jumpV.set(tileWorldWidth * 0, tileWorldHeight);//FIXME tileWorldWidth * 0
+
+//        System.out.println("jumpV.=" + jumpV);
 
         this.pos.set(worldBounds.pos);
 
     }
 
     @Override
-    public void draw(SpriteBatch batch) {
-        //перебираем массив фрагментов картинки фона
+//    public void draw(SpriteBatch batch) {
+//        //перебираем массив фрагментов картинки фона
 //        int n;
 //        for (int i = 0; i < tiles.length; i++) {
+////            n = (startIndex + i) % TILES_Y_NUMBER;
 //
-//            n = (startIndex + i) % TILES_Y_NUMBER;
 //            batch.draw(
-//                    tiles[n][0],
-//                    getLeft(), getTop(),
-////                    0, SPRITE_HEIGHT + (3 - i) * getHeight() / TILES_Y_NUMBER,
-//                    0, 0 + ( - n) * getHeight() / TILES_Y_NUMBER,
-//                    getWidth(), getHeight(),
-//                    1f, 1f / (float) TILES_Y_NUMBER,
-//                    angle
-//            );
+//                //текстура регион фрагмента фона
+//                tiles[i][0],
+//                //координаты левого-нижнего угла фрагмента от точки в середине экрана
+//                // (здесь - в мировой системе координат 1f x 1f)
+//                getLeft(), getTop() - tileWorldHeight * i,
+//                //FIXME что это?
+//                0, 0, //одинаково halfWidth, halfHeight,//tileWorldWidth, tileWorldHeight,
+//                //ширина и высота поля отрисовки фрагмента от
+//                // координаты левого-нижнего угла фрагмента(отрицательные - влево и вверх)
+//                tileWorldWidth, tileWorldHeight,
+//                //масштаб фрагмента по ширине и высоте
+//                scale, scale,
+//                angle);
 //        }
-//        batch.draw(
-//                    tiles[0][0],
-//                    getLeft(), getBottom(),
-//                    0, SPRITE_HEIGHT + 2 * getHeight() / TILES_Y_NUMBER,
-//                    getWidth(), getHeight(),
-//                    1f, 1 / (float)TILES_Y_NUMBER,
-//                    angle
-//            );
-        batch.draw(
-                //текстура регион фрагмента фона
-                tiles[0][0],
-                //координаты левого-нижнего угла фрагмента от точки в середине экрана
-                // (здесь - в мировой системе координат 1f x 1f)
-                getLeft(), getTop() - tileWorldHeight,
-                //
-                0, 0,
-                //ширина и высота поля отрисовки фрагмента от
-                // координаты левого-нижнего угла фрагмента(отрицательные - влево и вверх)
-                tileWorldWidth,
-                tileWorldHeight,
-                //масштаб фрагмента по ширине и высоте
-                scale, scale,
-                angle
-        );
+//    }
+    public void draw(SpriteBatch batch) {
 
+        //перебираем массив фрагментов картинки фона
+        int d;
+        for (int i = startIndex; i < tiles.length + startIndex; i++) {
+            d = (i - startIndex) % TILES_Y_NUMBER;
+
+            batch.draw(
+                    //текстура регион фрагмента фона
+                    tiles[i % tiles.length][0],
+                    //координаты левого-нижнего угла фрагмента от точки в середине экрана
+                    // (здесь - в мировой системе координат 1f x 1f)
+                    getLeft(), counterY + getTop() - tileWorldHeight * d,
+                    //FIXME что это?
+                    0, 0, //одинаково halfWidth, halfHeight,//tileWorldWidth, tileWorldHeight,
+                    //ширина и высота поля отрисовки фрагмента от
+                    // координаты левого-нижнего угла фрагмента(отрицательные - влево и вверх)
+                    tileWorldWidth, tileWorldHeight,
+                    //масштаб фрагмента по ширине и высоте
+                    scale, scale,
+                    angle);
+        }
     }
 
     @Override
@@ -167,22 +204,63 @@ public class BackgroundGalaxy extends Sprite {
         super.update(delta);
 
         //инкрементируем вектор позиции спрайта на величину сторости сдвига фона
-        pos.add(v);
+//        pos.add(v);
         //если счетчик меньше высоты фрагмента
-        if(counterY < tiles[0][0].getRegionHeight()){
+//        if(counterY < tileWorldHeight){
+        if(counterY < 0){
             //инкрементируем счетчик на величину сторости сдвига фона
-//            counterY += v.len();
             counterY += Math.abs(v.y);
 
 //            System.out.println("counterY= " + counterY);
 
         } else {
-            startIndex++;
+//            startIndex++;
 //            startIndex %= TILES_Y_NUMBER;
-            counterY = 0;
-            pos.add(jumpV);
+
+            startIndex = deque.removeFirst();
+            deque.addLast(startIndex);
+
+            System.out.println("deque= " + deque);
+
+            counterY = - tileWorldHeight;
+//            counterY = 0;
+//            pos.add(jumpV);
+
+            System.out.println("jumpV=" + jumpV);
+//            System.out.println("startIndex=" + startIndex);
+
         }
 
     }
+//    public void update(float delta) {
+//        super.update(delta);
+//
+//        //если счетчик меньше высоты фрагмента
+//        if(pos.y < tileWorldHeight){
+////            //инкрементируем счетчик на величину сторости сдвига фона
+////            counterY += Math.abs(v.y);
+//            //инкрементируем вектор позиции спрайта на величину сторости сдвига фона
+//            pos.add(v);
+//
+////            System.out.println("counterY= " + counterY);
+//
+//        } else {
+////            startIndex++;
+////            startIndex %= TILES_Y_NUMBER;
+//
+//            startIndex = deque.removeFirst();
+//            deque.addLast(startIndex);
+//
+//            System.out.println("deque= " + deque);
+//
+//            counterY = 0;
+//            pos.add(jumpV);
+//
+////            System.out.println("jumpV=" + jumpV);
+////            System.out.println("startIndex=" + startIndex);
+//
+//        }
+//
+//    }
 
 }
