@@ -32,8 +32,8 @@ public class Spaceship extends Sprite {
 
     //принимаем границы экрана
     private Rect screenBounds = new Rect();
-    //объявим переменную для хранения пропорции экрана для подгонки спрайтов под разные экраны
-    private float screenProportion;
+//    //объявим переменную для хранения пропорции экрана для подгонки спрайтов под разные экраны
+//    private float screenProportion;
 
     //объявляем переменную вида управления движением клавишами
     private boolean keyControl;
