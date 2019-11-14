@@ -13,9 +13,6 @@ public class BackgroundGalaxy extends Sprite {
     private static int TILES_X_NUMBER = 1;
     private static int TILES_Y_NUMBER = 16;//32;
 
-    //инициируем константу высоты спрайта
-//    private final float SPRITE_HEIGHT = 1f;//1.2f;
-
     //объявляем переменные размеров фрагмента текторы по ширине и высоте
     // в размерах экрана в пикселях
     private int tileWidth;
@@ -29,8 +26,6 @@ public class BackgroundGalaxy extends Sprite {
     private TextureRegion galaxy;
     //объявляем массив плиток текстуры
     private TextureRegion[][] tiles;
-    //объявляем переменную для образца фрагмента
-    private TextureRegion tile;
     //принимаем границы экрана
     private Rect screenBounds = new Rect();
 
@@ -61,22 +56,14 @@ public class BackgroundGalaxy extends Sprite {
     }
 
     private void init(Vector2 shiftVelocity){
-//        setHeightProportion(SPRITE_HEIGHT);
-
         //инициируем массив фрагментов фона
         tiles = galaxy.split(galaxy.getRegionWidth() / TILES_X_NUMBER,
                 galaxy.getRegionHeight() / TILES_Y_NUMBER);
 
-        //инициируем объект региона-образца фрагмента
-        this.tile = new TextureRegion(tiles[0][0]);
-//        tile.setRegionWidth(tiles[0][0].getRegionWidth());
-//        tile.setRegionHeight(tiles[0][0].getRegionHeight());
-
         //устанавливаем значения вектора скачка скорости в зависимости от нарезки тектуры
-        jumpV.x = TILES_X_NUMBER > 1 ? tile.getRegionWidth() : 0;
-        jumpV.y = TILES_Y_NUMBER > 1 ? tile.getRegionHeight() : 0;
-//        jumpV.y = tiles[0][0].getRegionHeight() < galaxy.getRegionHeight() ?
-//                tiles[0][0].getRegionHeight() : 0;
+//        jumpV.x = TILES_X_NUMBER > 1 ? tile.getRegionWidth() : 0;
+//        jumpV.y = TILES_Y_NUMBER > 1 ? tile.getRegionHeight() : 0;
+        jumpV.set(tileWidth, tileHeight);
 
 //        System.out.println("galaxy.getRegionHeight()= " + galaxy.getRegionHeight());
 //        System.out.println("jumpV " + jumpV);
@@ -90,35 +77,16 @@ public class BackgroundGalaxy extends Sprite {
         //устанавливаем границы скрина
         screenBounds.set(worldBounds);
 
-//        for (int i = 0; i < tiles.length; i++) {
-//            tiles[i][0].setRegionWidth(
-//                    (int)(worldBounds.getWidth() * Gdx.graphics.getWidth()));
-//            tiles[i][0].setRegionHeight(
-//                    (int)(worldBounds.getHeight() * Gdx.graphics.getHeight() /
-//                            (TILES_Y_NUMBER - 2)));
-//        }
-
-//        System.out.println("BgGal.resize tiles[0][0]. " +
-//                "getRegionWidth()= " + tiles[0][0].getRegionWidth() +
-//                ", getRegionHeight()= " + tiles[0][0].getRegionHeight());
-
-        System.out.println("BgGal.resize screenBounds.getWidth()= " + screenBounds.getWidth() +
-                ", screenBounds.getHeight()= " + screenBounds.getHeight());
-
-        //инициируем перременные
-//        tileWorldWidth = screenBounds.getWidth() * (galaxy.getRegionWidth() / (float)TILES_Y_NUMBER) /
-//                Gdx.graphics.getWidth();
-//        tileWorldHeight = screenBounds.getHeight() * (galaxy.getRegionHeight() / (float)TILES_Y_NUMBER) /
-//                Gdx.graphics.getHeight();
+//        System.out.println("BgGal.resize screenBounds.getWidth()= " + screenBounds.getWidth() +
+//                ", screenBounds.getHeight()= " + screenBounds.getHeight());
 
         //инициируем переменные размеров фрагмента текторы по ширине и высоте
         // в размерах экрана в пикселях
         tileWidth = (int)(Gdx.graphics.getWidth() / (float)(TILES_X_NUMBER - 2 * 0));
         tileHeight = (int)(Gdx.graphics.getHeight() / (float)(TILES_Y_NUMBER - 2));
 
-        System.out.println("BgGal.resize tileWidth= " + tileWidth +
-                ", tileHeight= " + tileHeight);
-
+//        System.out.println("BgGal.resize tileWidth= " + tileWidth +
+//                ", tileHeight= " + tileHeight);
 
         //инициируем переменные размеров фрагмента текторы по ширине и высоте
         // в мировой системе координат
@@ -131,46 +99,20 @@ public class BackgroundGalaxy extends Sprite {
 
         //устанавливаем размеры спрайта
         // (выводим по одному фрагменту по ширине и высоте за видимое поле скрина)
-//        setWidth(tileWorldWidth * TILES_X_NUMBER / (TILES_X_NUMBER - 2));
-//        setHeight(tileWorldHeight * TILES_Y_NUMBER / (TILES_Y_NUMBER - 2));
         setWidth(tileWorldWidth * TILES_X_NUMBER);
         setHeight(tileWorldHeight * TILES_Y_NUMBER);
 
-        System.out.println("BgGal.resize getWidth()= " + getWidth() +
-                ", getHeight()= " + getHeight());
+//        System.out.println("BgGal.resize getWidth()= " + getWidth() +
+//                ", getHeight()= " + getHeight());
 
         for (int i = 0; i < tiles.length; i++) {
             tiles[i][0].setRegionWidth(tileWidth);
             tiles[i][0].setRegionHeight(tileHeight);
         }
 
-        System.out.println("BgGal.resize tiles[0][0]. " +
-                "getRegionWidth()= " + tiles[0][0].getRegionWidth() +
-                ", getRegionHeight()= " + tiles[0][0].getRegionHeight());
-
-//        setHeightProportion(1f);
-
-        //устанавливаем новые размеры фона в зависимости от пропорций экрана
-//        setHeightProportion(SPRITE_HEIGHT *
-//                ScreenSettings.SCREEN_PROPORTION.getScreenProportion());
-
-
-        //устанавливаем новые размеры фона в зависимости от пропорций экрана
-//        setHeightProportion((1 + tile.getRegionHeight() /
-//                (screenBounds.getHeight() * Gdx.graphics.getHeight())) *
-//                ScreenSettings.SCREEN_PROPORTION.getScreenProportion());
-
-//        System.out.println("galaxy.getRegionHeight()= " + galaxy.getRegionHeight() +
-//                " / screenBounds. getHeight() * Gdx.graphics.getHeight()= " +
-//                screenBounds.getHeight() * Gdx.graphics.getHeight() +
-//                " = tileWorldHeight = " + tileWorldHeight);
-
-//        //расчитываем размеры фрагмента текстуры в мировой системе координат
-//        tile.setRegionWidth((int)(worldBounds.getWidth() / TILES_X_NUMBER));
-//        tile.setRegionHeight((int)(worldBounds.getHeight() / TILES_Y_NUMBER));
-//
-//        System.out.println("tile width= " + tile.getRegionWidth() + ", height" +
-//                tile.getRegionHeight());
+//        System.out.println("BgGal.resize tiles[0][0]. " +
+//                "getRegionWidth()= " + tiles[0][0].getRegionWidth() +
+//                ", getRegionHeight()= " + tiles[0][0].getRegionHeight());
 
         this.pos.set(worldBounds.pos);
 
@@ -217,8 +159,7 @@ public class BackgroundGalaxy extends Sprite {
                 scale, scale,
                 angle
         );
-        //tiles[0][0].getRegionWidth() / Gdx.graphics.getWidth()
-        //tiles[0][0].getRegionHeight() / Gdx.graphics.getHeight()
+
     }
 
     @Override
@@ -242,17 +183,6 @@ public class BackgroundGalaxy extends Sprite {
             pos.add(jumpV);
         }
 
-//        //если скорость равна нулю и
-//        // если еще не достигли точки назначения
-//        if (!isAboutDestination(restDistance, v)){
-//            //перемещаем объект картинки на один шаг
-//            pos.add(v);
-//            //обновляем остаток пути до точки назначения
-//            restDistance.sub(v);
-//        } else{
-//            //устанавливаем текущую позицию на точку назначения
-//            pos.set(destination);
-//        }
     }
 
 }
