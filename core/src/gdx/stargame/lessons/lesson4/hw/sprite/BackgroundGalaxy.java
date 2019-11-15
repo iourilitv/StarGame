@@ -12,11 +12,11 @@ import gdx.stargame.lessons.lesson4.hw.math.Rect;
 
 public class BackgroundGalaxy extends Sprite {
     //инициализируем константы количества фрагментов по X и Y всего
-    private static final int TILES_X_NUMBER = 1;
+    private static final int TILES_X_NUMBER = 1;//FIXME add condition for X
     private static final int TILES_Y_NUMBER = 3;//16;//32;
     //инициализируем константы количества фрагментов по X и Y в отступе с каждой стороны
     //0, если TILES_X_NUMBER меньше 3
-    private static final int TILES_IN_MARGE_A_SIDE_X = 1;
+    private static final int TILES_IN_MARGE_A_SIDE_X = 0;//1//FIXME add condition for X
     private static final int TILES_IN_MARGE_A_SIDE_Y = 1;
 
 //    //объявляем переменные размеров фрагмента текторы по ширине и высоте
@@ -68,9 +68,9 @@ public class BackgroundGalaxy extends Sprite {
     }
 
     private void init(Vector2 shiftVelocity){
-        //если параметры противоречат друг другу
-        if(TILES_IN_MARGE_A_SIDE_X < 1 ||
-                /*TILES_X_NUMBER < (TILES_IN_MARGE_A_SIDE_X * 2 + 1) ||*/
+        //если параметры противоречат друг другу//FIXME add condition for X
+        if(/*TILES_IN_MARGE_A_SIDE_X < 1 ||
+                TILES_X_NUMBER < (TILES_IN_MARGE_A_SIDE_X * 2 + 1) ||*/
                 TILES_IN_MARGE_A_SIDE_Y < 1 ||
                         TILES_Y_NUMBER < (TILES_IN_MARGE_A_SIDE_Y * 2 + 1)){
             throw new IllegalArgumentException("Wrong connection between " +
@@ -142,6 +142,9 @@ public class BackgroundGalaxy extends Sprite {
         setWidth(tileWorldWidth * TILES_X_NUMBER);
         setHeight(tileWorldHeight * TILES_Y_NUMBER);
 
+
+//        setHeightProportion(1f);
+
 //        System.out.println("BgGal.resize getWidth()= " + getWidth() +
 //                ", getHeight()= " + getHeight());
 
@@ -187,8 +190,8 @@ public class BackgroundGalaxy extends Sprite {
                 //вычисляем переменную шага координаты позиции фрагмента
 //                d = (i - startIndex) % TILES_Y_NUMBER;
 
-                System.out.println("startIndex=" + startIndex + ", i= " + i +
-                    ", d= " + d + ", y=" + (getTop() - tileWorldHeight * d + counterY));
+//                System.out.println("startIndex=" + startIndex + ", i= " + i +
+//                    ", d= " + d + ", y=" + (getTop() - tileWorldHeight * d + counterY));
 
                 batch.draw(
                         //текстура регион фрагмента фона
