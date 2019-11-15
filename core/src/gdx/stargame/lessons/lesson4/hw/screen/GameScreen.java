@@ -37,7 +37,8 @@ public class GameScreen extends BaseScreen {
 //    //инициируем константу скорости для всех звезд
 //    private final Vector2 STAR_VELOCITY = new Vector2(0, -0.001f);
     //инициируем константный вектор скорости сдвига фона
-    private final Vector2 SHIFT_VELOCITY = new Vector2(0, -0.0005f);
+    // (отрицательная - корабль движется вниз или лево)
+    private final Vector2 SHIFT_VELOCITY = new Vector2(0, 0.0005f);//0.0005f
 
     @Override
     public void show() {
