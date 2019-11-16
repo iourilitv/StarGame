@@ -85,6 +85,8 @@ public class GameScreen extends BaseScreen {
             star.resize(worldBounds);
         }
         mainShip.resize(worldBounds);
+
+        //передаем размеры мира в генератор врагов
         shipEmitter.resize(worldBounds);
     }
 
@@ -171,6 +173,9 @@ public class GameScreen extends BaseScreen {
         mainShip.dispose();
         //выгружаем из памяти объект фоновой музыки
         backgroundMusic.dispose();
+
+        //выгружаем из памяти ресурсы генератора врагов
+        shipEmitter.dispose();
         super.dispose();
     }
 }

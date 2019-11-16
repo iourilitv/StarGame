@@ -30,7 +30,7 @@ public class ShipEmitter {
     private BulletPool bulletPool;
 
     //TODO temporarily
-    EnemyShip enemyShip;
+//    EnemyShip enemyShip;
 
 //    Bullet[] bullets;
 
@@ -41,7 +41,11 @@ public class ShipEmitter {
         enemyShipPool = new EnemyShipPool();
         bulletPool = new BulletPool();
 
-        enemyShip = enemyShipPool.newObject(atlas, bulletPool);
+//        enemyShip = enemyShipPool.newObject(atlas, bulletPool);
+
+        enemyShipPool.obtain(atlas, bulletPool);
+
+        System.out.println("enemyShipPool.activeObjects.size()= " + enemyShipPool.activeObjects.size());
 
 //        bullets = new Bullet[200];
 //        for (int i = 0; i < bullets.length; i++) {
@@ -50,15 +54,23 @@ public class ShipEmitter {
     }
 
     public void resize(Rect worldBounds) {
-        enemyShip.resize(worldBounds);
+//        enemyShip.resize(worldBounds);
+        enemyShipPool.resize(worldBounds);
+
+        System.out.println("enemyShipPool.activeObjects.size()= " + enemyShipPool.activeObjects.size());
     }
 
     public void draw(SpriteBatch batch) {
-        enemyShip.draw(batch);
+//        enemyShip.draw(batch);
+        enemyShipPool.drawActiveSprites(batch);
     }
 
     public void update(float delta) {
-        enemyShip.update(delta);
+//        enemyShip.update(delta);
+
+        enemyShipPool.updateActiveSprites(delta);
+
+
 //        for (Bullet o : bullets) {
 //            if (o.active) {
 //                o.update(dt);
@@ -85,6 +97,10 @@ public class ShipEmitter {
         enemyShipPool.freeAllDestroyedActiveSprites();
     }
 
+    public void dispose() {
+        //выгружаем из памяти объект атласа
+        atlas.dispose();
 
+    }
 }
 

@@ -26,8 +26,9 @@ public class EnemyShip extends Sprite {
     private final Vector2 v = new Vector2();
 
     private Rect worldBounds;
-//    private BulletPool bulletPool;
-//    private TextureRegion bulletRegion;
+    private final TextureAtlas atlas = new TextureAtlas("textures/mainAtlas.tpack");
+    private BulletPool bulletPool;
+    private TextureRegion bulletRegion;
 //    //инициируем константу вектора начальной скорости снаряда этого корабля
 //    private final Vector2 bulletV = new Vector2(0, - 0.5f);
 //    //инициируем константу времени между выстрелами(зарядки)
@@ -42,6 +43,7 @@ public class EnemyShip extends Sprite {
 //            Gdx.files.internal(Source.SOUND_ENEMY_L1_SHOOT.sourceName()));
 //    //объявляем переменную для объекта текущего типа звука выстрела
 //    private Sound currentShotSound;
+
 
     public EnemyShip(TextureAtlas atlas, BulletPool bulletPool) {
         //передаем в конструктор родителя текстуру-регион, и

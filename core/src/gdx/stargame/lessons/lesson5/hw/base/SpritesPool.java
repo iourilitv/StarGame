@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.ArrayList;
 import java.util.List;
 
+import gdx.stargame.lessons.lesson5.hw.math.Rect;
+
 /**
  * Абстрактный класс пулов для организации повторного использования созданных спрайтов.
  * @param <T>
@@ -85,6 +87,17 @@ public abstract class SpritesPool<T extends Sprite> {
                 //TODO temporarily
 //                System.out.println("active/free : " + activeObjects.size() + "/" + freeObjects.size());
             }
+        }
+    }
+
+    /**
+     * Метод установки размера корабля при каждом изменении размеров игрового поля.
+     * @param worldBounds - прамоугольник игрового мира.
+     */
+    public void resize(Rect worldBounds) {
+        //проходим циклом коллекцию активных объектов игры
+        for (Sprite sprite : activeObjects) {
+            sprite.resize(worldBounds);
         }
     }
 
