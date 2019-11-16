@@ -43,8 +43,8 @@ public class MainShip extends Sprite {
             Gdx.files.internal(Source.SOUND_MAIN_SHIP_B1_SHOOT.sourceName()));
     private final Sound laserShot = Gdx.audio.newSound(
             Gdx.files.internal(Source.SOUND_MAIN_SHIP_L1_SHOOT.sourceName()));
-    //устанавливаем текущим звуком выстрела выстрел снарядом
-    private Sound currentShotSound = bulletShot;
+    //объявляем переменную для объекта текущего типа звука выстрела
+    private Sound currentShotSound;
 
     public MainShip(TextureAtlas atlas, BulletPool bulletPool) {
         //передаем в конструктор родителя текстуру-регион, и
@@ -52,6 +52,8 @@ public class MainShip extends Sprite {
         super(atlas.findRegion("main_ship"), 1, 2, 2);
         this.bulletPool = bulletPool;
         bulletRegion = atlas.findRegion("bulletMainShip");
+        //устанавливаем текущим звуком выстрела выстрел снарядом
+        currentShotSound = bulletShot;
     }
 
     /**

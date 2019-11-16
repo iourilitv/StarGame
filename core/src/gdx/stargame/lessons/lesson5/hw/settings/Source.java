@@ -13,7 +13,7 @@ public enum Source {
     GALAXY03_2610X3960("textures/galaxy03-2610x3960.jpg", 2610, 3960),
 
     //ссылка на файл фоновой музыки типа1
-    SOUND_BACKGROUND_MUSIC1("sounds/music.mp3"),
+    MUSIC_BACKGROUND1("sounds/music.mp3"),
     //ссылка на файл звука взрыва типа1
     SOUND_EXPLOSION1("sounds/explosion.wav"),
     //ссылка на файл звука выстрела корабля игрока снарядом типа 1

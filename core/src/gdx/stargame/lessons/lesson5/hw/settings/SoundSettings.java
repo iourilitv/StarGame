@@ -2,7 +2,7 @@ package gdx.stargame.lessons.lesson5.hw.settings;
 
 public enum SoundSettings {
     //общий уровень громкости для всех эффектов
-    SOUND_EFFECTS_LEVEL_MAIN(1f),
+    SOUND_EFFECTS_LEVEL_MAIN(0.05f),
     //общий уровень громкости для всей музыки
     SOUND_MUSIC_LEVEL_MAIN(1f),
     ;
