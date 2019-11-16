@@ -10,8 +10,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import gdx.stargame.lessons.lesson5.hw.base.BaseScreen;
+import gdx.stargame.lessons.lesson5.hw.base.ShipEmitter;
 import gdx.stargame.lessons.lesson5.hw.math.Rect;
 import gdx.stargame.lessons.lesson5.hw.pool.BulletPool;
+import gdx.stargame.lessons.lesson5.hw.pool.EnemyShipPool;
 import gdx.stargame.lessons.lesson5.hw.settings.InputControl;
 import gdx.stargame.lessons.lesson5.hw.settings.SoundSettings;
 import gdx.stargame.lessons.lesson5.hw.settings.Source;
@@ -37,6 +39,9 @@ public class GameScreen extends BaseScreen {
     //объявляем пул для снарядов
     private BulletPool bulletPool;
 
+    //объявляем пул для снарядов
+    private ShipEmitter shipEmitter;
+
     @Override
     public void show() {
         super.show();
@@ -48,8 +53,11 @@ public class GameScreen extends BaseScreen {
             stars[i] = new Star(atlas);
         }
         //инициируем пул для снарядов
-        bulletPool = new BulletPool();
+        bulletPool = new BulletPool();//FIXME rename to bulletMainShip
         mainShip = new MainShip(atlas, bulletPool);
+
+        //инициируем объект генератора генератора вражеских кораблей
+        shipEmitter = new ShipEmitter();//ShipEmitter.getInstance();
 
         //запускаем вопроизведение фоновой музыки
         backgroundMusic.play();
@@ -77,6 +85,7 @@ public class GameScreen extends BaseScreen {
             star.resize(worldBounds);
         }
         mainShip.resize(worldBounds);
+        shipEmitter.resize(worldBounds);
     }
 
     @Override
@@ -124,6 +133,8 @@ public class GameScreen extends BaseScreen {
         mainShip.update(delta);
         //обновляем коллекцию активных объектов на каждом такте отрисовки экрана
         bulletPool.updateActiveSprites(delta);
+
+        shipEmitter.update(delta);
     }
 
     /**
@@ -131,6 +142,9 @@ public class GameScreen extends BaseScreen {
      */
     private void freeAllDestroyed() {
         bulletPool.freeAllDestroyedActiveSprites();
+
+        //освобождаем удаленные корабли противника
+        shipEmitter.freeAllDestroyedActiveSprites();
     }
 
     private void draw() {
@@ -144,6 +158,8 @@ public class GameScreen extends BaseScreen {
         mainShip.draw(batch);
         //отрисовываем пул действующих объектов
         bulletPool.drawActiveSprites(batch);
+
+        shipEmitter.draw(batch);
         batch.end();
     }
 
