@@ -13,6 +13,7 @@ public class Sprite extends Rect {
     protected float scale = 1f;
     protected TextureRegion[] regions;
     protected int frame;
+    //объявляем переменную состояния удаления спрайта
     protected boolean destroyed;
 
     public Sprite() {
@@ -83,10 +84,12 @@ public class Sprite extends Rect {
         this.scale = scale;
     }
 
+    //Метод установки состояния спрайта - уничтожен
     public void destroy() {
         destroyed = true;
     }
 
+    //Метод установки состояния спрайта - действующий
     public void flushDestroy() {
         destroyed = false;
     }

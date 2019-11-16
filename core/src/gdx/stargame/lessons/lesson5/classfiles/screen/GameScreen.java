@@ -25,6 +25,7 @@ public class GameScreen extends BaseScreen {
     private Star[] stars;
     private MainShip mainShip;
 
+    //объявляем пул для снарядов
     private BulletPool bulletPool;
 
     @Override
@@ -37,6 +38,7 @@ public class GameScreen extends BaseScreen {
         for (int i = 0; i < STAR_COUNT; i++) {
             stars[i] = new Star(atlas);
         }
+        //инициируем пул для снарядов
         bulletPool = new BulletPool();
         mainShip = new MainShip(atlas, bulletPool);
     }
@@ -44,6 +46,7 @@ public class GameScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         update(delta);
+        //переносим помеченные на удаление объекты игры из пула активных объектов в пул свободных
         freeAllDestroyed();
         draw();
     }
@@ -93,9 +96,13 @@ public class GameScreen extends BaseScreen {
             star.update(delta);
         }
         mainShip.update(delta);
+        //обновляем коллекцию активных объектов на каждом такте отрисовки экрана
         bulletPool.updateActiveSprites(delta);
     }
 
+    /**
+     * Метод переноса помеченных на удаление объектов игры из пула активных объектов в пул свободных.
+     */
     private void freeAllDestroyed() {
         bulletPool.freeAllDestroyedActiveSprites();
     }
@@ -109,6 +116,7 @@ public class GameScreen extends BaseScreen {
             star.draw(batch);
         }
         mainShip.draw(batch);
+        //отрисовываем пул действующих объектов
         bulletPool.drawActiveSprites(batch);
         batch.end();
     }
