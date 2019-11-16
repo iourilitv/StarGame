@@ -1,6 +1,8 @@
 package gdx.stargame.lessons.lesson5.hw.sprite;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -8,6 +10,8 @@ import com.badlogic.gdx.math.Vector2;
 import gdx.stargame.lessons.lesson5.hw.base.Sprite;
 import gdx.stargame.lessons.lesson5.hw.math.Rect;
 import gdx.stargame.lessons.lesson5.hw.pool.BulletPool;
+import gdx.stargame.lessons.lesson5.hw.settings.SoundSettings;
+import gdx.stargame.lessons.lesson5.hw.settings.Source;
 
 public class MainShip extends Sprite {
 
@@ -33,6 +37,14 @@ public class MainShip extends Sprite {
     private final float reloadInterval = 0.2f;
     //инициируем переменную таймера времени между выстрелами(зарядки)
     private float reloadTimer = 0f;
+
+    //инициируем константы объектов звука выстрела снарядом и лазером
+    private final Sound bulletShot = Gdx.audio.newSound(
+            Gdx.files.internal(Source.SOUND_MAIN_SHIP_B1_SHOOT.sourceName()));
+    private final Sound laserShot = Gdx.audio.newSound(
+            Gdx.files.internal(Source.SOUND_MAIN_SHIP_L1_SHOOT.sourceName()));
+    //устанавливаем текущим звуком выстрела выстрел снарядом
+    private Sound currentShotSound = bulletShot;
 
     public MainShip(TextureAtlas atlas, BulletPool bulletPool) {
         //передаем в конструктор родителя текстуру-регион, и
@@ -109,6 +121,15 @@ public class MainShip extends Sprite {
                 pressedLeft = true;
                 break;
             case Input.Keys.UP:
+
+                //TODO temporarily. Меняем тип звука выстрела с лазера на снаряд
+                // по каждому нажатию клавиши
+                if(currentShotSound == laserShot){
+                    currentShotSound = bulletShot;
+                } else {
+                    currentShotSound = laserShot;
+                }
+
                 shoot();
                 break;
         }
@@ -239,5 +260,29 @@ public class MainShip extends Sprite {
         Bullet bullet = bulletPool.obtain();
         //устанавливаем параметры снаряда
         bullet.set(this, bulletRegion, pos, bulletV, 0.01f, worldBounds, 1);
+
+        //воспроизводим звук выстрела текущим типом звука
+        // с уровнем громкости по значению для всех эффектов
+        //и сохраняет идентификатор для дальнейших изменений с панарамой - по середине
+        long id = currentShotSound.play(SoundSettings.SOUND_EFFECTS_LEVEL_MAIN.getPower());
+
+//        //параметры: volume(громкость, 1f - default); pitch(высота тона, 1f - default) и
+//        //panorama(, ? - default)
+//        bulletShot.play(0.1f, 1f, 0f);
+
+        //увеличивает высоту звука в 2 раза от оригинальной высоты
+//        bulletShot.setPitch(id, 2f);
+
+//        //устанавливает панораму звука(динамик) с определенным ID в с определенной стороны
+//        // - 1f (слева), 0f (по середине), 1f (справа) на полную громкость(1f)
+//        bulletShot.setPan(id, 0f, 1f);
+    }
+
+    /**
+     * Метод выгружает из памяти ресурсы корабля героя
+     */
+    public void dispose(){
+        bulletShot.dispose();
+        laserShot.dispose();
     }
 }

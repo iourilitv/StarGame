@@ -61,13 +61,6 @@ public class GameScreen extends BaseScreen {
     }
 
     @Override
-    public void dispose() {
-        bg.dispose();
-        atlas.dispose();
-        super.dispose();
-    }
-
-    @Override
     public boolean keyDown(int keycode) {
         mainShip.keyDown(keycode);
         return false;
@@ -119,5 +112,14 @@ public class GameScreen extends BaseScreen {
         //отрисовываем пул действующих объектов
         bulletPool.drawActiveSprites(batch);
         batch.end();
+    }
+
+    @Override
+    public void dispose() {
+        bg.dispose();
+        atlas.dispose();
+        //выгружаем из памяти ресурсы главного корабля
+        mainShip.dispose();
+        super.dispose();
     }
 }
