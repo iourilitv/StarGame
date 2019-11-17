@@ -14,10 +14,10 @@ import gdx.stargame.lessons.lesson5.hw.pool.BulletPool;
  */
 public class EnemyShip extends Sprite {
 
-//    private static final float BOTTOM_MARGIN = 0.05f;//константа сдвига начальной позиции
-//    private static final int INVALID_POINTER = -1;//константа несуществующего пальца
-    //инициируем константу вектора начальной скорости корабля
-//    private final Vector2 v0 = new Vector2(0.5f, 0);
+
+    //инициируем константу делителя верхней границы начальной скорости корабля
+    private final int LOW_V0_DENOMINATOR = 5;
+    private final int HIGH_V0_DENOMINATOR = 10;
 
     //принимаем прямоугольник игрового поля
     private Rect worldBounds;
@@ -67,10 +67,6 @@ public class EnemyShip extends Sprite {
 //        //устанавливаем текущим звуком выстрела выстрел снарядом
 //        currentShotSound = bulletShot;
 
-//        //генерируем настройки корабля
-//        generateShipProperties();
-        //устанавливаем текущую скорость по вектору начальной скорости
-//        v.set(v0);
     }
 
     /**
@@ -83,10 +79,7 @@ public class EnemyShip extends Sprite {
         float rndX = Rnd.nextFloat(- worldBounds.getHalfWidth(), worldBounds.getHalfWidth());
 //        float rndY = Rnd.nextFloat(- worldBounds.getHalfHeight(), worldBounds.getHalfHeight());
 
-//        System.out.println("rndX=" + rndX);
-
         //устанавливаем значения зоны действия корабля
-//        coverageArea.setSize(worldBounds.getWidth(), worldBounds.getHeight());
         coverageArea.setSize(worldBounds.getWidth(), worldBounds.getHeight());
         //устанавливаем положение зоны действия по X
         coverageArea.pos.x = rndX;
@@ -95,17 +88,16 @@ public class EnemyShip extends Sprite {
         //все выплывают сверху экрана
         pos0.set(rndX, worldBounds.getTop() + getHeight());
 
-//        System.out.println("pos0=" + pos0);
-
         //генерируем случайные значения знака скорости
         int minus = Rnd.nextFloat(- 1f, 1f) < 0 ? - 1 : 1;
         //генерируем значения модуля начальной скорости по X и Y
-        rndX = Rnd.nextFloat(worldBounds.getHalfWidth() / 10, worldBounds.getHalfWidth() / 5);
-        float rndY = Rnd.nextFloat(worldBounds.getHalfHeight() / 10, worldBounds.getHalfHeight() / 5);
+        rndX = Rnd.nextFloat(worldBounds.getHalfWidth() / HIGH_V0_DENOMINATOR,
+                worldBounds.getHalfWidth() / LOW_V0_DENOMINATOR);
+        float rndY = Rnd.nextFloat(worldBounds.getHalfHeight() / HIGH_V0_DENOMINATOR,
+                worldBounds.getHalfHeight() / LOW_V0_DENOMINATOR);
         //устанавливаем значения вектора начальной скорости корабля
         v0.set(minus * rndX, - rndY);//(0.05f, -0.02f)
 
-//        System.out.println("v0=" + v0);
     }
 
     /**
@@ -138,16 +130,10 @@ public class EnemyShip extends Sprite {
     @Override
     public void resize(Rect worldBounds) {
         this.worldBounds = worldBounds;
-
-//        setHeightProportion(SHIP_HEIGHT);
-//        setTop(worldBounds.getTop()/* + BOTTOM_MARGIN*/);
-        //FIXME генерировать корабль за границами мира и добавить сдвиг по X
-
         //генерируем настройки корабля
         generateShipProperties();
         //устанавливаем параметры корабля
         set(pos0, v0, coverageArea);
-
     }
 
     /**
@@ -170,18 +156,7 @@ public class EnemyShip extends Sprite {
         //обновляем вектор позиции корабля
         //операция одновременного прибавления вектора и умножения на скаляр
         pos.mulAdd(v, delta);
-//        //если корабль вышел за правый край игрового поля
-//        if (getRight() > worldBounds.getRight()) {
-//            //устанавливаем его правый край по краю мира
-//            setRight(worldBounds.getRight());
-//            //меняем направление движения
-//            changeDirectionX();
-//        }
-//        //тоже самое для движение влево
-//        if (getLeft() < worldBounds.getLeft()) {
-//            setLeft(worldBounds.getLeft());
-//            changeDirectionX();
-//        }
+
         //если корабль вышел за правый край своей зоны действия
         if (getRight() > coverageArea.getRight()) {
             //устанавливаем его правый край по краю своей зоны действия
@@ -213,25 +188,6 @@ public class EnemyShip extends Sprite {
         // меняем направление на обратное
         v.x *= - 1;
     }
-
-//    /**
-//     * Метод движения корабля вправо.
-//     */
-//    private void moveRight() {
-////        v.set(v0);
-//        v.rotate(90);
-//    }
-
-//    /**
-//     * Метод движения корабля влево.
-//     * Направление движения корабля меняется на противоположное.
-//     */
-//    private void moveLeft() {
-//        //устанавливаем вектору скорости значение заданной константы скорости и
-//        // меняем направление на обратное
-////        v.set(v0).rotate(180);
-//        v.x *= - 1;
-//    }
 
     /**
      * Метод остановки корабля

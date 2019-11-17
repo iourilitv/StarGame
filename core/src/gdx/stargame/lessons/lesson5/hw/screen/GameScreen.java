@@ -160,7 +160,7 @@ public class GameScreen extends BaseScreen {
         mainShip.draw(batch);
         //отрисовываем пул действующих объектов
         bulletPool.drawActiveSprites(batch);
-
+        //отрисовываем все элементы противника
         shipEmitter.draw(batch);
         batch.end();
     }

@@ -15,7 +15,7 @@ import gdx.stargame.lessons.lesson5.hw.screen.MenuScreen;
  * DONE 1. Разобраться с классами Sound(http://www.libgdx.ru/2013/10/sound-effects.html) и
  * 		Music(http://www.libgdx.ru/2013/10/streaming-music.html) (можно мне вопросы задавать)
  * 		и реализовать фоновую музыку
- * 2. ***Реализовать 1 вид вражеских кораблей, используя пулл спрайтов
+ * DONE 2. ***Реализовать 1 вид вражеских кораблей, используя пулл спрайтов
  * 		(корабль пролетает по экрану и дистроится после вылета за границы экрана)
  */
 public class StarGame extends Game {
