@@ -26,7 +26,13 @@ public class EnemyShip extends Sprite {
     private final Vector2 v = new Vector2();
 
     private Rect worldBounds;
-    private final TextureAtlas atlas = new TextureAtlas("textures/mainAtlas.tpack");
+//    private final TextureAtlas atlas = new TextureAtlas("textures/mainAtlas.tpack");
+
+    //инициируем константу высоты объекта корабля
+    private final float SHIP_HEIGHT = 0.15f;
+    //инициируем константу вектора начальной скорости корабля
+    private final Vector2 v0 = new Vector2(0.05f, -0.02f);
+
     private BulletPool bulletPool;
     private TextureRegion bulletRegion;
 //    //инициируем константу вектора начальной скорости снаряда этого корабля
@@ -49,6 +55,8 @@ public class EnemyShip extends Sprite {
         //передаем в конструктор родителя текстуру-регион, и
         // параметры нарезки(количества): строк, колонок и фрагментов
         super(atlas.findRegion("enemy0"), 1, 2, 2);
+        //устанавливаем текущую скорость по вектору начальной скорости
+        v.set(v0);
 
 //        this.bulletPool = bulletPool;
 //        bulletRegion = atlas.findRegion("bulletMainShip");
@@ -64,8 +72,11 @@ public class EnemyShip extends Sprite {
     public void resize(Rect worldBounds) {
         this.worldBounds = worldBounds;
 
-        setHeightProportion(0.15f);
+        setHeightProportion(SHIP_HEIGHT);
         setTop(worldBounds.getTop()/* + BOTTOM_MARGIN*/);
+
+        //TODO temporarily
+//        System.out.println("EnemyShip.resize this=" + this);
     }
 
     /**
@@ -87,38 +98,63 @@ public class EnemyShip extends Sprite {
         //***движение корабля***
         //обновляем вектор позиции корабля
         //операция одновременного прибавления вектора и умножения на скаляр
-//        pos.mulAdd(v, delta);
+        pos.mulAdd(v, delta);
 
-//        //если корабль вышел за правый край игрового поля
-//        if (getRight() > worldBounds.getRight()) {
-//            //устанавливаем его правый край по краю мира
-//            setRight(worldBounds.getRight());
+        //TODO temporarily
+//        System.out.println("EnemyShip.update this= " + this);
+
+        //если корабль вышел за правый край игрового поля
+        if (getRight() > worldBounds.getRight()) {
+            //устанавливаем его правый край по краю мира
+            setRight(worldBounds.getRight());
+            //меняем направление движения
+            changeDirectionX();
+//            moveLeft();
+//            v.rotate(-90);
 //            //останавливаем движение корабля
 //            stop();
-//        }
-//        //тоже самое для двидение влево
-//        if (getLeft() < worldBounds.getLeft()) {
-//            setLeft(worldBounds.getLeft());
+        }
+        //тоже самое для двидение влево
+        if (getLeft() < worldBounds.getLeft()) {
+            setLeft(worldBounds.getLeft());
+            changeDirectionX();
+//            moveRight();
+//            v.rotate(90);
 //            stop();
-//        }
+        }
+        //если корабль вышел за нижнюю границу
+//        if(getTop() < worldBounds.getBottom()){
+        if(getBottom() < worldBounds.getBottom()){
+            //удаляем корабль
+            destroy();
+        }
     }
 
-    /**
-     * Метод движения корабля вправо.
-     */
-    private void moveRight() {
-//        v.set(v0);
-    }
-
-    /**
-     * Метод движения корабля влево.
-     * Направление движения корабля меняется на противоположное.
-     */
-    private void moveLeft() {
+    private void changeDirectionX() {
         //устанавливаем вектору скорости значение заданной константы скорости и
         // меняем направление на обратное
 //        v.set(v0).rotate(180);
+        v.x *= - 1;
     }
+
+//    /**
+//     * Метод движения корабля вправо.
+//     */
+//    private void moveRight() {
+////        v.set(v0);
+//        v.rotate(90);
+//    }
+
+//    /**
+//     * Метод движения корабля влево.
+//     * Направление движения корабля меняется на противоположное.
+//     */
+//    private void moveLeft() {
+//        //устанавливаем вектору скорости значение заданной константы скорости и
+//        // меняем направление на обратное
+////        v.set(v0).rotate(180);
+//        v.x *= - 1;
+//    }
 
     /**
      * Метод остановки корабля

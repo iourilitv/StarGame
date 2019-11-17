@@ -44,7 +44,7 @@ public class EnemyShipPool extends SpritesPool<EnemyShip> {
         activeObjects.add(object);
 
         //TODO temporarily
-//        System.out.println("active/free : " + activeObjects.size() + "/" + freeObjects.size());
+        System.out.println("EnemyShipPool obtain. active/free : " + activeObjects.size() + "/" + freeObjects.size());
 
         return object;
     }

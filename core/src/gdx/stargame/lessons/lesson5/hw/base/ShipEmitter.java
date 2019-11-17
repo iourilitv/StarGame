@@ -15,11 +15,14 @@ import gdx.stargame.lessons.lesson5.hw.sprite.EnemyShip;
  * Класс ShipEmitter занимается управлением кораблями и является синглтоном.
  */
 public class ShipEmitter {
-//    private static final ShipEmitter ourInstance = new ShipEmitter();
 
-//    public static ShipEmitter getInstance() {
-//        return ourInstance;
-//    }
+    private Rect worldBounds;
+
+    //инициируем константу времени между выстрелами(зарядки)
+    private final float RELOAD_SHIP_INTERVAL = 0.2f;
+    //инициируем переменную таймера времени между выстрелами(зарядки)
+    private float reloadShipTimer = 0f;
+
     //bulletEnemy
     private TextureAtlas atlas;
 
@@ -43,9 +46,14 @@ public class ShipEmitter {
 
 //        enemyShip = enemyShipPool.newObject(atlas, bulletPool);
 
-        enemyShipPool.obtain(atlas, bulletPool);
+//        enemyShipPool.obtain(atlas, bulletPool);
+//
+//        //TODO temporarily
+//        System.out.println("ShipEmitter.Constructor enemyShipPool=" + enemyShipPool +
+//                ", enemyShipPool.activeObjects.size()= " + enemyShipPool.activeObjects.size());
 
-        System.out.println("enemyShipPool.activeObjects.size()= " + enemyShipPool.activeObjects.size());
+//
+//        System.out.println("enemyShipPool.activeObjects.size()= " + enemyShipPool.activeObjects.size());
 
 //        bullets = new Bullet[200];
 //        for (int i = 0; i < bullets.length; i++) {
@@ -55,9 +63,15 @@ public class ShipEmitter {
 
     public void resize(Rect worldBounds) {
 //        enemyShip.resize(worldBounds);
+
+        this.worldBounds = worldBounds;
+
         enemyShipPool.resize(worldBounds);
 
-        System.out.println("enemyShipPool.activeObjects.size()= " + enemyShipPool.activeObjects.size());
+        //TODO temporarily
+        System.out.println("ShipEmitter.resize enemyShipPool=" + enemyShipPool +
+                ", enemyShipPool.activeObjects.size()= " + enemyShipPool.activeObjects.size());
+
     }
 
     public void draw(SpriteBatch batch) {
@@ -70,12 +84,32 @@ public class ShipEmitter {
 
         enemyShipPool.updateActiveSprites(delta);
 
+        //
+        obtainShips(delta);
 
-//        for (Bullet o : bullets) {
-//            if (o.active) {
-//                o.update(dt);
-//            }
-//        }
+    }
+
+    /**
+     * Метод вызова автоматического вызова кораблей
+     * @param delta - период времени между кадрами
+     */
+    private void obtainShips(float delta) {
+        //***автоматический вызов корабля***
+        //инкрементируем переменную таймера вызова
+        reloadShipTimer += delta;
+        //если значение таймера превысило значение установленной константы
+        if (reloadShipTimer > RELOAD_SHIP_INTERVAL) {
+            //обнуляем таймер
+            reloadShipTimer = 0f;
+            //вызываем корабль
+            EnemyShip enemyShip = enemyShipPool.obtain(atlas, bulletPool);
+            enemyShip.resize(worldBounds);
+        }
+
+        //TODO temporarily
+//        System.out.println("ShipEmitter.obtainShip enemyShipPool=" + enemyShipPool +
+//                ", enemyShipPool.activeObjects.size()= " + enemyShipPool.activeObjects.size());
+
     }
 
 //    public void render(SpriteBatch batch) {
