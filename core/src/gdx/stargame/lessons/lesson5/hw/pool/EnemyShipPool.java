@@ -8,7 +8,7 @@ import gdx.stargame.lessons.lesson5.hw.sprite.Bullet;
 import gdx.stargame.lessons.lesson5.hw.sprite.EnemyShip;
 
 /**
- * Класс пула для снарядов.
+ * Класс пула для вражеских кораблей.
  */
 public class EnemyShipPool extends SpritesPool<EnemyShip> {
 
@@ -19,12 +19,6 @@ public class EnemyShipPool extends SpritesPool<EnemyShip> {
     protected EnemyShip newObject() {
         return new EnemyShip(atlas, bulletPool);
     }
-
-//    @Override
-//    public EnemyShip newObject(TextureAtlas atlas, BulletPool bulletPool) {
-//
-//        return new EnemyShip(atlas, bulletPool);
-//    }
 
     /**
      * Метод вызова объекта игры из пула, если есть свободный объект, или создания нового,

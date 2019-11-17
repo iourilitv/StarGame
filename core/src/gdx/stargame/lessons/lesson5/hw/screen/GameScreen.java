@@ -1,7 +1,6 @@
 package gdx.stargame.lessons.lesson5.hw.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,7 +12,6 @@ import gdx.stargame.lessons.lesson5.hw.base.BaseScreen;
 import gdx.stargame.lessons.lesson5.hw.base.ShipEmitter;
 import gdx.stargame.lessons.lesson5.hw.math.Rect;
 import gdx.stargame.lessons.lesson5.hw.pool.BulletPool;
-import gdx.stargame.lessons.lesson5.hw.pool.EnemyShipPool;
 import gdx.stargame.lessons.lesson5.hw.settings.InputControl;
 import gdx.stargame.lessons.lesson5.hw.settings.SoundSettings;
 import gdx.stargame.lessons.lesson5.hw.settings.Source;
@@ -135,7 +133,7 @@ public class GameScreen extends BaseScreen {
         mainShip.update(delta);
         //обновляем коллекцию активных объектов на каждом такте отрисовки экрана
         bulletPool.updateActiveSprites(delta);
-
+        //обновляем объекты противника
         shipEmitter.update(delta);
     }
 
