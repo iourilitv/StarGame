@@ -15,27 +15,21 @@ import gdx.stargame.lessons.lesson5.hw.sprite.EnemyShip;
  * Класс ShipEmitter занимается управлением кораблями и является синглтоном.
  */
 public class ShipEmitter {
-
+    //принимаем границы игрового мира
     private Rect worldBounds;
-
     //инициируем константу времени между выстрелами(зарядки)
     private final float RELOAD_SHIP_INTERVAL = 0.2f;
     //инициируем переменную таймера времени между выстрелами(зарядки)
     private float reloadShipTimer = 0f;
+    //инициируем констанму максимального количества кораблей на игровом поле
+    private final int MAX_SHIP_COUNT_ON_SCREEN = 2;
 
-    //bulletEnemy
+    //объявляем переменную атласа
     private TextureAtlas atlas;
-
-    //объявляем пул для снарядов
+    //объявляем пул для кораблей
     private EnemyShipPool enemyShipPool;
-
-//    //объявляем пул для снарядов
-    private BulletPool bulletPool;
-
-    //TODO temporarily
-//    EnemyShip enemyShip;
-
-//    Bullet[] bullets;
+    //объявляем пул для снарядов
+    private BulletPool bulletPool;//FIXME     //bulletEnemy
 
     public ShipEmitter() {
         //создаем объект атласа
@@ -43,50 +37,25 @@ public class ShipEmitter {
         //создаем объект пула для вражеских кораблей
         enemyShipPool = new EnemyShipPool();
         bulletPool = new BulletPool();
-
-//        enemyShip = enemyShipPool.newObject(atlas, bulletPool);
-
-//        enemyShipPool.obtain(atlas, bulletPool);
-//
-//        //TODO temporarily
-//        System.out.println("ShipEmitter.Constructor enemyShipPool=" + enemyShipPool +
-//                ", enemyShipPool.activeObjects.size()= " + enemyShipPool.activeObjects.size());
-
-//
-//        System.out.println("enemyShipPool.activeObjects.size()= " + enemyShipPool.activeObjects.size());
-
-//        bullets = new Bullet[200];
-//        for (int i = 0; i < bullets.length; i++) {
-//            bullets[i] = new Bullet();
-//        }
     }
 
     public void resize(Rect worldBounds) {
-//        enemyShip.resize(worldBounds);
-
+        //принимаем границы игрового мира
         this.worldBounds = worldBounds;
-
+        //устанавливаем размеры кораблей
         enemyShipPool.resize(worldBounds);
-
-        //TODO temporarily
-        System.out.println("ShipEmitter.resize enemyShipPool=" + enemyShipPool +
-                ", enemyShipPool.activeObjects.size()= " + enemyShipPool.activeObjects.size());
-
     }
 
     public void draw(SpriteBatch batch) {
-//        enemyShip.draw(batch);
+        //прорисовываем корабли
         enemyShipPool.drawActiveSprites(batch);
     }
 
     public void update(float delta) {
-//        enemyShip.update(delta);
-
+        //обновляем корабли
         enemyShipPool.updateActiveSprites(delta);
-
-        //
+        //вызываем корабли
         obtainShips(delta);
-
     }
 
     /**
@@ -101,24 +70,23 @@ public class ShipEmitter {
         if (reloadShipTimer > RELOAD_SHIP_INTERVAL) {
             //обнуляем таймер
             reloadShipTimer = 0f;
-            //вызываем корабль
-            EnemyShip enemyShip = enemyShipPool.obtain(atlas, bulletPool);
-            enemyShip.resize(worldBounds);
+
+            //если на поле кораблей меньше максимального
+            if(!isMaximumShips()) {
+                //вызываем корабль
+                EnemyShip enemyShip = enemyShipPool.obtain(atlas, bulletPool);
+                enemyShip.resize(worldBounds);
+            }
         }
-
-        //TODO temporarily
-//        System.out.println("ShipEmitter.obtainShip enemyShipPool=" + enemyShipPool +
-//                ", enemyShipPool.activeObjects.size()= " + enemyShipPool.activeObjects.size());
-
     }
 
-//    public void render(SpriteBatch batch) {
-////        for (Bullet o : bullets) {
-////            if (o.active) {
-////                batch.draw(texture, o.position.x - 16, o.position.y - 16);
-////            }
-////        }
-//    }
+    /**
+     * МЕтод проверки не находится ли на поле кораблей больше или равно заданного максимума.
+     * @return - true - количество кораблей на поле не меньше разрешенного максимума
+     */
+    private boolean isMaximumShips() {
+        return enemyShipPool.activeObjects.size() >= MAX_SHIP_COUNT_ON_SCREEN;
+    }
 
     /**
      * Метод переноса помеченных на удаление объектов игры из пула активных объектов в пул свободных.
