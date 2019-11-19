@@ -89,7 +89,7 @@ public class EnemyEmitter {
                         SMALL_HEIGHT,
                         SMALL_HP
                 );
-                //устанавливаем параметры начальные параметры маленького корабля
+                //устанавливаем начальные параметры маленького корабля
                 enemy.setBeginningMode(SMALL_BEGINNING_MODE_VY_VALUE);
             //генерируем средние корабли с вероятностью 30%
             } else if (type < 0.8f) {
@@ -105,7 +105,7 @@ public class EnemyEmitter {
                         MIDDLE_HEIGHT,
                         MIDDLE_HP
                 );
-                //устанавливаем параметры начальные параметры среднего корабля
+                //устанавливаем начальные параметры среднего корабля
                 enemy.setBeginningMode(MIDDLE_BEGINNING_MODE_VY_VALUE);
             //генерируем большие корабли с вероятностью 20%
             } else {
@@ -121,7 +121,7 @@ public class EnemyEmitter {
                         BIG_HEIGHT,
                         BIG_HP
                 );
-                //устанавливаем параметры начальные параметры большего корабля
+                //устанавливаем начальные параметры большего корабля
                 enemy.setBeginningMode(BIG_BEGINNING_MODE_VY_VALUE);
             }
             enemy.pos.x = Rnd.nextFloat(worldBounds.getLeft() + enemy.getHalfWidth(),

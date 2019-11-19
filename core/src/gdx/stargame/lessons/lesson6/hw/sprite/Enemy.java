@@ -40,12 +40,8 @@ public class Enemy extends Ship {
             }
         //если корабль уже не в начальном режиме
         } else {
-//
-//            System.out.println("Enemy.update.else(operationMode == BEGINNING_MODE) damage= "
-//                    + damage + " reloadTimer= " + reloadTimer + " , reloadInterval= " + reloadInterval);
-
             //начинаем стрельбу сразу после активации
-            if (reloadTimer == 0f || reloadTimer >= reloadInterval) {
+            if (reloadTimer >= reloadInterval) {
                 reloadTimer = 0f;
                 shoot();
             }
