@@ -31,6 +31,9 @@ public class GameScreen extends BaseScreen {
     //работает подобно хэш-таблице Map
 //    private final Preferences prefs = Gdx.app.getPreferences("GameScreen_Preferences");
 
+    //объявляем переменную для хранения статуса пауза игры
+    private boolean isGamePaused;
+
     private Prefs conditions = new Prefs();
 
     private static final int STAR_COUNT = 64;
@@ -192,14 +195,17 @@ public class GameScreen extends BaseScreen {
     }
 
     private void update(float delta) {
-        for (Star star : stars) {
-            star.update(delta);
+        //если игра не на паузе, обновляем
+        if(!isGamePaused) {
+            for (Star star : stars) {
+                star.update(delta);
+            }
+            mainShip.update(delta);
+            //обновляем коллекцию активных объектов на каждом такте отрисовки экрана
+            bulletPool.updateActiveSprites(delta);
+            //обновляем объекты противника
+            shipEmitter.update(delta);
         }
-        mainShip.update(delta);
-        //обновляем коллекцию активных объектов на каждом такте отрисовки экрана
-        bulletPool.updateActiveSprites(delta);
-        //обновляем объекты противника
-        shipEmitter.update(delta);
     }
 
     /**
@@ -245,18 +251,20 @@ public class GameScreen extends BaseScreen {
     @Override
     public void pause() {
 //        super.pause();
+////        shipEmitter.pause();
+////        mainShip.pause();
+//        conditions.saveScreenCondition(this);
 
+        isGamePaused = true;
         backgroundMusic.pause();
-//        shipEmitter.pause();
-//        mainShip.pause();
-        conditions.saveScreenCondition(this);
     }
 
     @Override
     public void resume() {
 //        super.resume();
+//        restoreCondition((Map<String, Float>) conditions.getPrefs().get());
+        isGamePaused = false;
         backgroundMusic.play();
-        restoreCondition((Map<String, Float>) conditions.getPrefs().get());
     }
 
     @Override
