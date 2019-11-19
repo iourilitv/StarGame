@@ -23,7 +23,7 @@ public class EnemyEmitter {
     private static float SMALL_BEGINNING_MODE_VY_VALUE = -0.5f;
     //объявляем константы параметров звука маленького корабля
     private static final float SMALL_SOUND_VOLUME = 0.2f;//уровень громкости звука
-    private static final float SMALL_SOUND_PITCH = 0.5f;//уровень тона звука
+    private static final float SMALL_SOUND_PITCH = 2;//уровень тона звука
 
     //инициируем константы для среднего корабля
     private static final float MIDDLE_BULLET_HEIGHT = 0.02f;
@@ -101,7 +101,7 @@ public class EnemyEmitter {
                 //устанавливаем начальные параметры маленького корабля
                 enemy.setBeginningMode(SMALL_BEGINNING_MODE_VY_VALUE);
                 //устанавливаем параметры звука выстрелов маленького корабля
-                enemy.setSound(SMALL_SOUND_VOLUME, SMALL_SOUND_PITCH, 0f);
+                enemy.setSound(SMALL_SOUND_VOLUME, SMALL_SOUND_PITCH);
             //генерируем средние корабли с вероятностью 30%
             } else if (type < 0.8f) {
                 enemy.set(
@@ -119,7 +119,7 @@ public class EnemyEmitter {
                 //устанавливаем начальные параметры среднего корабля
                 enemy.setBeginningMode(MIDDLE_BEGINNING_MODE_VY_VALUE);
                 //устанавливаем параметры звука выстрелов среднего корабля
-                enemy.setSound(MIDDLE_SOUND_VOLUME, MIDDLE_SOUND_PITCH, 0f);
+                enemy.setSound(MIDDLE_SOUND_VOLUME, MIDDLE_SOUND_PITCH);
             //генерируем большие корабли с вероятностью 20%
             } else {
                 enemy.set(
@@ -137,7 +137,7 @@ public class EnemyEmitter {
                 //устанавливаем начальные параметры большого корабля
                 enemy.setBeginningMode(BIG_BEGINNING_MODE_VY_VALUE);
                 //устанавливаем параметры звука выстрелов большого корабля
-                enemy.setSound(BIG_SOUND_VOLUME, BIG_SOUND_PITCH, 0f);
+                enemy.setSound(BIG_SOUND_VOLUME, BIG_SOUND_PITCH);
             }
             enemy.pos.x = Rnd.nextFloat(worldBounds.getLeft() + enemy.getHalfWidth(),
                     worldBounds.getRight() - enemy.getHalfWidth());

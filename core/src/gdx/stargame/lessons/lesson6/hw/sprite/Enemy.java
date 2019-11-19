@@ -19,10 +19,6 @@ public class Enemy extends Ship {
 
     //объявляем переменную режима работы корабля
     private int operationMode;
-    //объявляем переменные параметров звука
-    private float soundVolume;//уровень громкости звука
-    private float soundPitch;//уровень тона звука
-    private float soundPan;//расположение и размер сдвига источника звука(-1 слева, 1 справа, 0 по центру)
 
     public Enemy(BulletPool bulletPool, Rect worldBounds) {
         this.bulletPool = bulletPool;
@@ -83,14 +79,17 @@ public class Enemy extends Ship {
         this.hp = hp;
     }
 
+    /**
+     * Метод настройки параметров звука корабля
+     * @param soundVolume - уровень громкости звука
+     * @param soundPitch - уровень тона звука
+     */
     public void setSound(
             float soundVolume,
-            float soundPitch,
-            float soundPan
+            float soundPitch
     ) {
         this.soundVolume = soundVolume;
         this.soundPitch = soundPitch;
-        this.soundPan = soundPan;
     }
 
     /**
@@ -107,12 +106,4 @@ public class Enemy extends Ship {
         reloadTimer = reloadInterval;
     }
 
-    @Override
-    protected void shoot() {
-        //воспроизводим звук выстрела по заданным параметрам
-        sound.play(soundVolume, soundPitch, soundPan);
-
-        Bullet bullet = bulletPool.obtain();
-        bullet.set(this, bulletRegion, pos, bulletV, bulletHeight, worldBounds, damage);
-    }
 }
