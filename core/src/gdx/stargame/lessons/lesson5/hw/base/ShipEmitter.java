@@ -104,5 +104,13 @@ public class ShipEmitter {
         atlas.dispose();
 
     }
+
+
+    /**
+     * Метод обработки паузы игры
+     */
+    public void pause(){
+
+    }
 }
 

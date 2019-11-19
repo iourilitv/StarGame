@@ -8,6 +8,10 @@ import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 import gdx.stargame.lessons.lesson5.hw.math.MatrixUtils;
 import gdx.stargame.lessons.lesson5.hw.math.Rect;
 
@@ -66,12 +70,12 @@ public class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public void pause() {
-        System.out.println("pause");
+        System.out.println("BaseScreen pause");
     }
 
     @Override
     public void resume() {
-        System.out.println("resume");
+        System.out.println("BaseScreen resume");
     }
 
     @Override
@@ -152,5 +156,19 @@ public class BaseScreen implements Screen, InputProcessor {
     public boolean scrolled(int amount) {
         System.out.println("scrolled amount = " + amount);
         return false;
+    }
+
+    public Map saveCondition(){
+        Map map = new HashMap();
+//        map.put(v);
+
+//        System.out.println("this.getClass().getDeclaredFields().toString()= " +
+//                Arrays.deepToString(this.getClass().getDeclaredFields()));
+
+//        for (int i = 0; i < ; i++) {
+//
+//        }
+
+        return map;
     }
 }

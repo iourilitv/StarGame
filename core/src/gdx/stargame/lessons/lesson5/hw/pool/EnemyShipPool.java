@@ -43,4 +43,12 @@ public class EnemyShipPool extends SpritesPool<EnemyShip> {
         return object;
     }
 
+    /**
+     * Метод обработки паузы игры
+     */
+    @Override
+    public void pause(){
+
+    }
+
 }
