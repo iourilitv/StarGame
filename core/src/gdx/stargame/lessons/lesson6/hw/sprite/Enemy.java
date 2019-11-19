@@ -16,9 +16,6 @@ public class Enemy extends Ship {
     private static final int ACTIVE_MODE = 1;
     //режим когда корабль уже начал действовать
     private static final int DAMAGED_MODE = 2;//FIXME. Это на будущее. К нему добавить степень повреждения.
-//
-//    //инициируем константу ускорения в начале(BEGINNING_MODE)
-//    private static float BEGINNING_MODE_VY_VALUE = -0.2f;
 
     //объявляем переменную режима работы корабля
     private int operationMode;
@@ -26,10 +23,6 @@ public class Enemy extends Ship {
     public Enemy(BulletPool bulletPool, Rect worldBounds) {
         this.bulletPool = bulletPool;
         this.worldBounds = worldBounds;
-
-        //устанавливаем переменную режима работы на начальный режим
-        operationMode = BEGINNING_MODE;
-//        this.v.set(v0);
     }
 
     @Override
@@ -37,10 +30,6 @@ public class Enemy extends Ship {
         super.update(delta);
         //если включен начальный режим
         if(operationMode == BEGINNING_MODE){
-
-//            //ускоряем корабль пока он выплывает из-за экрана в начале
-//            v.y = BEGINNING_MODE_VY_VALUE;
-
             //если корабль уже наполовину показался из-за экрана
             if(pos.y < worldBounds.getTop()){
                 //устанавливаем его скорость по заданной начальной скорости
@@ -82,12 +71,6 @@ public class Enemy extends Ship {
         this.sound = sound;
         setHeightProportion(height);
         this.hp = hp;
-
-//        //ускоряем корабль пока он выплывает из-за экрана в начале
-//        this.v.y = BEGINNING_MODE_VY_VALUE;
-
-        System.out.println("Enemy.set damage= " + damage + " v= " + v);
-
     }
 
     /**
