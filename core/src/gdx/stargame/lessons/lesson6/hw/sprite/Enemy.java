@@ -19,6 +19,10 @@ public class Enemy extends Ship {
 
     //объявляем переменную режима работы корабля
     private int operationMode;
+    //объявляем переменные параметров звука
+    private float soundVolume;//уровень громкости звука
+    private float soundPitch;//уровень тона звука
+    private float soundPan;//расположение и размер сдвига источника звука(-1 слева, 1 справа, 0 по центру)
 
     public Enemy(BulletPool bulletPool, Rect worldBounds) {
         this.bulletPool = bulletPool;
@@ -79,6 +83,16 @@ public class Enemy extends Ship {
         this.hp = hp;
     }
 
+    public void setSound(
+            float soundVolume,
+            float soundPitch,
+            float soundPan
+    ) {
+        this.soundVolume = soundVolume;
+        this.soundPitch = soundPitch;
+        this.soundPan = soundPan;
+    }
+
     /**
      * Метод установки параметров для начального режима
      * @param vYBeg - скорость выплывания корабля из-за экрана в начале
@@ -91,5 +105,14 @@ public class Enemy extends Ship {
         //устанавливаем таймер выстрелов на начальную позицию
         // нужно чтобы стрельба началась сразу после окончания начального режима корабля
         reloadTimer = reloadInterval;
+    }
+
+    @Override
+    protected void shoot() {
+        //воспроизводим звук выстрела по заданным параметрам
+        sound.play(soundVolume, soundPitch, soundPan);
+
+        Bullet bullet = bulletPool.obtain();
+        bullet.set(this, bulletRegion, pos, bulletV, bulletHeight, worldBounds, damage);
     }
 }
