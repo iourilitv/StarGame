@@ -27,7 +27,8 @@ public class Enemy extends Ship {
 
     @Override
     public void update(float delta) {
-        super.update(delta);
+        //корабль начинает движение сразу после вызова
+        pos.mulAdd(v, delta);
         //если включен начальный режим
         if(operationMode == BEGINNING_MODE){
             //если корабль уже наполовину показался из-за экрана
@@ -36,10 +37,19 @@ public class Enemy extends Ship {
                 v.set(v0);
                 //переводим корабль в активный режим
                 operationMode = ACTIVE_MODE;
-
-                System.out.println("Enemy.update.if(operationMode == BEGINNING_MODE) damage= "
-                        + damage + " v= " + v);
             }
+        //если корабль уже не в начальном режиме
+        } else {
+//
+//            System.out.println("Enemy.update.else(operationMode == BEGINNING_MODE) damage= "
+//                    + damage + " reloadTimer= " + reloadTimer + " , reloadInterval= " + reloadInterval);
+
+            //начинаем стрельбу сразу после активации
+            if (reloadTimer == 0f || reloadTimer >= reloadInterval) {
+                reloadTimer = 0f;
+                shoot();
+            }
+            reloadTimer += delta;
         }
 
         //если корабль полностью вышел за нижний край поля
@@ -82,5 +92,8 @@ public class Enemy extends Ship {
         operationMode = BEGINNING_MODE;
         //ускоряем корабль пока он выплывает из-за экрана в начале
         v.y = vYBeg;
+        //устанавливаем таймер выстрелов на начальную позицию
+        // нужно чтобы стрельба началась сразу после окончания начального режима корабля
+        reloadTimer = reloadInterval;
     }
 }
