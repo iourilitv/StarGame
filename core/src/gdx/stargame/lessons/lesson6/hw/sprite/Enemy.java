@@ -9,17 +9,53 @@ import gdx.stargame.lessons.lesson6.hw.math.Rect;
 import gdx.stargame.lessons.lesson6.hw.pool.BulletPool;
 
 public class Enemy extends Ship {
+    //***инициируем константы режима работы корабля***
+    //режим когда корабль уже инициирован, но не начал действовать(не стреляет и за полем)
+    private static final int BEGINNING_MODE = 0;
+    //режим когда корабль уже начал действовать
+    private static final int ACTIVE_MODE = 1;
+    //режим когда корабль уже начал действовать
+    private static final int DAMAGED_MODE = 2;//FIXME. Это на будущее. К нему добавить степень повреждения.
+//
+//    //инициируем константу ускорения в начале(BEGINNING_MODE)
+//    private static float BEGINNING_MODE_VY_VALUE = -0.2f;
+
+    //объявляем переменную режима работы корабля
+    private int operationMode;
 
     public Enemy(BulletPool bulletPool, Rect worldBounds) {
         this.bulletPool = bulletPool;
         this.worldBounds = worldBounds;
-        this.v.set(v0);
+
+        //устанавливаем переменную режима работы на начальный режим
+        operationMode = BEGINNING_MODE;
+//        this.v.set(v0);
     }
 
     @Override
     public void update(float delta) {
         super.update(delta);
-        if (getBottom() < worldBounds.getBottom()) {
+        //если включен начальный режим
+        if(operationMode == BEGINNING_MODE){
+
+//            //ускоряем корабль пока он выплывает из-за экрана в начале
+//            v.y = BEGINNING_MODE_VY_VALUE;
+
+            //если корабль уже наполовину показался из-за экрана
+            if(pos.y < worldBounds.getTop()){
+                //устанавливаем его скорость по заданной начальной скорости
+                v.set(v0);
+                //переводим корабль в активный режим
+                operationMode = ACTIVE_MODE;
+
+                System.out.println("Enemy.update.if(operationMode == BEGINNING_MODE) damage= "
+                        + damage + " v= " + v);
+            }
+        }
+
+        //если корабль полностью вышел за нижний край поля
+        if (getTop() < worldBounds.getBottom()) {
+            //удаляем корабль
             destroy();
         }
     }
@@ -46,6 +82,22 @@ public class Enemy extends Ship {
         this.sound = sound;
         setHeightProportion(height);
         this.hp = hp;
-        this.v.set(v0);
+
+//        //ускоряем корабль пока он выплывает из-за экрана в начале
+//        this.v.y = BEGINNING_MODE_VY_VALUE;
+
+        System.out.println("Enemy.set damage= " + damage + " v= " + v);
+
+    }
+
+    /**
+     * Метод установки параметров для начального режима
+     * @param vYBeg - скорость выплывания корабля из-за экрана в начале
+     */
+    public void setBeginningMode(float vYBeg){
+        //переводим корабль в начальный режим
+        operationMode = BEGINNING_MODE;
+        //ускоряем корабль пока он выплывает из-за экрана в начале
+        v.y = vYBeg;
     }
 }
