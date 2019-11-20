@@ -157,18 +157,4 @@ public class BaseScreen implements Screen, InputProcessor {
         System.out.println("scrolled amount = " + amount);
         return false;
     }
-
-    public Map saveCondition(){
-        Map map = new HashMap();
-//        map.put(v);
-
-//        System.out.println("this.getClass().getDeclaredFields().toString()= " +
-//                Arrays.deepToString(this.getClass().getDeclaredFields()));
-
-//        for (int i = 0; i < ; i++) {
-//
-//        }
-
-        return map;
-    }
 }

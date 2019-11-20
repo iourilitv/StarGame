@@ -1,15 +1,13 @@
 package gdx.stargame.lessons.lesson5.hw.base;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
-import gdx.stargame.lessons.lesson3.classbook.Bullet;
 import gdx.stargame.lessons.lesson5.hw.math.Rect;
 import gdx.stargame.lessons.lesson5.hw.pool.BulletPool;
 import gdx.stargame.lessons.lesson5.hw.pool.EnemyShipPool;
-import gdx.stargame.lessons.lesson5.hw.settings.Source;
 import gdx.stargame.lessons.lesson5.hw.sprite.EnemyShip;
+import gdx.stargame.lessons.lesson5.hw.utils.Saver;
 
 /**
  * Класс ShipEmitter занимается управлением кораблями и является синглтоном.
@@ -105,12 +103,44 @@ public class ShipEmitter {
 
     }
 
+    /**
+     * Метод сохранения параметров кораблей противника
+     * @param pref - менеджер сохранения в файл
+     */
+    public void saveUserGame(Saver pref){
+        //сохраняем количество активных кораблей противника
+        pref.saveInteger("Enemy.activeObjects.size", enemyShipPool.activeObjects.size());
+        //сохраняем позиции кораблей противника
+        for (int i = 0; i < enemyShipPool.activeObjects.size(); i++) {
+            pref.saveFloat("Enemy" + i, enemyShipPool.activeObjects.get(i).pos);
+        }
+    }
 
     /**
-     * Метод обработки паузы игры
+     * Метод восстановления параметров кораблей противника
+     * @param pref - менеджер сохранения в файл
      */
-    public void pause(){
+    public void restoreSavedGame(Saver pref){
+        //восстанавливаем количество активных кораблей противника
+        int size = pref.restoreInteger("Enemy.activeObjects.size");
+        //наполняем коллекцию активных кораблей заданным количеством кораблей
+        generateShips(size);
+        //сохраняем позиции кораблей противника
+        for (int i = 0; i < size; i++) {
+            enemyShipPool.activeObjects.get(i).pos.set(pref.restoreFloat("Enemy" + i));
+        }
+    }
 
+    /**
+     * Метод наполняет коллекцию активных кораблей заданным количеством кораблей
+     * @param count - заданное количество кораблей противника
+     */
+    private void generateShips(int count){
+        for (int i = 0; i < count; i++) {
+            //вызываем корабль
+            EnemyShip enemyShip = enemyShipPool.obtain(atlas, bulletPool);
+            enemyShip.resize(worldBounds);
+        }
     }
 }
 

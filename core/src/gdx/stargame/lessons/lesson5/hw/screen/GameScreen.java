@@ -1,7 +1,6 @@
 package gdx.stargame.lessons.lesson5.hw.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,12 +8,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
 import gdx.stargame.lessons.lesson5.hw.base.BaseScreen;
-import gdx.stargame.lessons.lesson5.hw.base.Prefs;
+import gdx.stargame.lessons.lesson5.hw.utils.Saver;
 import gdx.stargame.lessons.lesson5.hw.base.ShipEmitter;
 import gdx.stargame.lessons.lesson5.hw.math.Rect;
 import gdx.stargame.lessons.lesson5.hw.pool.BulletPool;
@@ -26,15 +21,11 @@ import gdx.stargame.lessons.lesson5.hw.sprite.MainShip;
 import gdx.stargame.lessons.lesson5.hw.sprite.Star;
 
 public class GameScreen extends BaseScreen {
-    //инициализируем объект класса предпочтений
-    // устанавливаем путь к файлу для хранения предпочтений пользователя и сохранения игр
-    //работает подобно хэш-таблице Map
-//    private final Preferences prefs = Gdx.app.getPreferences("GameScreen_Preferences");
 
     //объявляем переменную для хранения статуса пауза игры
     private boolean isGamePaused;
-
-    private Prefs conditions = new Prefs();
+    //инициируем объект сервиса для сохранения параметров игры
+    private Saver saver = new Saver("SavedGame");
 
     private static final int STAR_COUNT = 64;
 
@@ -79,50 +70,6 @@ public class GameScreen extends BaseScreen {
         //установим закольцовывание музыки
         backgroundMusic.setLooping(true);
 
-//        System.out.println("Before prefs.get()=" + prefs.get());
-//        //Before prefs.get()={}
-
-        //сохраняем в предпочтения ссылку на название файла картинки текущего фона
-//        prefs.putString("CURRENT_BACKGROUND", "Source.GALAXY03_2610X3960");
-        // вызов процесса сохранения изменений файла предпочтений
-//        prefs.flush();
-        //в папке C:\Users\iurii\.prefs создается новый файл(если его нет) с заданным названием
-        // и изменение сохраняется в файл в таком виде:
-        //<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-        //<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-        //<properties>
-        //<entry key="CURRENT_BACKGROUND">Source.GALAXY03_2610X3960</entry>
-        //</properties>
-
-//        System.out.println("After prefs.get()=" + prefs.get());
-        //After prefs.get()={CURRENT_BACKGROUND=Source.GALAXY03_2610X3960}
-
-//        //выводим значение свойства, если есть, в противном случае - значение по-умолчанию
-//        String name = prefs.getString("CURRENT_BACKGROUND", "No name stored");
-//        //если такое свойство есть, возвращается его значение
-//        System.out.println("name = " + name);
-//        // name = Source.GALAXY03_2610X3960
-
-//        //выводим отсутствующее свойство с именем "name"
-//        String name = prefs.getString("name", "No name stored");
-//        //если такого свойства нет, возвращается значение по-умолчанию
-//        System.out.println("name = " + name);
-//        //name = No name stored
-
-//        //удаляем свойство с именем "CURRENT_BACKGROUND"
-////        name = prefs.get().remove("CURRENT_BACKGROUND").toString();//TODO doesn't remove
-////        System.out.println("removed name = " + name);
-//        prefs.remove("CURRENT_BACKGROUND");
-//        prefs.flush();
-//        System.out.println("After removing. prefs.get()=" + prefs.get());
-
-        Prefs prefs = new Prefs();
-//        prefs.setStartPrefs();
-//        prefs.storeStartPrefs();
-//        super.saveCondition();
-
-//        System.out.println("music.isPlaying()=" + backgroundMusic.isLooping());
-
     }
 
     @Override
@@ -143,6 +90,8 @@ public class GameScreen extends BaseScreen {
 
         //передаем размеры мира в генератор врагов
         shipEmitter.resize(worldBounds);
+        //вызываем метод восстановления параметров сохраненной игры игрока
+        restoreSavedGame();
     }
 
     @Override
@@ -163,12 +112,12 @@ public class GameScreen extends BaseScreen {
         }
 
         //если нажата клавиша паузы в игре
-        if(keycode == InputControl.MUSIC_GAME_PAUSE_KEY.keyCode()){
+        if(keycode == InputControl.GAME_PAUSE_KEY.keyCode()){
             //вызываем метод обработки паузы игры
             pause();
         }
         //если нажата клавиша продолжить в игре
-        if(keycode == InputControl.MUSIC_GAME_RESUME_KEY.keyCode()){
+        if(keycode == InputControl.GAME_RESUME_KEY.keyCode()){
             //вызываем метод обработки продолжения игры
             resume();
         }
@@ -208,16 +157,6 @@ public class GameScreen extends BaseScreen {
         }
     }
 
-    /**
-     * Метод переноса помеченных на удаление объектов игры из пула активных объектов в пул свободных.
-     */
-    private void freeAllDestroyed() {
-        bulletPool.freeAllDestroyedActiveSprites();
-
-        //освобождаем удаленные корабли противника
-        shipEmitter.freeAllDestroyedActiveSprites();
-    }
-
     private void draw() {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -250,11 +189,6 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void pause() {
-//        super.pause();
-////        shipEmitter.pause();
-////        mainShip.pause();
-//        conditions.saveScreenCondition(this);
-
         isGamePaused = true;
         backgroundMusic.pause();
     }
@@ -262,46 +196,47 @@ public class GameScreen extends BaseScreen {
     @Override
     public void resume() {
 //        super.resume();
-//        restoreCondition((Map<String, Float>) conditions.getPrefs().get());
+
         isGamePaused = false;
         backgroundMusic.play();
     }
 
     @Override
     public void hide() {
+        //вызываем метод сохрания параметров игры игрока
+        saveUserGame();
         super.hide();
     }
 
-    @Override
-    public Map<String, ?> saveCondition(){
-        Map<String, Float> map = new HashMap<>();
-        map.put("mainShip.pos.x", mainShip.pos.x);
-        map.put("mainShip.pos.y", mainShip.pos.y);
-        map.put("mainShip.v0.x", mainShip.getV0().x);
-        map.put("mainShip.v0.y", mainShip.getV0().y);
-        map.put("mainShip.v.x", mainShip.getV().x);
-        map.put("mainShip.v.y", mainShip.getV().y);
+    /**
+     * Метод переноса помеченных на удаление объектов игры из пула активных объектов в пул свободных.
+     */
+    private void freeAllDestroyed() {
+        bulletPool.freeAllDestroyedActiveSprites();
 
-        System.out.println("GameScreen.saveCondition map= " + map.toString());
-
-//        System.out.println("this.getClass().getDeclaredFields().toString()= " +
-//                Arrays.deepToString(this.getClass().getDeclaredFields()));
-
-//        for (int i = 0; i < ; i++) {
-//
-//        }
-
-        return map;
+        //освобождаем удаленные корабли противника
+        shipEmitter.freeAllDestroyedActiveSprites();
     }
 
-    public void restoreCondition(Map<String, Float> map){
-        System.out.println("Before restoreCondition mainShip.pos= " + mainShip.pos);
+    /**
+     * Метод сохрания параметров игры игрока
+     */
+    private void saveUserGame() {
+        //сохраняем позицию главного корабля
+        saver.getPrefs().putFloat("mainShip.pos.x", mainShip.pos.x);
+        //сохраняем параметры кораблей противника
+        shipEmitter.saveUserGame(saver);
+    }
 
-        mainShip.pos.set(map.get("mainShip.pos.x").floatValue(), map.get("mainShip.pos.y").floatValue());
-        mainShip.getV0().set(map.get("mainShip.v0.x"), map.get("mainShip.v0.y"));
-        mainShip.getV().set(map.get("mainShip.v.x"), map.get("mainShip.v.y"));
+    /**
+     * Метод восстановления параметров сохраненной игры игрока
+     */
+    private void restoreSavedGame() {
+        //восстанавливаем позицию главного корабля
+        mainShip.pos.x = saver.restoreSingleFloat("mainShip.pos.x");
 
-        System.out.println("After restoreCondition mainShip.pos= " + mainShip.pos);
+        //восстанавливаем параметры кораблей противника
+        shipEmitter.restoreSavedGame(saver);
     }
 
 }
@@ -314,3 +249,47 @@ public class GameScreen extends BaseScreen {
 //boolean isPlaying = music.isPlaying(); // проверка воспроизводится ли музыка
 //boolean isLooping = music.isLooping(); // проверка установлено ли повторение
 //float position = music.getPosition();  // возвращает позицию воспроизведения в секундах
+
+//        System.out.println("Before prefs.get()=" + prefs.get());
+//        //Before prefs.get()={}
+
+//сохраняем в предпочтения ссылку на название файла картинки текущего фона
+//        prefs.putString("CURRENT_BACKGROUND", "Source.GALAXY03_2610X3960");
+// вызов процесса сохранения изменений файла предпочтений
+//        prefs.flush();
+//в папке C:\Users\iurii\.prefs создается новый файл(если его нет) с заданным названием
+// и изменение сохраняется в файл в таком виде:
+//<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+//<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+//<properties>
+//<entry key="CURRENT_BACKGROUND">Source.GALAXY03_2610X3960</entry>
+//</properties>
+
+//        System.out.println("After prefs.get()=" + prefs.get());
+//After prefs.get()={CURRENT_BACKGROUND=Source.GALAXY03_2610X3960}
+
+//        //выводим значение свойства, если есть, в противном случае - значение по-умолчанию
+//        String name = prefs.getString("CURRENT_BACKGROUND", "No name stored");
+//        //если такое свойство есть, возвращается его значение
+//        System.out.println("name = " + name);
+//        // name = Source.GALAXY03_2610X3960
+
+//        //выводим отсутствующее свойство с именем "name"
+//        String name = prefs.getString("name", "No name stored");
+//        //если такого свойства нет, возвращается значение по-умолчанию
+//        System.out.println("name = " + name);
+//        //name = No name stored
+
+//        //удаляем свойство с именем "CURRENT_BACKGROUND"
+////        name = prefs.get().remove("CURRENT_BACKGROUND").toString();//TODO doesn't remove
+////        System.out.println("removed name = " + name);
+//        prefs.remove("CURRENT_BACKGROUND");
+//        prefs.flush();
+//        System.out.println("After removing. prefs.get()=" + prefs.get());
+
+//        Saver prefs = new Saver();
+//        prefs.setStartPrefs();
+//        prefs.storeStartPrefs();
+//        super.saveCondition();
+
+//        System.out.println("music.isPlaying()=" + backgroundMusic.isLooping());

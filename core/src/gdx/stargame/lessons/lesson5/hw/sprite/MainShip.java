@@ -34,7 +34,6 @@ public class MainShip extends Sprite {
     private int leftPointer = INVALID_POINTER;
     private int rightPointer = INVALID_POINTER;
     //инициируем константу времени между выстрелами(зарядки)
-//    private final float reloadInterval = 0.2f;
     private float reloadInterval = 0.2f;
 
     //инициируем переменную таймера времени между выстрелами(зарядки)
@@ -296,20 +295,6 @@ public class MainShip extends Sprite {
 
     public Vector2 getV() {
         return v;
-    }
-
-    /**
-     * Метод обработки паузы игры
-     */
-    public void pause(){
-        stop();
-
-        stopShoot();
-    }
-
-    private void stopShoot() {
-        reloadInterval = Float.MAX_VALUE;
-
     }
 
 }
