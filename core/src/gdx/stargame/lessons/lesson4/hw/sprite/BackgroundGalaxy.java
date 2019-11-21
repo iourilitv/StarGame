@@ -123,50 +123,25 @@ public class BackgroundGalaxy extends Sprite {
     public void draw(SpriteBatch batch) {
         //перебираем массив фрагментов картинки фона
         int d = 0;
-        //если заданная скорость движения фона по вертикали отрицательная
-        if(v.y < 0) {
-            //двигаем фон вверх(корабль летит вниз)
-            for (int i = startIndex; i < tiles.length + startIndex; i++) {
-                batch.draw(
-                        //текстура регион фрагмента фона
-                        tiles[i % tiles.length][1],//[0]
-                        //координаты левого-нижнего угла фрагмента от точки в середине экрана
-                        // (здесь - в мировой системе координат 1f x 1f)
-                        screenBounds.getLeft(), getTop() - tileWorldHeight * d++ + counterPosY,
-                        //FIXME что это?
-                        0, 0, //одинаково halfWidth, halfHeight,//tileWorldWidth, tileWorldHeight,
-//                        tileWorldWidth / 2, tileWorldHeight / 2,
-                        //ширина и высота поля отрисовки фрагмента от
-                        // координаты левого-нижнего угла фрагмента(отрицательные - влево и вверх)
-                        tileWorldWidth, tileWorldHeight,
-                        //масштаб фрагмента по ширине и высоте
-                        scale, scale,
-                        angle);
-            }
-        }
-        //если заданная скорость движения фона по вертикали положительная
-        if(v.y >= 0) {
-            //двигаем фон вниз(корабль летит вверх)
-            d = 0;
-            for (int i = startIndex; i < startIndex + tiles.length; i++) {
-                //вычисляем координаты левого нижнего угла фрагмента от аналогичного его текстуры
-                float y = getTop() - tileWorldHeight * (TILES_IN_MARGE_A_SIDE_Y + d++) - counterPosY;
-                float x = getLeft() + tileWorldWidth * TILES_IN_MARGE_A_SIDE_X;
-                batch.draw(
-                        //текстура регион фрагмента фона
-                        tiles[i% tiles.length][1],//[0]
-                        //координаты левого-нижнего угла фрагмента от точки в середине экрана
-                        // (здесь - в мировой системе координат 1f x 1f)
-                        x, y,
-                        //FIXME что это?
-                        0, 0, //одинаково halfWidth, halfHeight,//tileWorldWidth, tileWorldHeight,
-                        //ширина и высота поля отрисовки фрагмента от
-                        // координаты левого-нижнего угла фрагмента(отрицательные - влево и вверх)
-                        tileWorldWidth, tileWorldHeight,
-                        //масштаб фрагмента по ширине и высоте
-                        scale, scale,
-                        angle);
-            }
+        for (int i = startIndex; i < startIndex + tiles.length; i++) {
+            //вычисляем координаты левого нижнего угла фрагмента от аналогичного его текстуры
+            float y = getTop() - tileWorldHeight * (TILES_IN_MARGE_A_SIDE_Y + d++) - counterPosY;
+            float x = getLeft() + tileWorldWidth * TILES_IN_MARGE_A_SIDE_X;
+            //отрисовываем фрагмент
+            batch.draw(
+                    //текстура регион фрагмента фона
+                    tiles[i% tiles.length][1],//[0]
+                    //координаты левого-нижнего угла фрагмента от точки в середине экрана
+                    // (здесь - в мировой системе координат 1f x 1f)
+                    x, y,
+                    //FIXME что это?
+                    0, 0, //одинаково halfWidth, halfHeight,//tileWorldWidth, tileWorldHeight,
+                    //ширина и высота поля отрисовки фрагмента от
+                    // координаты левого-нижнего угла фрагмента(отрицательные - влево и вверх)
+                    tileWorldWidth, tileWorldHeight,
+                    //масштаб фрагмента по ширине и высоте
+                    scale, scale,
+                    angle);
         }
     }
 
@@ -174,61 +149,78 @@ public class BackgroundGalaxy extends Sprite {
     public void update(float delta) {
         super.update(delta);
         //если задано движение по Y
-        if(v.y != 0){
-            //если заданная скорость движения фона по вертикали отрицательная
-            if(v.y < 0){
-                //двигаем фон вверх(корабль летит вниз)
-                moveBackgroundUp();
-            } else {
-                //двигаем фон вниз(корабль летит вверх)
-                moveBackgroundDown();
-            }
-        }
+//        if(v.y != 0){
+            //двигаем фон по Y
+            moveBackgroundY();
+//            //если заданная скорость движения фона по вертикали отрицательная
+//            if(v.y < 0){
+//                //двигаем фон вверх(корабль летит вниз)
+//                moveBackgroundUp();
+//            } else {
+//                //двигаем фон вниз(корабль летит вверх)
+//                moveBackgroundDown();
+//            }
+//        }
     }
 
     /**
      * Метод двигает фон вверх(корабль летит вниз)
      */
-    private void moveBackgroundUp(){
-        //если счетчик меньше высоты фрагмента
-        if(counterPosY < 0){
-            //инкрементируем счетчик на величину сторости сдвига фона
-            counterPosY += Math.abs(v.y);
-
-//            System.out.println("counterPosY= " + counterPosY);
-
-        } else {
-//            startIndex++;
-//            startIndex %= TILES_Y_NUMBER;
-
-            startIndex = deque.removeFirst();
-            deque.addLast(startIndex);
-
-            System.out.println("deque= " + deque);
-
-            counterPosY = - tileWorldHeight;
-
-        }
-    }
+//    private void moveBackgroundUp(){
+//        //если счетчик меньше высоты фрагмента
+//        //декрементируем счетчик на величину скорости сдвига фона, пока
+//        // он не станет равен шагу(высоте фрагмента)
+//        if((counterPosY += v.y) <= - tileWorldHeight){
+//            //инкрементируем стартовый индекс
+//            //и берем остаток по количеству арагментов по вертикали
+//            counterY = ++counterY % TILES_Y_NUMBER;
+//            startIndex = counterY;
+//            //обнуляем счетчик приращения
+//            counterPosY = 0;
+//        }
+//    }
 
     /**
      * Метод двигает фон вниз(корабль летит вверх)
      */
-    private void moveBackgroundDown(){
+//    private void moveBackgroundDown(){
+//        //если счетчик меньше высоты фрагмента
+//        //декрементируем счетчик на величину скорости сдвига фона, пока
+//        // он не станет равен шагу(высоте фрагмента)
+//        if((counterPosY += v.y) >= tileWorldHeight){
+//            //инкрементируем стартовый индекс
+//            //и берем остаток по количеству арагментов по вертикали
+//            counterY = ++counterY % TILES_Y_NUMBER;
+//            startIndex = (TILES_Y_NUMBER - counterY) % TILES_Y_NUMBER;
+//            //обнуляем счетчик приращения
+//            counterPosY = 0;
+//        }
+//    }
+
+    /**
+     * Метод двигает фон по вертикали в зависимости от знака скорости сдвига по Y
+     * плюс - вниз(корабль летит вверх) и минус - вверх(корабль летит вниз). Ноль - стоит
+     */
+    private void moveBackgroundY(){
         //если счетчик меньше высоты фрагмента
         //декрементируем счетчик на величину скорости сдвига фона, пока
         // он не станет равен шагу(высоте фрагмента)
-        if((counterPosY += v.y) >= tileWorldHeight){
-
-            System.out.println("Before startIndex= " + startIndex + ", counterY= " + counterY);
-
+        if(Math.abs(counterPosY += v.y) >= tileWorldHeight){
             //инкрементируем стартовый индекс
             //и берем остаток по количеству арагментов по вертикали
-            counterY = (++counterY % TILES_Y_NUMBER);
-            startIndex = (TILES_Y_NUMBER - counterY) % TILES_Y_NUMBER;
+            counterY = ++counterY % TILES_Y_NUMBER;
+            //если заданная скорость движения фона по вертикали отрицательная
+//            if(v.y < 0){
+//                //двигаем фон вверх(корабль летит вниз)
+////                moveBackgroundUp();
+//                startIndex = counterY;
+//            } else {
+//                //двигаем фон вниз(корабль летит вверх)
+////                moveBackgroundDown();
+//                startIndex = (TILES_Y_NUMBER - counterY) % TILES_Y_NUMBER;
+//            }
 
-            System.out.println("After startIndex= " + startIndex + ", counterY= " + counterY);
-
+            startIndex = v.y < 0 ? counterY : TILES_Y_NUMBER - counterY;
             //обнуляем счетчик приращения
             counterPosY = 0;
         }
