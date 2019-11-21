@@ -11,11 +11,11 @@ import gdx.stargame.lessons.lesson4.hw.math.Rect;
 
 public class BackgroundGalaxy extends Sprite {
     //инициализируем константы количества фрагментов по X и Y всего
-    private static final int TILES_X_NUMBER = 3;//FIXME add condition for X
-    private static final int TILES_Y_NUMBER = 3;//16;//32;
+    private static final int TILES_X_NUMBER = 3;
+    private static final int TILES_Y_NUMBER = 3;
     //инициализируем константы количества фрагментов по X и Y в отступе с каждой стороны
     //0, если TILES_X_NUMBER меньше 3
-    private static final int TILES_IN_MARGE_A_SIDE_X = 1;//1//FIXME add condition for X
+    private static final int TILES_IN_MARGE_A_SIDE_X = 1;
     private static final int TILES_IN_MARGE_A_SIDE_Y = 1;
 
     //объявляем переменные размеров фрагмента текторы по ширине и высоте
@@ -39,8 +39,6 @@ public class BackgroundGalaxy extends Sprite {
     private int startIndex = 0;//0;
     //временная переменная счетчика инкремена индекса фрагмента по Y
     private int counterY = 0;
-    //очередь индексов фрагментов
-    ArrayDeque<Integer> deque;
 
     public BackgroundGalaxy(TextureRegion region) {
         super(region);
@@ -69,19 +67,6 @@ public class BackgroundGalaxy extends Sprite {
         //инициируем массив фрагментов фона
         tiles = galaxy.split(galaxy.getRegionWidth() / TILES_X_NUMBER,
                 galaxy.getRegionHeight() / TILES_Y_NUMBER);
-
-//        //TODO temporarily
-//        System.out.println("BackgroundGalaxy.init tiles:");
-//        for (TextureRegion[] t: tiles) {
-//            System.out.println(Arrays.toString(t));
-//        }
-
-        //FIXME
-        deque = new ArrayDeque<>();
-        for (int i = 0; i < tiles.length; i++) {
-            deque.add(i);
-        }
-
     }
 
     @Override
@@ -89,22 +74,12 @@ public class BackgroundGalaxy extends Sprite {
         super.resize(worldBounds);
         //устанавливаем границы скрина
         screenBounds.set(worldBounds);
-
-        System.out.println("BgGal.resize screenBounds.getWidth()= " + screenBounds.getWidth() +
-                ", .getHeight()= " + screenBounds.getHeight());
-        System.out.println("BgGal.resize screenBounds.getLeft()= " + screenBounds.getLeft() +
-                ", .getBottom()= " + screenBounds.getBottom());
-
         //инициируем переменные размеров фрагмента текторы по ширине и высоте
         // в мировой системе координат
         tileWorldWidth = screenBounds.getWidth() /
                 (float)(TILES_X_NUMBER - 2 * TILES_IN_MARGE_A_SIDE_X);
         tileWorldHeight = screenBounds.getHeight() /
                 (float)(TILES_Y_NUMBER - 2 * TILES_IN_MARGE_A_SIDE_Y);
-
-        System.out.println("BgGal.resize tileWorldWidth= " + tileWorldWidth +
-                ", tileWorldHeight= " + tileWorldHeight);
-
         //устанавливаем размеры спрайта
         // (выводим за видимое поле скрина фрагменты на полях по ширине и высоте)
         setWidth(tileWorldWidth * TILES_X_NUMBER);
@@ -112,6 +87,7 @@ public class BackgroundGalaxy extends Sprite {
         //устанавливаем начальную позицию текстуры в ноль в мировых координатах(центр скрина)
         this.pos.set(worldBounds.pos);
 
+        //TODO temporarily
         System.out.println("2BgGal.resize Width= " + getWidth() +
                 ", Height= " + getHeight());
         System.out.println("BgGal.resize getLeft()= " + getLeft() +
@@ -134,8 +110,9 @@ public class BackgroundGalaxy extends Sprite {
                     //координаты левого-нижнего угла фрагмента от точки в середине экрана
                     // (здесь - в мировой системе координат 1f x 1f)
                     x, y,
-                    //FIXME что это?
-                    0, 0, //одинаково halfWidth, halfHeight,//tileWorldWidth, tileWorldHeight,
+                    //FIXME что такое originX, originY?
+                    // одинаково halfWidth, halfHeight,//tileWorldWidth, tileWorldHeight,
+                    0, 0,
                     //ширина и высота поля отрисовки фрагмента от
                     // координаты левого-нижнего угла фрагмента(отрицательные - влево и вверх)
                     tileWorldWidth, tileWorldHeight,
@@ -148,54 +125,9 @@ public class BackgroundGalaxy extends Sprite {
     @Override
     public void update(float delta) {
         super.update(delta);
-        //если задано движение по Y
-//        if(v.y != 0){
-            //двигаем фон по Y
-            moveBackgroundY();
-//            //если заданная скорость движения фона по вертикали отрицательная
-//            if(v.y < 0){
-//                //двигаем фон вверх(корабль летит вниз)
-//                moveBackgroundUp();
-//            } else {
-//                //двигаем фон вниз(корабль летит вверх)
-//                moveBackgroundDown();
-//            }
-//        }
+        //двигаем фон по Y
+        moveBackgroundY();
     }
-
-    /**
-     * Метод двигает фон вверх(корабль летит вниз)
-     */
-//    private void moveBackgroundUp(){
-//        //если счетчик меньше высоты фрагмента
-//        //декрементируем счетчик на величину скорости сдвига фона, пока
-//        // он не станет равен шагу(высоте фрагмента)
-//        if((counterPosY += v.y) <= - tileWorldHeight){
-//            //инкрементируем стартовый индекс
-//            //и берем остаток по количеству арагментов по вертикали
-//            counterY = ++counterY % TILES_Y_NUMBER;
-//            startIndex = counterY;
-//            //обнуляем счетчик приращения
-//            counterPosY = 0;
-//        }
-//    }
-
-    /**
-     * Метод двигает фон вниз(корабль летит вверх)
-     */
-//    private void moveBackgroundDown(){
-//        //если счетчик меньше высоты фрагмента
-//        //декрементируем счетчик на величину скорости сдвига фона, пока
-//        // он не станет равен шагу(высоте фрагмента)
-//        if((counterPosY += v.y) >= tileWorldHeight){
-//            //инкрементируем стартовый индекс
-//            //и берем остаток по количеству арагментов по вертикали
-//            counterY = ++counterY % TILES_Y_NUMBER;
-//            startIndex = (TILES_Y_NUMBER - counterY) % TILES_Y_NUMBER;
-//            //обнуляем счетчик приращения
-//            counterPosY = 0;
-//        }
-//    }
 
     /**
      * Метод двигает фон по вертикали в зависимости от знака скорости сдвига по Y
@@ -209,17 +141,9 @@ public class BackgroundGalaxy extends Sprite {
             //инкрементируем стартовый индекс
             //и берем остаток по количеству арагментов по вертикали
             counterY = ++counterY % TILES_Y_NUMBER;
-            //если заданная скорость движения фона по вертикали отрицательная
-//            if(v.y < 0){
-//                //двигаем фон вверх(корабль летит вниз)
-////                moveBackgroundUp();
-//                startIndex = counterY;
-//            } else {
-//                //двигаем фон вниз(корабль летит вверх)
-////                moveBackgroundDown();
-//                startIndex = (TILES_Y_NUMBER - counterY) % TILES_Y_NUMBER;
-//            }
-
+            //если заданная скорость движения фона по вертикали отрицательная,
+            // двигаем фон вверх(корабль летит вниз)
+            //если положительная, двигаем фон вниз(корабль летит вверх)
             startIndex = v.y < 0 ? counterY : TILES_Y_NUMBER - counterY;
             //обнуляем счетчик приращения
             counterPosY = 0;
