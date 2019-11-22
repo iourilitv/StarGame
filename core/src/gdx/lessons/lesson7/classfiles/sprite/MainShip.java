@@ -24,6 +24,7 @@ public class MainShip extends Ship {
     public MainShip(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool) {
         super(atlas.findRegion("main_ship"), 1, 2, 2);
         this.bulletPool = bulletPool;
+        //принимаем объект пула вызрывов
         this.explosionPool = explosionPool;
         bulletRegion = atlas.findRegion("bulletMainShip");
         sound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
@@ -130,11 +131,17 @@ public class MainShip extends Ship {
         return false;
     }
 
+    /**
+     * Метод обработки столкновений гланого корабля со снарядом противника.
+     * @param bullet - снаряд(здесь по логике - корабля противника)
+     * @return - true - есть столкновение(здесь - попадание снаряда в главный корабль)
+     */
     public boolean isBulletCollision(Rect bullet) {
         return !(
                 bullet.getRight() < getLeft()
                 || bullet.getLeft() > getRight()
                 || bullet.getTop() < getBottom()
+                //чтобы снаряд визуально долетал до центра главного корабля
                 || bullet.getBottom() > pos.y
         );
     }
