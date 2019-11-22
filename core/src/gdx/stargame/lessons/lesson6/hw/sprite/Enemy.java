@@ -9,17 +9,48 @@ import gdx.stargame.lessons.lesson6.hw.math.Rect;
 import gdx.stargame.lessons.lesson6.hw.pool.BulletPool;
 
 public class Enemy extends Ship {
+    //***инициируем константы режима работы корабля***
+    //режим когда корабль уже инициирован, но не начал действовать(не стреляет и за полем)
+    private static final int BEGINNING_MODE = 0;
+    //режим когда корабль уже начал действовать
+    private static final int ACTIVE_MODE = 1;
+    //режим когда корабль уже начал действовать
+    private static final int DAMAGED_MODE = 2;//FIXME. Это на будущее. К нему добавить степень повреждения.
+
+    //объявляем переменную режима работы корабля
+    private int operationMode;
 
     public Enemy(BulletPool bulletPool, Rect worldBounds) {
         this.bulletPool = bulletPool;
         this.worldBounds = worldBounds;
-        this.v.set(v0);
     }
 
     @Override
     public void update(float delta) {
-        super.update(delta);
-        if (getBottom() < worldBounds.getBottom()) {
+        //корабль начинает движение сразу после вызова
+        pos.mulAdd(v, delta);
+        //если включен начальный режим
+        if(operationMode == BEGINNING_MODE){
+            //если корабль уже наполовину показался из-за экрана
+            if(pos.y < worldBounds.getTop()){
+                //устанавливаем его скорость по заданной начальной скорости
+                v.set(v0);
+                //переводим корабль в активный режим
+                operationMode = ACTIVE_MODE;
+            }
+        //если корабль уже не в начальном режиме
+        } else {
+            //начинаем стрельбу сразу после активации
+            if (reloadTimer >= reloadInterval) {
+                reloadTimer = 0f;
+                shoot();
+            }
+            reloadTimer += delta;
+        }
+
+        //если корабль полностью вышел за нижний край поля
+        if (getTop() < worldBounds.getBottom()) {
+            //удаляем корабль
             destroy();
         }
     }
@@ -46,6 +77,19 @@ public class Enemy extends Ship {
         this.sound = sound;
         setHeightProportion(height);
         this.hp = hp;
-        this.v.set(v0);
+    }
+
+    /**
+     * Метод установки параметров для начального режима
+     * @param vYBeg - скорость выплывания корабля из-за экрана в начале
+     */
+    public void setBeginningMode(float vYBeg){
+        //переводим корабль в начальный режим
+        operationMode = BEGINNING_MODE;
+        //ускоряем корабль пока он выплывает из-за экрана в начале
+        v.y = vYBeg;
+        //устанавливаем таймер выстрелов на начальную позицию
+        // нужно чтобы стрельба началась сразу после окончания начального режима корабля
+        reloadTimer = reloadInterval;
     }
 }
