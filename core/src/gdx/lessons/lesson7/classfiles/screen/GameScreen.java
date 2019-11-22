@@ -37,6 +37,7 @@ public class GameScreen extends BaseScreen {
 
     private BulletPool bulletPool;
     private EnemyPool enemyPool;
+    //объявляем объект пула взрывов
     private ExplosionPool explosionPool;
 
     private EnemyEmitter enemyEmitter;
@@ -53,8 +54,11 @@ public class GameScreen extends BaseScreen {
             stars[i] = new Star(atlas);
         }
         bulletPool = new BulletPool();
+        //инициируем объект пула взрывов
         explosionPool = new ExplosionPool(atlas);
+        //инициируем объект пула кораблей противника с дополнительным параметром - пулом взрывов
         enemyPool = new EnemyPool(worldBounds, bulletPool, explosionPool);
+        //инициируем объект гравного корабля с дополнительным параметром - пулом взрывов
         mainShip = new MainShip(atlas, bulletPool, explosionPool);
         enemyEmitter = new EnemyEmitter(enemyPool, atlas, worldBounds);
         music.setLooping(true);
@@ -64,6 +68,7 @@ public class GameScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         update(delta);
+        //вызываем метод проверки столкновений объектов(снарядов, кораблей и т.п.)
         checkCollisions();
         freeAllDestroyed();
         draw();
@@ -86,6 +91,7 @@ public class GameScreen extends BaseScreen {
         mainShip.dispose();
         bulletPool.dispose();
         enemyPool.dispose();
+        //выгружаем из памяти пул взрывов
         explosionPool.dispose();
         enemyEmitter.dispose();
         super.dispose();
@@ -122,35 +128,59 @@ public class GameScreen extends BaseScreen {
         mainShip.update(delta);
         bulletPool.updateActiveSprites(delta);
         enemyPool.updateActiveSprites(delta);
+        //обновляем пул взрывов
         explosionPool.updateActiveSprites(delta);
         enemyEmitter.generate(delta);
     }
 
+    /**
+     * Метод проверки столкновений объектов(снарядов, кораблей и т.п.)
+     */
     private void checkCollisions() {
+        //инициируем временные коллекции для пулов кораблей противника и снарядов
         List<Enemy> enemyList = enemyPool.getActiveObjects();
         List<Bullet> bulletList = bulletPool.getActiveObjects();
+        //листаем коллекцию кораблей противника - отрабатываем их столкновения
         for (Enemy enemy : enemyList) {
+            //инициируем временную переменную для рассчета минимального расстояния между объектами
+            //это нужно, чтобы соприкосновения происходили реалистично близко к центрам объектов
             float minDist = enemy.getHalfWidth() + mainShip.getHalfWidth();
+            //если длина вектора между векторами позиции корабля противника и главного корабля
+            // стал меньше минимального расстояния
             if (mainShip.pos.dst(enemy.pos) < minDist) {
+                //вызываем метод повреждения главного корабля
                 mainShip.damage(enemy.getDamage());
+                //вызываем метод уничтожения корабля противника(такая игровая логика)
                 enemy.destroy();
             }
+            //листаем коллекцию снарядов (главного корабля) - отрабатываем их столкновения
             for (Bullet bullet : bulletList) {
+                //если пуля не принадлежит главному кораблю, значит это пуля корабля противника
                 if (bullet.getOwner() != mainShip) {
+                    //пропускаем остальной код на этой итерации - идем к следующей
                     continue;
                 }
+                //если снаряд главного корабля попал в корабль противника
                 if (enemy.isBulletCollision(bullet)) {
+                    //вызываем метод расчета повреждения корабля противника
                     enemy.damage(bullet.getDamage());
+                    //вызываем метод уничтожения снаряда
                     bullet.destroy();
                 }
             }
         }
+        //листаем коллекцию снарядов (кораблей противника) - отрабатываем их столкновения
         for (Bullet bullet : bulletList) {
+            //если пуля принадлежит главному кораблю, значит это не пуля корабля противника
             if (bullet.getOwner() == mainShip) {
+                //пропускаем остальной код на этой итерации - идем к следующей
                 continue;
             }
+            //если снаряд корабля противника попал в главный корабль
             if (mainShip.isBulletCollision(bullet)) {
+                //вызываем метод расчета повреждения главного корабля
                 mainShip.damage(bullet.getDamage());
+                //вызываем метод уничтожения снаряда
                 bullet.destroy();
             }
         }
@@ -159,6 +189,7 @@ public class GameScreen extends BaseScreen {
     private void freeAllDestroyed() {
         bulletPool.freeAllDestroyedActiveSprites();
         enemyPool.freeAllDestroyedActiveSprites();
+        //вызываем метод переноса удаленных объектов взрывов из коллекции активных в свободные
         explosionPool.freeAllDestroyedActiveSprites();
     }
 
@@ -170,11 +201,14 @@ public class GameScreen extends BaseScreen {
         for (Star star : stars) {
             star.draw(batch);
         }
+        //если главный корабль еще живой
         if (!mainShip.isDestroyed()) {
+            //отрисовываем главный корабль
             mainShip.draw(batch);
         }
         bulletPool.drawActiveSprites(batch);
         enemyPool.drawActiveSprites(batch);
+        //отрисовываем объекты в пуле взрывов
         explosionPool.drawActiveSprites(batch);
         batch.end();
     }
