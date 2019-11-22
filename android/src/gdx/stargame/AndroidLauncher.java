@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 
-import gdx.stargame.lessons.lesson3.hw.StarGame;
+import gdx.lessons.lesson3.hw.StarGame;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override
@@ -25,8 +25,8 @@ public class AndroidLauncher extends AndroidApplication {
 	}*/
 
 //***for .puzzle.puzzle3.***
-//import gdx.stargame.puzzle.Puzzle1;
-//import gdx.stargame.puzzle.Puzzle2;
+//import gdx.puzzle.Puzzle1;
+//import gdx.puzzle.Puzzle2;
 		/*protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
@@ -35,7 +35,7 @@ public class AndroidLauncher extends AndroidApplication {
 	}*/
 
 //***for .stargame.StarGame***
-//import gdx.stargame.stargame.StarGame;
+//import gdx.stargame.StarGame;
 	/*protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
