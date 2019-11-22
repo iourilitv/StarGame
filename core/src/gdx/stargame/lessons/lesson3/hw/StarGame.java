@@ -15,6 +15,8 @@ import gdx.stargame.lessons.lesson3.hw.screen.MenuScreen;
  * DONE 1. Разобраться с темой урока.
  * DONE 2. Адаптировать ДЗ урока2 к новой архитектуре проекта. Желательно всю логику,
  * 		которая касается обработки логотипа по максимуму разместить в классе Logo.
+ * Additionally.
+ * DONE 1. Реализовать движение спрайта через интерфейс Mobility.
  */
 public class StarGame extends Game {
 
