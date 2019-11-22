@@ -1,8 +1,8 @@
-package gdx.stargame.lessons.lesson6.classfiles;//ru.geekbrains
+package gdx.stargame.lessons.lesson6.hw;//ru.geekbrains
 
 import com.badlogic.gdx.Game;
 
-import gdx.stargame.lessons.lesson6.classfiles.screen.MenuScreen;
+import gdx.stargame.lessons.lesson6.hw.screen.MenuScreen;
 
 /**
  * Вебинар.20191028_GB-Разработка_игры_на_LibGDX.Преподаватель: Алексей Кутепов
@@ -10,8 +10,11 @@ import gdx.stargame.lessons.lesson6.classfiles.screen.MenuScreen;
  * Разделение игры на экраны. Менеджер экранов. Пользовательский интерфейс.
  * Переходы между экранами, освобождение ресурсов.
  * На видео: Генерация трех типов кораблей противника. Движение и стрельба кораблей противника.
- * @author Alexey Kutepov
- *
+ * @author Yuriy Litvinenko
+ * Homework.
+ * 1. Сделать 2 режима корабля: когда он быстро вылетает на экран и когда начинает двигаться
+ * со своей скоростью и вести бой. Важно чтобы стрельба началась сразу после того как
+ * корабль полностью появится на экране (сейчас маленькие корабли стреляют в самом конце).
  */
 public class StarGame extends Game {
 
