@@ -7,13 +7,18 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import gdx.lessons.lesson7.classfiles.base.SpritesPool;
 import gdx.lessons.lesson7.classfiles.sprite.Explosion;
 
+/**
+ * Класс для организации пула объектов-взрывов.
+ */
 public class ExplosionPool extends SpritesPool<Explosion> {
-
+    //принимаем объект атласа
     private TextureAtlas atlas;
+    //объявляем объект звука взрыва
     private Sound sound;
 
     public ExplosionPool(TextureAtlas atlas) {
         this.atlas = atlas;
+        //инициируем объект звука взрыва
         sound = Gdx.audio.newSound(Gdx.files.internal("sounds/explosion.wav"));
     }
 
