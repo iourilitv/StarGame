@@ -119,9 +119,9 @@ public class BackgroundGalaxy extends Sprite {
                         //координаты левого-нижнего угла фрагмента от точки в середине экрана
                         // (здесь - в мировой системе координат 1f x 1f)
                         x, y,
-                        //FIXME что такое originX, originY?
-                        // одинаково halfWidth, halfHeight,//tileWorldWidth, tileWorldHeight,
-                        0, 0,
+                        //originX, originY - координата центра вращения фрагмента
+                        //от левого-нижнего угла фрагмента
+                        tileWorldWidth / 2, tileWorldHeight / 2,
                         //ширина и высота поля отрисовки фрагмента от
                         // координаты левого-нижнего угла фрагмента(отрицательные - влево и вверх)
                         tileWorldWidth, tileWorldHeight,
@@ -145,7 +145,7 @@ public class BackgroundGalaxy extends Sprite {
     private void moveBackgroundX() {
         //TODO temporarily
         //если счетчик инкремента по X равен или больше количеству фрагментов фона по Y
-        if(counterX >= TILES_Y_NUMBER){
+        if(counterX >= TILES_Y_NUMBER - 1){
             //сдвигаем фон на следующую колонку
             startIndexX++;
             //сбрасываем счетчик инкремента по X

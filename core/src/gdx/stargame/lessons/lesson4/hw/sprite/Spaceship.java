@@ -10,6 +10,8 @@ import gdx.stargame.lessons.lesson4.hw.constants.ScreenSettings;
 import gdx.stargame.lessons.lesson4.hw.math.Rect;
 
 public class Spaceship extends Sprite {
+    //инициируем константу точности касания на корабль для вращения
+    private static final float ROTATE_TOUCH_PRECISION = 0.02f;
     //инициируем константу длины вектора скорости
     //если 0 - мгновенный переход в точку назначения
     private final float VELOCITY_LENGTH = 0.02f;
@@ -119,15 +121,44 @@ public class Spaceship extends Sprite {
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
         super.touchDown(touch, pointer);
-        //устанавливаем вектор позиции назначения по переданному вектору касания
-        destination.set(touch);
-        //корректируем вектор точки назначения, чтобы спрайт не выходил за границы скрина
-        fitDestinationToScreenBounds(destination, screenBounds);
-        //рассчитываем временного вектора остаточного растояния до точки назначения
-        restDistance.set(destination).sub(pos);
-        //расчитываем вектора скорости для перемещения
-        v.set(restDistance).setLength(VELOCITY_LENGTH);
+
+        //TODO temporarily
+        //если тапнули на главный корабль
+        if(isMe(touch)){
+            //если тап попал в точку вращения(вблизи центра корабля)
+            if(isRotation(touch)){
+                //делаем поворот на 45 грд против часовой стрелки
+                angle += 45f;
+                System.out.println("After: Spaceship.touchDown angle= " + angle);
+            }
+        //если тапнули мимо главного корабля
+        } else {
+//        screenBounds.pos.x -= screenBounds.getWidth();
+//        System.out.println("After: Spaceship.touchDown screenBounds.pos.x= " + screenBounds.pos.x);
+
+            //устанавливаем вектор позиции назначения по переданному вектору касания
+            destination.set(touch);
+            //корректируем вектор точки назначения, чтобы спрайт не выходил за границы скрина
+            fitDestinationToScreenBounds(destination, screenBounds);
+            //рассчитываем временного вектора остаточного растояния до точки назначения
+            restDistance.set(destination).sub(pos);
+            //расчитываем вектора скорости для перемещения
+            v.set(restDistance).setLength(VELOCITY_LENGTH);
+        }
+
         return false;
+    }
+
+    /**
+     * Метод определяет попал ли тач в точку вращения
+     * @param touch - координаты касания
+     * @return - true - есть попадание - можно вращать
+     */
+    private boolean isRotation(Vector2 touch) {
+        //если тап попал в квадрат размером в ширину корабля, чтобы при повороте
+        // тап не выходил за границы корабля, т.е. прямоугольник корабля не поворачивается
+        return touch.x > pos.x - ROTATE_TOUCH_PRECISION && touch.x < pos.x + ROTATE_TOUCH_PRECISION
+        && touch.y > pos.y - ROTATE_TOUCH_PRECISION && touch.y < pos.y + ROTATE_TOUCH_PRECISION;
     }
 
     /**

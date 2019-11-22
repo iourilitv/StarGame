@@ -30,10 +30,12 @@ public class Sprite extends Rect {
         batch.draw(
                 regions[frame],
                 getLeft(), getBottom(),
+                //originX, originY - координата центра вращения объекта
+                //от левого-нижнего угла объекта
                 halfWidth, halfHeight,
                 getWidth(), getHeight(),
                 scale, scale,
-                angle
+                angle //угол поворота объекта вокруг origin на количество градусов
         );
     }
 
