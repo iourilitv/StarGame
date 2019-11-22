@@ -31,6 +31,9 @@ public class MainShip extends Ship {
         damage = 1;
         hp = 100;
         bulletV.set(0, 0.5f);
+
+        soundVolume = 0.3f;//громкость звука
+        soundPitch = 1f;//тон звука
     }
 
     @Override

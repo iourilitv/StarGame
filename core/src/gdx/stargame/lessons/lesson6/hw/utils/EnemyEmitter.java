@@ -21,6 +21,9 @@ public class EnemyEmitter {
     private static final int SMALL_HP = 1;//значение жизни корабля
     //ускорение в начале(BEGINNING_MODE)
     private static float SMALL_BEGINNING_MODE_VY_VALUE = -0.5f;
+    //объявляем константы параметров звука маленького корабля
+    private static final float SMALL_SOUND_VOLUME = 0.2f;//уровень громкости звука
+    private static final float SMALL_SOUND_PITCH = 2;//уровень тона звука
 
     //инициируем константы для среднего корабля
     private static final float MIDDLE_BULLET_HEIGHT = 0.02f;
@@ -31,8 +34,11 @@ public class EnemyEmitter {
     private static final int MIDDLE_HP = 5;
     //ускорение в начале(BEGINNING_MODE)
     private static float MIDDLE_BEGINNING_MODE_VY_VALUE = -0.2f;
+    //объявляем константы параметров звука среднего корабля
+    private static final float MIDDLE_SOUND_VOLUME = 0.5f;//уровень громкости звука
+    private static final float MIDDLE_SOUND_PITCH = 1f;//уровень тона звука
 
-    //инициируем константы для большого корабля
+    //***инициируем константы для большого корабля***
     private static final float BIG_BULLET_HEIGHT = 0.03f;
     private static final float BIG_BULLET_VY = -0.2f;
     private static final int BIG_BULLET_DAMAGE = 10;
@@ -40,7 +46,10 @@ public class EnemyEmitter {
     private static final float BIG_HEIGHT = 0.2f;
     private static final int BIG_HP = 10;
     //ускорение в начале(BEGINNING_MODE)
-    private static float BIG_BEGINNING_MODE_VY_VALUE = -0.05f;
+    private static final float BIG_BEGINNING_MODE_VY_VALUE = -0.05f;
+    //объявляем константы параметров звука большого корабля
+    private static final float BIG_SOUND_VOLUME = 1f;//уровень громкости звука
+    private static final float BIG_SOUND_PITCH = 0.5f;//уровень тона звука
 
     private float generateInterval = 4f;//интервал между выпуском кораблей
     private float generateTimer;//таймер выпуска кораблей
@@ -91,6 +100,8 @@ public class EnemyEmitter {
                 );
                 //устанавливаем начальные параметры маленького корабля
                 enemy.setBeginningMode(SMALL_BEGINNING_MODE_VY_VALUE);
+                //устанавливаем параметры звука выстрелов маленького корабля
+                enemy.setSound(SMALL_SOUND_VOLUME, SMALL_SOUND_PITCH);
             //генерируем средние корабли с вероятностью 30%
             } else if (type < 0.8f) {
                 enemy.set(
@@ -107,6 +118,8 @@ public class EnemyEmitter {
                 );
                 //устанавливаем начальные параметры среднего корабля
                 enemy.setBeginningMode(MIDDLE_BEGINNING_MODE_VY_VALUE);
+                //устанавливаем параметры звука выстрелов среднего корабля
+                enemy.setSound(MIDDLE_SOUND_VOLUME, MIDDLE_SOUND_PITCH);
             //генерируем большие корабли с вероятностью 20%
             } else {
                 enemy.set(
@@ -121,8 +134,10 @@ public class EnemyEmitter {
                         BIG_HEIGHT,
                         BIG_HP
                 );
-                //устанавливаем начальные параметры большего корабля
+                //устанавливаем начальные параметры большого корабля
                 enemy.setBeginningMode(BIG_BEGINNING_MODE_VY_VALUE);
+                //устанавливаем параметры звука выстрелов большого корабля
+                enemy.setSound(BIG_SOUND_VOLUME, BIG_SOUND_PITCH);
             }
             enemy.pos.x = Rnd.nextFloat(worldBounds.getLeft() + enemy.getHalfWidth(),
                     worldBounds.getRight() - enemy.getHalfWidth());

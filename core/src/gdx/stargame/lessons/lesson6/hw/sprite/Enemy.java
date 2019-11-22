@@ -80,6 +80,19 @@ public class Enemy extends Ship {
     }
 
     /**
+     * Метод настройки параметров звука корабля
+     * @param soundVolume - уровень громкости звука
+     * @param soundPitch - уровень тона звука
+     */
+    public void setSound(
+            float soundVolume,
+            float soundPitch
+    ) {
+        this.soundVolume = soundVolume;
+        this.soundPitch = soundPitch;
+    }
+
+    /**
      * Метод установки параметров для начального режима
      * @param vYBeg - скорость выплывания корабля из-за экрана в начале
      */
@@ -92,4 +105,5 @@ public class Enemy extends Ship {
         // нужно чтобы стрельба началась сразу после окончания начального режима корабля
         reloadTimer = reloadInterval;
     }
+
 }
