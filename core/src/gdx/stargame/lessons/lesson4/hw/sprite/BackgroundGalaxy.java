@@ -29,13 +29,15 @@ public class BackgroundGalaxy extends Sprite {
     private Rect screenBounds = new Rect();
     //объявляем вектор скорости
     private Vector2 v;
-    //временная переменная счетчика приращения позиции фрагментов по Y от скорости сдвига
+    //временные переменные счетчиков приращения позиции фрагментов по X и Y от скорости сдвига
     // для зацикливания картинки фона
+    private float counterPosX = 0;//FIXME на будущее для режима фиксации режима корабля
     private float counterPosY = 0;
     //инициируем индексы фрагмента по X и Y, с которых начинаем прорисовку массива фрагментов
     private int startIndexX = 0;
     private int startIndexY = 0;
-    //временная переменная счетчика инкремена индекса фрагмента по Y
+    //временные переменные счетчиков инкремена индекса фрагмента по X и Y
+    private int counterX = 0;
     private int counterY = 0;
 
     public BackgroundGalaxy(TextureRegion region) {
@@ -108,7 +110,7 @@ public class BackgroundGalaxy extends Sprite {
                 //вычисляем координаты левого края фрагмента от аналогичного его текстуры
                 float x = getLeft() + tileWorldWidth * (TILES_IN_MARGE_A_SIDE_X - 1 + dX++);//FIXME  - counterPosX
 
-                System.out.println("j % tiles.length= " + j % tiles.length + ", x= " + x);
+//                System.out.println("j % tiles.length= " + j % tiles.length + ", x= " + x);
 
                 //отрисовываем фрагмент
                 batch.draw(
@@ -141,7 +143,14 @@ public class BackgroundGalaxy extends Sprite {
     }
 
     private void moveBackgroundX() {
-
+        //TODO temporarily
+        //если счетчик инкремента по X равен или больше количеству фрагментов фона по Y
+        if(counterX >= TILES_Y_NUMBER){
+            //сдвигаем фон на следующую колонку
+            startIndexX++;
+            //сбрасываем счетчик инкремента по X
+            counterX = 0;
+        }
 //        //если счетчик меньше высоты фрагмента
 //        //декрементируем счетчик на величину скорости сдвига фона, пока
 //        // он не станет равен шагу(высоте фрагмента)
@@ -176,6 +185,10 @@ public class BackgroundGalaxy extends Sprite {
             startIndexY = v.y < 0 ? counterY : TILES_Y_NUMBER - counterY;
             //обнуляем счетчик приращения
             counterPosY = 0;
+
+            //TODO temporarily
+            //инкрементируем счетчик по X
+            counterX++;
         }
     }
 }
