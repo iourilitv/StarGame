@@ -12,7 +12,6 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.List;
 
 import gdx.lessons.lesson7.hw.base.BaseScreen;
-import gdx.lessons.lesson7.hw.base.ScaledTouchUpButton;
 import gdx.lessons.lesson7.hw.math.Rect;
 import gdx.lessons.lesson7.hw.pool.BulletPool;
 import gdx.lessons.lesson7.hw.pool.EnemyPool;
@@ -121,6 +120,8 @@ public class GameScreen extends BaseScreen {
         //выгружаем из памяти пул взрывов
         explosionPool.dispose();
         enemyEmitter.dispose();
+        //выгружаем из памяти объекты анимации конца игры
+        gameOver.dispose();
         super.dispose();
     }
 
@@ -289,6 +290,10 @@ public class GameScreen extends BaseScreen {
         //обновляем главный корабль
 //        mainShip.update(delta);
 
+        //останавливаем фоновую музыку
+        music.pause();
+        //запускаем анимацию с начальными установками
+        gameOver.start();
         //вызываем метод обновления спрайта конец игры
         gameOver.update(delta);
 
