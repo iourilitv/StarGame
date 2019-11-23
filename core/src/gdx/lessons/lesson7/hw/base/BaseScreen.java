@@ -1,6 +1,6 @@
 package gdx.lessons.lesson7.hw.base;
 
-import com.badlogic.gdx.Game;
+//import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -11,11 +11,12 @@ import com.badlogic.gdx.math.Vector2;
 
 import gdx.lessons.lesson7.hw.math.MatrixUtils;
 import gdx.lessons.lesson7.hw.math.Rect;
+import gdx.lessons.lesson7.hw.StarGame;
 
 public class BaseScreen implements Screen, InputProcessor {
 
     //принимаем объект игры
-    protected Game game;
+    protected StarGame game;
 
     protected SpriteBatch batch;
     private Rect screenBounds;
@@ -27,7 +28,7 @@ public class BaseScreen implements Screen, InputProcessor {
 
     private Vector2 touch;
 
-    public BaseScreen(Game game) {
+    public BaseScreen(StarGame game) {
         this.game = game;
         this.screenBounds = new Rect();
         this.worldBounds = new Rect();
@@ -39,7 +40,10 @@ public class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public void show() {
-        System.out.println("show");
+
+        System.out.println("BaseScreen.show this.getClass().getSimpleName()= " +
+                this.getClass().getSimpleName());
+
         Gdx.input.setInputProcessor(this);
         this.batch = new SpriteBatch();
     }
@@ -51,7 +55,12 @@ public class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
-        System.out.println("resize width = " + width + " height = " + height);
+
+        System.out.println("BaseScreen.resize this.getClass().getSimpleName()= " +
+                this.getClass().getSimpleName() + ". resize width = " + width + " height = " + height);
+
+//        System.out.println("resize width = " + width + " height = " + height);
+
         screenBounds.setSize(width, height);
         screenBounds.setLeft(0);
         screenBounds.setBottom(0);
@@ -71,80 +80,125 @@ public class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public void pause() {
-        System.out.println("pause");
+
+        System.out.println("BaseScreen.pause this.getClass().getSimpleName()= " +
+                this.getClass().getSimpleName());
+
     }
 
     @Override
     public void resume() {
-        System.out.println("resume");
+
+        System.out.println("BaseScreen.resume this.getClass().getSimpleName()= " +
+                this.getClass().getSimpleName());
+
     }
 
     @Override
     public void hide() {
-        System.out.println("hide");
+
+        System.out.println("BaseScreen.hide this.getClass().getSimpleName()= " +
+                this.getClass().getSimpleName());
+
         dispose();
     }
 
     @Override
     public void dispose() {
-        System.out.println("dispose");
+
+        System.out.println("BaseScreen.dispose this.getClass().getSimpleName()= " +
+                this.getClass().getSimpleName());
+
         batch.dispose();
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        System.out.println("keyDown keycode = " + keycode);
+
+        System.out.println("BaseScreen.keyDown this.getClass().getSimpleName()= " +
+                this.getClass().getSimpleName() + ". keyDown keycode = " + keycode);
+
+//        System.out.println("keyDown keycode = " + keycode);
+
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        System.out.println("keyUp keycode = " + keycode);
+
+        System.out.println("BaseScreen.keyUp this.getClass().getSimpleName()= " +
+                this.getClass().getSimpleName() + ". keyUp keycode = " + keycode);
+
+//        System.out.println("keyUp keycode = " + keycode);
+
         return false;
     }
 
     @Override
     public boolean keyTyped(char character) {
-        System.out.println("keyTyped character = " + character);
+
+        System.out.println("BaseScreen.keyTyped this.getClass().getSimpleName()= " +
+                this.getClass().getSimpleName() + ". keyTyped character = " + character);
+
+//        System.out.println("keyTyped character = " + character);
+
         return false;
     }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        System.out.println("touchDown screenX = " + screenX + " screenY = " + screenY);
+//        System.out.println("touchDown screenX = " + screenX + " screenY = " + screenY);
         touch.set(screenX, screenBounds.getHeight() - screenY).mul(screenToWorld);
         touchDown(touch, pointer);
         return false;
     }
 
     public boolean touchDown(Vector2 touch, int pointer) {
-        System.out.println("touchDown touchX = " + touch.x + " touchY = " + touch.y);
+
+        System.out.println("BaseScreen.touchDown this.getClass().getSimpleName()= " +
+                this.getClass().getSimpleName() +
+                ". touch= " + touch);
+
+//        System.out.println("touchDown touchX = " + touch.x + " touchY = " + touch.y);
+
         return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        System.out.println("touchUp screenX = " + screenX + " screenY = " + screenY);
+//        System.out.println("touchUp screenX = " + screenX + " screenY = " + screenY);
         touch.set(screenX, screenBounds.getHeight() - screenY).mul(screenToWorld);
         touchUp(touch, pointer);
         return false;
     }
 
     public boolean touchUp(Vector2 touch, int pointer) {
-        System.out.println("touchUp touchX = " + touch.x + " touchY = " + touch.y);
+
+        System.out.println("BaseScreen.touchUp this.getClass().getSimpleName()= " +
+                this.getClass().getSimpleName() +
+                ". touch= " + touch);
+
+//        System.out.println("touchUp touchX = " + touch.x + " touchY = " + touch.y);
+
         return false;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        System.out.println("touchDragged screenX = " + screenX + " screenY = " + screenY);
+//        System.out.println("touchDragged screenX = " + screenX + " screenY = " + screenY);
         touch.set(screenX, screenBounds.getHeight() - screenY).mul(screenToWorld);
         touchDragged(touch, pointer);
         return false;
     }
 
     public boolean touchDragged(Vector2 touch, int pointer) {
-        System.out.println("touchDragged touchX = " + touch.x + " touchY = " + touch.y);
+
+        System.out.println("BaseScreen.touchDragged this.getClass().getSimpleName()= " +
+                this.getClass().getSimpleName() +
+                ". touch= " + touch);
+
+//        System.out.println("touchDragged touchX = " + touch.x + " touchY = " + touch.y);
+
         return false;
     }
 
@@ -155,7 +209,13 @@ public class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public boolean scrolled(int amount) {
-        System.out.println("scrolled amount = " + amount);
+
+        System.out.println("BaseScreen.scrolled this.getClass().getSimpleName()= " +
+                this.getClass().getSimpleName() +
+                ". scrolled amount = " + amount);
+
+//        System.out.println("scrolled amount = " + amount);
+
         return false;
     }
 }

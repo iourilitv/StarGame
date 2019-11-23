@@ -1,23 +1,27 @@
 package gdx.lessons.lesson7.hw.sprite;
 
-import com.badlogic.gdx.Game;
+//import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
+import gdx.lessons.lesson7.hw.StarGame;
 import gdx.lessons.lesson7.hw.base.ScaledTouchUpButton;
 import gdx.lessons.lesson7.hw.math.Rect;
 import gdx.lessons.lesson7.hw.screen.GameScreen;
 
 public class ButtonPlay extends ScaledTouchUpButton {
 
-    private Game game;
+    private StarGame game;
 
-    public ButtonPlay(TextureAtlas atlas, Game game) {
+    public ButtonPlay(TextureAtlas atlas, StarGame game) {
         super(atlas.findRegion("btPlay"));
         this.game = game;
     }
 
     @Override
     public void action() {
+
+        System.out.println("ButtonPlay.action");
+
         game.setScreen(new GameScreen(game));
     }
 

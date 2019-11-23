@@ -1,6 +1,6 @@
 package gdx.lessons.lesson7.hw.screen;
 
-import com.badlogic.gdx.Game;
+//import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.util.List;
 
+import gdx.lessons.lesson7.hw.StarGame;
 import gdx.lessons.lesson7.hw.base.BaseScreen;
 import gdx.lessons.lesson7.hw.math.Rect;
 import gdx.lessons.lesson7.hw.pool.BulletPool;
@@ -26,9 +27,6 @@ import gdx.lessons.lesson7.hw.sprite.Star;
 import gdx.lessons.lesson7.hw.utils.EnemyEmitter;
 
 public class GameScreen extends BaseScreen {
-
-//    //принимаем объект игры
-//    private Game game;
     //объявляем переменную для хранения статуса пауза игры
     private boolean gamePaused;
     //объявляем переменную для хранения статуса конца игры
@@ -58,7 +56,11 @@ public class GameScreen extends BaseScreen {
     //объявляем спрайт для сообщения "конец игры"
     private GameOver gameOver;
 
-    public GameScreen(Game game) {
+//    public GameScreen(Game game) {
+//        super(game);
+//    }
+
+    public GameScreen(StarGame game) {
         super(game);
     }
 
@@ -73,7 +75,7 @@ public class GameScreen extends BaseScreen {
         //инициируем спрайт для анимации "конец игры"
         gameOver = new GameOver(atlas.findRegion("message_game_over"));
         //инициируем объект кнопки "новая игра"
-        newGameButton = new ButtonNewGame(atlas, game);
+        newGameButton = new ButtonNewGame(atlas, game, this);
 
         stars = new Star[STAR_COUNT];
         for (int i = 0; i < STAR_COUNT; i++) {
@@ -149,7 +151,7 @@ public class GameScreen extends BaseScreen {
     public boolean touchUp(Vector2 touch, int pointer) {
         mainShip.touchUp(touch, pointer);
         //вызываем метод отработки отпускания нажатия кнопки NewGame
-        newGameButton.touchDown(touch, pointer);
+        newGameButton.touchUp(touch, pointer);
         return false;
     }
 
@@ -256,6 +258,8 @@ public class GameScreen extends BaseScreen {
         }
         bulletPool.drawActiveSprites(batch);
         enemyPool.drawActiveSprites(batch);
+        //отрисовываем объекты в пуле взрывов
+        explosionPool.drawActiveSprites(batch);
 
         //если игра окончена
         if(gameFinished) {
@@ -272,8 +276,6 @@ public class GameScreen extends BaseScreen {
             mainShip.draw(batch);
 
         }
-        //отрисовываем объекты в пуле взрывов
-        explosionPool.drawActiveSprites(batch);
         batch.end();
     }
 

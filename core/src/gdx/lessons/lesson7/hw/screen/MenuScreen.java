@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
+import gdx.lessons.lesson7.hw.StarGame;
 import gdx.lessons.lesson7.hw.base.BaseScreen;
 import gdx.lessons.lesson7.hw.math.Rect;
 import gdx.lessons.lesson7.hw.sprite.Background;
@@ -29,7 +30,7 @@ public class MenuScreen extends BaseScreen {
     private ButtonExit buttonExit;
     private ButtonPlay buttonPlay;
 
-    public MenuScreen(Game game) {
+    public MenuScreen(StarGame game) {
         super(game);
     }
 
