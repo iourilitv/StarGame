@@ -14,6 +14,9 @@ public class GameOver extends Sprite {
     private static final float INITIAL_ANGLE = 0f;
     //инициируем константу вектора начальной позиции спрайта
     private static final Vector2 pos0 = new Vector2(0, 0);
+    //инициируем константу начального размера спрайта
+    public static final int LAST_FRAME = 18;
+
     //инициируем переменные интервала и таймера для анимации попадания снаряда в корабль
     private float animateStartInterval = 10f;
     private float animateTimer;

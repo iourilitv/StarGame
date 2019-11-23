@@ -254,16 +254,11 @@ public class GameScreen extends BaseScreen {
         for (Star star : stars) {
             star.draw(batch);
         }
-//        mainShip.draw(batch);
         bulletPool.drawActiveSprites(batch);
         enemyPool.drawActiveSprites(batch);
 
         //если игра окончена
         if(gameFinished) {
-
-            //вызываем метод "последнего вздоха" взрывов
-            explosionPool.setExplosionEndFrame(50);//FIXME зачем здесь?
-
             //отрисовываем объект анимации конца игры
             gameOver.draw(batch);
             //если активирован флаг ожидания запуска новой игры
@@ -275,9 +270,10 @@ public class GameScreen extends BaseScreen {
         } else {
             //отрисовываем главный корабль
             mainShip.draw(batch);
-            //отрисовываем объекты в пуле взрывов
-            explosionPool.drawActiveSprites(batch);
+
         }
+        //отрисовываем объекты в пуле взрывов
+        explosionPool.drawActiveSprites(batch);
         batch.end();
     }
 
@@ -287,9 +283,8 @@ public class GameScreen extends BaseScreen {
      */
     private void updateGameOverAnimation(float delta) {
         //***дорисовываем сцену битвы***
-        //обновляем главный корабль
-//        mainShip.update(delta);
-
+        //вызываем метод "последнего вздоха" взрывов
+        explosionPool.setExplosionEndFrame(GameOver.LAST_FRAME);//FIXME зачем здесь?
         //останавливаем фоновую музыку
         music.pause();
         //запускаем анимацию с начальными установками

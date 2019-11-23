@@ -33,24 +33,19 @@ public class ExplosionPool extends SpritesPool<Explosion> {
         super.dispose();
     }
 
+    /**
+     * Метод устанавливает кадр "последнего вздоха" у всех активных объектов взрывов.
+     * @param frame - заданный кадр "последнего вздоха"
+     */
     public void setExplosionEndFrame(int frame){
-        int i = 0;
-        //TODO temporarily
-        if(!activeObjects.isEmpty()){
-            for (Explosion exp: activeObjects) {
-                while(i++ < frame){
 
-                    exp.getFrame();
-                }
+        //если в коллекции активных взрывов есть объекты
+        if(!activeObjects.isEmpty()){
+            //пролистываем коллекцию
+            for (Explosion exp: activeObjects) {
+                //устанавливаем всем объектам взрывов кадр "последнего вздоха"
+                exp.setFrame(frame);
             }
         }
-
-//        for (int i = 0; i < frame; i++) {
-//            exp.get
-//        }
-//        System.out.println("this.activeObjects" + activeObjects.toString()
-//                + " frame= " + activeObjects.get(0).getFrame());
-
-
     }
 }
