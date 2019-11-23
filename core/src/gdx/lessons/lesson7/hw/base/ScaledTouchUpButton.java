@@ -8,6 +8,9 @@ public abstract class ScaledTouchUpButton extends Sprite {
     private int pointer;
     private boolean pressed;
 
+    //объявляем переменую флага показа кнопки на экране
+    private boolean isShowing;
+
     public ScaledTouchUpButton(TextureRegion region) {
         super(region);
     }
@@ -37,4 +40,14 @@ public abstract class ScaledTouchUpButton extends Sprite {
     }
 
     public abstract void action();
+
+    //геттер на переменую флага показа кнопки на экране
+    public boolean isShowing() {
+        return isShowing;
+    }
+
+    //сеттер на переменую флага показа кнопки на экране
+    public void setShowing(boolean showing) {
+        isShowing = showing;
+    }
 }

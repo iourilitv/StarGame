@@ -32,4 +32,25 @@ public class ExplosionPool extends SpritesPool<Explosion> {
         sound.dispose();
         super.dispose();
     }
+
+    public void setExplosionEndFrame(int frame){
+        int i = 0;
+        //TODO temporarily
+        if(!activeObjects.isEmpty()){
+            for (Explosion exp: activeObjects) {
+                while(i++ < frame){
+
+                    exp.getFrame();
+                }
+            }
+        }
+
+//        for (int i = 0; i < frame; i++) {
+//            exp.get
+//        }
+//        System.out.println("this.activeObjects" + activeObjects.toString()
+//                + " frame= " + activeObjects.get(0).getFrame());
+
+
+    }
 }

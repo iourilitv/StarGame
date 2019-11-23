@@ -1,5 +1,6 @@
 package gdx.lessons.lesson7.hw.base;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -13,6 +14,9 @@ import gdx.lessons.lesson7.hw.math.Rect;
 
 public class BaseScreen implements Screen, InputProcessor {
 
+    //принимаем объект игры
+    protected Game game;
+
     protected SpriteBatch batch;
     private Rect screenBounds;
     protected Rect worldBounds;
@@ -23,7 +27,8 @@ public class BaseScreen implements Screen, InputProcessor {
 
     private Vector2 touch;
 
-    public BaseScreen() {
+    public BaseScreen(Game game) {
+        this.game = game;
         this.screenBounds = new Rect();
         this.worldBounds = new Rect();
         this.glBounds = new Rect(0, 0, 1f, 1f);

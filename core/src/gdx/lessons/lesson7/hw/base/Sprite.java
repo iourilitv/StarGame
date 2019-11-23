@@ -94,4 +94,12 @@ public class Sprite extends Rect {
     public boolean isDestroyed() {
         return destroyed;
     }
+
+    public int getFrame() {
+        return frame;
+    }
+
+    public void setFrame(int frame) {
+        this.frame = frame;
+    }
 }

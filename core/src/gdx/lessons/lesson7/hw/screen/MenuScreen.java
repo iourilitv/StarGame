@@ -19,7 +19,7 @@ public class MenuScreen extends BaseScreen {
 
     private static final int STAR_COUNT = 256;
 
-    private Game game;
+//    private Game game;
 
     private Texture bg;
     private TextureAtlas atlas;
@@ -30,7 +30,7 @@ public class MenuScreen extends BaseScreen {
     private ButtonPlay buttonPlay;
 
     public MenuScreen(Game game) {
-        this.game = game;
+        super(game);
     }
 
     @Override

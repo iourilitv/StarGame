@@ -1,5 +1,6 @@
 package gdx.lessons.lesson7.hw.screen;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -11,23 +12,36 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.List;
 
 import gdx.lessons.lesson7.hw.base.BaseScreen;
+import gdx.lessons.lesson7.hw.base.ScaledTouchUpButton;
 import gdx.lessons.lesson7.hw.math.Rect;
 import gdx.lessons.lesson7.hw.pool.BulletPool;
 import gdx.lessons.lesson7.hw.pool.EnemyPool;
 import gdx.lessons.lesson7.hw.pool.ExplosionPool;
 import gdx.lessons.lesson7.hw.sprite.Background;
 import gdx.lessons.lesson7.hw.sprite.Bullet;
+import gdx.lessons.lesson7.hw.sprite.ButtonNewGame;
 import gdx.lessons.lesson7.hw.sprite.Enemy;
+import gdx.lessons.lesson7.hw.sprite.GameOver;
 import gdx.lessons.lesson7.hw.sprite.MainShip;
 import gdx.lessons.lesson7.hw.sprite.Star;
 import gdx.lessons.lesson7.hw.utils.EnemyEmitter;
 
 public class GameScreen extends BaseScreen {
 
+//    //принимаем объект игры
+//    private Game game;
+    //объявляем переменную для хранения статуса пауза игры
+    private boolean gamePaused;
+    //объявляем переменную для хранения статуса конца игры
+    private boolean gameFinished;
+
     private static final int STAR_COUNT = 64;
 
     private Texture bg;
     private TextureAtlas atlas;
+
+    //объявляем регион для картинки "новая игра"
+    private ButtonNewGame newGameButton;
 
     private Music music;
 
@@ -42,6 +56,13 @@ public class GameScreen extends BaseScreen {
 
     private EnemyEmitter enemyEmitter;
 
+    //объявляем спрайт для сообщения "конец игры"
+    private GameOver gameOver;
+
+    public GameScreen(Game game) {
+        super(game);
+    }
+
     @Override
     public void show() {
         super.show();
@@ -49,6 +70,12 @@ public class GameScreen extends BaseScreen {
         bg = new Texture("textures/bg.png");
         background = new Background(new TextureRegion(bg));
         atlas = new TextureAtlas("textures/mainAtlas.tpack");
+
+        //инициируем спрайт для анимации "конец игры"
+        gameOver = new GameOver(atlas.findRegion("message_game_over"));
+        //инициируем объект кнопки "новая игра"
+        newGameButton = new ButtonNewGame(atlas, game);
+
         stars = new Star[STAR_COUNT];
         for (int i = 0; i < STAR_COUNT; i++) {
             stars[i] = new Star(atlas);
@@ -112,25 +139,50 @@ public class GameScreen extends BaseScreen {
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
         mainShip.touchDown(touch, pointer);
+        //вызываем метод отработки нажатия кнопки NewGame
+        newGameButton.touchDown(touch, pointer);
         return false;
     }
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer) {
         mainShip.touchUp(touch, pointer);
+        //вызываем метод отработки отпускания нажатия кнопки NewGame
+        newGameButton.touchDown(touch, pointer);
         return false;
     }
 
     private void update(float delta) {
-        for (Star star : stars) {
-            star.update(delta);
+        //если игра поставлена на паузе
+        if(gamePaused) {
+            //выходим, нивего не обновляя
+            return;
         }
-        mainShip.update(delta);
-        bulletPool.updateActiveSprites(delta);
-        enemyPool.updateActiveSprites(delta);
-        //обновляем пул взрывов
-        explosionPool.updateActiveSprites(delta);
-        enemyEmitter.generate(delta);
+        //если игра окончена
+        if (gameFinished){
+            //запускаем метод обновления анимации окончания игры  и выходим
+            updateGameOverAnimation(delta);
+            return;
+        }
+        //если игра не на паузе или главный корабль еще живой, обновляем все элементы
+        if(!mainShip.isDestroyed()) {
+            for (Star star : stars) {
+                star.update(delta);
+            }
+            mainShip.update(delta);
+            bulletPool.updateActiveSprites(delta);
+            enemyPool.updateActiveSprites(delta);
+            enemyEmitter.generate(delta);
+            //обновляем пул взрывов
+            explosionPool.updateActiveSprites(delta);
+        }
+        //если игра на паузе или окончена
+        else {
+            //устанавливаем состояние конец игры
+            gameFinished = true;
+        }
+
+
     }
 
     /**
@@ -201,15 +253,53 @@ public class GameScreen extends BaseScreen {
         for (Star star : stars) {
             star.draw(batch);
         }
-        //если главный корабль еще живой
-        if (!mainShip.isDestroyed()) {
-            //отрисовываем главный корабль
-            mainShip.draw(batch);
-        }
+//        mainShip.draw(batch);
         bulletPool.drawActiveSprites(batch);
         enemyPool.drawActiveSprites(batch);
-        //отрисовываем объекты в пуле взрывов
-        explosionPool.drawActiveSprites(batch);
+
+        //если игра окончена
+        if(gameFinished) {
+
+            //вызываем метод "последнего вздоха" взрывов
+            explosionPool.setExplosionEndFrame(50);//FIXME зачем здесь?
+
+            //отрисовываем объект анимации конца игры
+            gameOver.draw(batch);
+            //если активирован флаг ожидания запуска новой игры
+            if(newGameButton.isShowing()){
+                //отрисовываем объект кнопки NewGame
+                newGameButton.draw(batch);
+            }
+        //если игра еще не окончена
+        } else {
+            //отрисовываем главный корабль
+            mainShip.draw(batch);
+            //отрисовываем объекты в пуле взрывов
+            explosionPool.drawActiveSprites(batch);
+        }
         batch.end();
+    }
+
+    /**
+     * Метод обновления анимации окончания игры
+     * @param delta - время между кадрами
+     */
+    private void updateGameOverAnimation(float delta) {
+        //***дорисовываем сцену битвы***
+        //обновляем главный корабль
+//        mainShip.update(delta);
+
+        //вызываем метод обновления спрайта конец игры
+        gameOver.update(delta);
+
+        //если анимация конца игры закончена
+        if(gameOver.isDestroyed()){
+            //вызываем метод первоначальной установки параметров кнопки на экран
+            newGameButton.resize(worldBounds);
+            //взводим меркер отображения кнопки newGame на экране
+            newGameButton.setShowing(true);
+            //вызываем метод обновления кнопки NewGame
+            newGameButton.update(delta);
+        }
     }
 }

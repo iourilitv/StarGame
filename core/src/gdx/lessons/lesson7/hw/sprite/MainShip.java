@@ -32,7 +32,7 @@ public class MainShip extends Ship {
         reloadInterval = 0.2f;
         bulletHeight = 0.01f;
         damage = 1;
-        hp = 100;
+        hp = 1;//100;
         bulletV.set(0, 0.5f);
     }
 
@@ -57,6 +57,11 @@ public class MainShip extends Ship {
     }
 
     public void keyDown(int keycode) {
+        //если гланый корабль удален
+        if(isDestroyed()){
+            //выходим, игнорируя событие управления корабля
+            return;
+        }
         switch (keycode) {
             case Input.Keys.D:
             case Input.Keys.RIGHT:
@@ -75,6 +80,11 @@ public class MainShip extends Ship {
     }
 
     public void keyUp(int keycode) {
+        //если гланый корабль удален
+        if(isDestroyed()){
+            //выходим, игнорируя событие управления корабля
+            return;
+        }
         switch (keycode) {
             case Input.Keys.D:
             case Input.Keys.RIGHT:
@@ -99,6 +109,12 @@ public class MainShip extends Ship {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
+        //если гланый корабль удален
+        if(isDestroyed()){
+            //выходим, игнорируя событие управления корабля
+            return false;
+        }
+
         if (touch.x < worldBounds.pos.x) {
             if (leftPointer != INVALID_POINTER) return false;
             leftPointer = pointer;
@@ -113,6 +129,11 @@ public class MainShip extends Ship {
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer) {
+        //если гланый корабль удален
+        if(isDestroyed()){
+            //выходим, игнорируя событие управления корабля
+            return false;
+        }
         if (pointer == leftPointer) {
             leftPointer = INVALID_POINTER;
             if (rightPointer != INVALID_POINTER) {
