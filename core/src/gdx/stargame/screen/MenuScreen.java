@@ -13,17 +13,19 @@ import gdx.stargame.math.Rect;
 import gdx.stargame.sprite.Background;
 import gdx.stargame.sprite.ButtonExit;
 import gdx.stargame.sprite.ButtonPlay;
-import gdx.stargame.sprite.Star;
+//import gdx.stargame.sprite.Star;
 
 public class MenuScreen extends BaseScreen {
 
-    private static final int STAR_COUNT = 256;
+//    private static final int STAR_COUNT = 256;
 
     private Texture bg;
     private TextureAtlas atlas;
 
     private Background background;
-    private Star[] stars;
+
+//    private Star[] stars;
+
     private ButtonExit buttonExit;
     private ButtonPlay buttonPlay;
 
@@ -34,13 +36,18 @@ public class MenuScreen extends BaseScreen {
     @Override
     public void show() {
         super.show();
-        bg = new Texture("textures/bg.png");
+
+//        bg = new Texture("textures/bg.png");background-v-512-1024
+
+        bg = new Texture("textures/galaxy02-1800x2880.jpg");
         background = new Background(new TextureRegion(bg));
         atlas = new TextureAtlas("textures/menuAtlas.tpack");
-        stars = new Star[STAR_COUNT];
-        for (int i = 0; i < STAR_COUNT; i++) {
-            stars[i] = new Star(atlas);
-        }
+
+//        stars = new Star[STAR_COUNT];
+//        for (int i = 0; i < STAR_COUNT; i++) {
+//            stars[i] = new Star(atlas);
+//        }
+
         buttonExit = new ButtonExit(atlas, this);
         buttonPlay = new ButtonPlay(atlas, this);
     }
@@ -63,9 +70,11 @@ public class MenuScreen extends BaseScreen {
     public void resize(Rect worldBounds) {
         super.resize(worldBounds);
         background.resize(worldBounds);
-        for (Star star : stars) {
-            star.resize(worldBounds);
-        }
+
+//        for (Star star : stars) {
+//            star.resize(worldBounds);
+//        }
+
         buttonExit.resize(worldBounds);
         buttonPlay.resize(worldBounds);
     }
@@ -85,9 +94,11 @@ public class MenuScreen extends BaseScreen {
     }
 
     private void update(float delta) {
-        for (Star star : stars) {
-            star.update(delta);
-        }
+
+//        for (Star star : stars) {
+//            star.update(delta);
+//        }
+
     }
 
     private void draw() {
@@ -95,9 +106,11 @@ public class MenuScreen extends BaseScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         background.draw(batch);
-        for (Star star : stars) {
-            star.draw(batch);
-        }
+
+//        for (Star star : stars) {
+//            star.draw(batch);
+//        }
+
         buttonExit.draw(batch);
         buttonPlay.draw(batch);
         batch.end();
