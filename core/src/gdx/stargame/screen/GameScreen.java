@@ -10,13 +10,15 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.util.List;
 
+import gdx.stargame.constants.ScreenSettings;
+import gdx.stargame.sprite.BackgroundGalaxy;
 import gdx.stargame.StarGame;
 import gdx.stargame.base.BaseScreen;
 import gdx.stargame.math.Rect;
 import gdx.stargame.pool.BulletPool;
 import gdx.stargame.pool.EnemyPool;
 import gdx.stargame.pool.ExplosionPool;
-import gdx.stargame.sprite.Background;
+//import gdx.stargame.sprite.Background;
 import gdx.stargame.sprite.Bullet;
 import gdx.stargame.sprite.ButtonNewGame;
 import gdx.stargame.sprite.Enemy;
@@ -31,18 +33,23 @@ public class GameScreen extends BaseScreen {
     //объявляем переменную для хранения статуса конца игры
     private boolean gameFinished;
 
-    private static final int STAR_COUNT = 64;
+//    private static final int STAR_COUNT = 64;
 
-    private Texture bg;
+    //объявляем тектуру картинки фона с галактикой
+    private Texture bgGalaxy;
+//    private Texture bg;
+
     private TextureAtlas atlas;
 
     //объявляем регион для картинки "новая игра"
     private ButtonNewGame newGameButton;
 
     private Music music;
+    //объявляем объект спрайта фона
+//    private Background background;
+    private BackgroundGalaxy background;
 
-    private Background background;
-    private Star[] stars;
+//    private Star[] stars;
     private MainShip mainShip;
 
     private BulletPool bulletPool;
@@ -63,8 +70,16 @@ public class GameScreen extends BaseScreen {
     public void show() {
         super.show();
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
-        bg = new Texture("textures/bg.png");
-        background = new Background(new TextureRegion(bg));
+
+//        bg = new Texture("textures/bg.png");
+//        background = new Background(new TextureRegion(bg));
+
+        //инициируем текстуру картинки фона галактики
+        bgGalaxy = new Texture(ScreenSettings.CURRENT_BACKGROUND.getPicture().sourceName());
+        //инициируем объект региона всей картинки фона
+        // с дефолтным константным вектором скорости сдвига
+        background = new BackgroundGalaxy(new TextureRegion(bgGalaxy));
+
         atlas = new TextureAtlas("textures/mainAtlas.tpack");
 
         //инициируем спрайт для анимации "конец игры"
@@ -72,10 +87,10 @@ public class GameScreen extends BaseScreen {
         //инициируем объект кнопки "новая игра"
         newGameButton = new ButtonNewGame(atlas, this);
 
-        stars = new Star[STAR_COUNT];
-        for (int i = 0; i < STAR_COUNT; i++) {
-            stars[i] = new Star(atlas);
-        }
+//        stars = new Star[STAR_COUNT];
+//        for (int i = 0; i < STAR_COUNT; i++) {
+//            stars[i] = new Star(atlas);
+//        }
         bulletPool = new BulletPool();
         //инициируем объект пула взрывов
         explosionPool = new ExplosionPool(atlas);
@@ -100,15 +115,20 @@ public class GameScreen extends BaseScreen {
     @Override
     public void resize(Rect worldBounds) {
         background.resize(worldBounds);
-        for (Star star : stars) {
-            star.resize(worldBounds);
-        }
+
+//        for (Star star : stars) {
+//            star.resize(worldBounds);
+//        }
+
         mainShip.resize(worldBounds);
     }
 
     @Override
     public void dispose() {
-        bg.dispose();
+
+//        bg.dispose();
+
+        bgGalaxy.dispose();
         atlas.dispose();
         music.dispose();
         mainShip.dispose();
@@ -164,9 +184,13 @@ public class GameScreen extends BaseScreen {
         }
         //если игра не на паузе или главный корабль еще живой, обновляем все элементы
         if(!mainShip.isDestroyed()) {
-            for (Star star : stars) {
-                star.update(delta);
-            }
+
+//            for (Star star : stars) {
+//                star.update(delta);
+//            }
+            //вызываем методы обновления фона со звездами
+            background.update(delta);
+
             mainShip.update(delta);
             bulletPool.updateActiveSprites(delta);
             enemyPool.updateActiveSprites(delta);
@@ -247,10 +271,14 @@ public class GameScreen extends BaseScreen {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
+        //вызываем методы прорисовки у каждого спрайта
         background.draw(batch);
-        for (Star star : stars) {
-            star.draw(batch);
-        }
+
+//        background.draw(batch);
+//        for (Star star : stars) {
+//            star.draw(batch);
+//        }
+
         bulletPool.drawActiveSprites(batch);
         enemyPool.drawActiveSprites(batch);
         //отрисовываем объекты в пуле взрывов
