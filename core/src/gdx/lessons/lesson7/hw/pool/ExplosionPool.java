@@ -38,7 +38,6 @@ public class ExplosionPool extends SpritesPool<Explosion> {
      * @param frame - заданный кадр "последнего вздоха"
      */
     public void setExplosionEndFrame(int frame){
-
         //если в коллекции активных взрывов есть объекты
         if(!activeObjects.isEmpty()){
             //пролистываем коллекцию

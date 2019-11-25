@@ -1,6 +1,5 @@
 package gdx.lessons.lesson7.hw.screen;
 
-//import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -56,10 +55,6 @@ public class GameScreen extends BaseScreen {
     //объявляем спрайт для сообщения "конец игры"
     private GameOver gameOver;
 
-//    public GameScreen(Game game) {
-//        super(game);
-//    }
-
     public GameScreen(StarGame game) {
         super(game);
     }
@@ -75,7 +70,8 @@ public class GameScreen extends BaseScreen {
         //инициируем спрайт для анимации "конец игры"
         gameOver = new GameOver(atlas.findRegion("message_game_over"));
         //инициируем объект кнопки "новая игра"
-        newGameButton = new ButtonNewGame(atlas, game, this);
+//        newGameButton = new ButtonNewGame(atlas, game, this);
+        newGameButton = new ButtonNewGame(atlas, this);
 
         stars = new Star[STAR_COUNT];
         for (int i = 0; i < STAR_COUNT; i++) {
@@ -274,7 +270,6 @@ public class GameScreen extends BaseScreen {
         } else {
             //отрисовываем главный корабль
             mainShip.draw(batch);
-
         }
         batch.end();
     }
@@ -286,7 +281,7 @@ public class GameScreen extends BaseScreen {
     private void updateGameOverAnimation(float delta) {
         //***дорисовываем сцену битвы***
         //вызываем метод "последнего вздоха" взрывов
-        explosionPool.setExplosionEndFrame(GameOver.LAST_FRAME);//FIXME зачем здесь?
+        explosionPool.setExplosionEndFrame(GameOver.LAST_FRAME);
         //останавливаем фоновую музыку
         music.pause();
         //запускаем анимацию с начальными установками

@@ -1,6 +1,5 @@
 package gdx.lessons.lesson7.hw.base;
 
-//import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -14,7 +13,6 @@ import gdx.lessons.lesson7.hw.math.Rect;
 import gdx.lessons.lesson7.hw.StarGame;
 
 public class BaseScreen implements Screen, InputProcessor {
-
     //принимаем объект игры
     protected StarGame game;
 
@@ -58,8 +56,6 @@ public class BaseScreen implements Screen, InputProcessor {
 
         System.out.println("BaseScreen.resize this.getClass().getSimpleName()= " +
                 this.getClass().getSimpleName() + ". resize width = " + width + " height = " + height);
-
-//        System.out.println("resize width = " + width + " height = " + height);
 
         screenBounds.setSize(width, height);
         screenBounds.setLeft(0);
@@ -118,8 +114,6 @@ public class BaseScreen implements Screen, InputProcessor {
         System.out.println("BaseScreen.keyDown this.getClass().getSimpleName()= " +
                 this.getClass().getSimpleName() + ". keyDown keycode = " + keycode);
 
-//        System.out.println("keyDown keycode = " + keycode);
-
         return false;
     }
 
@@ -129,8 +123,6 @@ public class BaseScreen implements Screen, InputProcessor {
         System.out.println("BaseScreen.keyUp this.getClass().getSimpleName()= " +
                 this.getClass().getSimpleName() + ". keyUp keycode = " + keycode);
 
-//        System.out.println("keyUp keycode = " + keycode);
-
         return false;
     }
 
@@ -139,8 +131,6 @@ public class BaseScreen implements Screen, InputProcessor {
 
         System.out.println("BaseScreen.keyTyped this.getClass().getSimpleName()= " +
                 this.getClass().getSimpleName() + ". keyTyped character = " + character);
-
-//        System.out.println("keyTyped character = " + character);
 
         return false;
     }
@@ -159,8 +149,6 @@ public class BaseScreen implements Screen, InputProcessor {
                 this.getClass().getSimpleName() +
                 ". touch= " + touch);
 
-//        System.out.println("touchDown touchX = " + touch.x + " touchY = " + touch.y);
-
         return false;
     }
 
@@ -177,8 +165,6 @@ public class BaseScreen implements Screen, InputProcessor {
         System.out.println("BaseScreen.touchUp this.getClass().getSimpleName()= " +
                 this.getClass().getSimpleName() +
                 ". touch= " + touch);
-
-//        System.out.println("touchUp touchX = " + touch.x + " touchY = " + touch.y);
 
         return false;
     }
@@ -197,8 +183,6 @@ public class BaseScreen implements Screen, InputProcessor {
                 this.getClass().getSimpleName() +
                 ". touch= " + touch);
 
-//        System.out.println("touchDragged touchX = " + touch.x + " touchY = " + touch.y);
-
         return false;
     }
 
@@ -214,8 +198,10 @@ public class BaseScreen implements Screen, InputProcessor {
                 this.getClass().getSimpleName() +
                 ". scrolled amount = " + amount);
 
-//        System.out.println("scrolled amount = " + amount);
-
         return false;
+    }
+
+    public StarGame getGame() {
+        return game;
     }
 }

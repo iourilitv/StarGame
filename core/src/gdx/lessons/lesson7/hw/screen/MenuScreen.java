@@ -1,6 +1,5 @@
 package gdx.lessons.lesson7.hw.screen;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -19,8 +18,6 @@ import gdx.lessons.lesson7.hw.sprite.Star;
 public class MenuScreen extends BaseScreen {
 
     private static final int STAR_COUNT = 256;
-
-//    private Game game;
 
     private Texture bg;
     private TextureAtlas atlas;
@@ -44,8 +41,10 @@ public class MenuScreen extends BaseScreen {
         for (int i = 0; i < STAR_COUNT; i++) {
             stars[i] = new Star(atlas);
         }
-        buttonExit = new ButtonExit(atlas);
-        buttonPlay = new ButtonPlay(atlas, game);
+//        buttonExit = new ButtonExit(atlas);
+//        buttonPlay = new ButtonPlay(atlas, game);
+        buttonExit = new ButtonExit(atlas, this);
+        buttonPlay = new ButtonPlay(atlas, this);
     }
 
     @Override

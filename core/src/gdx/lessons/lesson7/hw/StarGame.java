@@ -5,7 +5,6 @@ import com.badlogic.gdx.Screen;
 
 import gdx.lessons.lesson7.hw.base.BaseScreen;
 import gdx.lessons.lesson7.hw.screen.MenuScreen;
-import gdx.lessons.lesson7.hw.screen.GameScreen;
 
 /**
  * Вебинар.20191028_GB-Разработка_игры_на_LibGDX.Преподаватель: Алексей Кутепов
@@ -22,7 +21,7 @@ import gdx.lessons.lesson7.hw.screen.GameScreen;
  *    взрывы за мораживаются с статичной картинке, запускается музыка(зациклена) и появляется
  *    сообщение GameOver, которое через паузу начинает крутиться и уменьшаться. После исчезновения
  *    сообщения GameOver на его месте появляется кнопка NewGame. *
- * 2*. Реализовать кнопку NEW_GAME при нажатии на которую будет начинаться новая игра.
+ * DONE 2*. Реализовать кнопку NEW_GAME при нажатии на которую будет начинаться новая игра.
  *    Кнопку выводить вместе с надписью Game Over
  */
 public class StarGame extends Game {
@@ -31,14 +30,4 @@ public class StarGame extends Game {
 	public void create() {
 		setScreen(new MenuScreen(this));
 	}
-
-//	public void startNextGame(BaseScreen screen){
-//
-//        System.out.println("StarGame.startNextGame screen.getClass().getSimpleName()= " +
-//                screen.getClass().getSimpleName());
-//
-////	    screen.dispose();
-////        screen.hide();
-//        setScreen(new GameScreen(this));
-//    }
 }
