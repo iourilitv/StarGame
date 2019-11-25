@@ -3,8 +3,9 @@ package gdx.stargame.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-import gdx.lessons.lesson7.hw.StarGame;
+//import gdx.lessons.lesson7.hw.StarGame;
 //import gdx.lessons.lesson7.classfiles.StarGame;
+import gdx.stargame.StarGame;
 
 public class DesktopLauncher {
     public static void main (String[] arg) {
