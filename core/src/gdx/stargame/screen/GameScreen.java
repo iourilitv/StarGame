@@ -9,10 +9,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.List;
-
-//import gdx.stargame.constants.ScreenSettings;
-//import gdx.stargame.constants.Source;
-
 import gdx.stargame.sprite.BackgroundGalaxy;
 import gdx.stargame.StarGame;
 import gdx.stargame.base.BaseScreen;
@@ -63,11 +59,8 @@ public class GameScreen extends BaseScreen {
     public void show() {
         super.show();
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
-
         //инициируем текстуру картинки фона галактики
         bgGalaxy = new Texture("textures/galaxy03-2610x3960.jpg");
-//        bgGalaxy = new Texture(Source.GALAXY03_2610X3960.sourceName());
-
         //инициируем объект региона всей картинки фона
         // с дефолтным константным вектором скорости сдвига
         background = new BackgroundGalaxy(new TextureRegion(bgGalaxy));

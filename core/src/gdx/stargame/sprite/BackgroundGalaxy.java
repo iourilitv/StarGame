@@ -59,7 +59,7 @@ public class BackgroundGalaxy extends Sprite {
     }
 
     private void init(Vector2 shiftVelocity){
-        //если параметры противоречат друг другу//FIXME add condition for X
+        //если параметры противоречат друг другу
         if(TILES_IN_MARGE_A_SIDE_X < 1 ||
                 TILES_X_NUMBER < (TILES_IN_MARGE_A_SIDE_X * 2 + 1) ||
                 TILES_IN_MARGE_A_SIDE_Y < 1 ||
@@ -90,13 +90,6 @@ public class BackgroundGalaxy extends Sprite {
         setHeight(tileWorldHeight * TILES_Y_NUMBER);
         //устанавливаем начальную позицию текстуры в ноль в мировых координатах(центр скрина)
         this.pos.set(worldBounds.pos);
-
-        //TODO temporarily
-        System.out.println("2BgGal.resize Width= " + getWidth() +
-                ", Height= " + getHeight());
-        System.out.println("BgGal.resize getLeft()= " + getLeft() +
-                ", .getBottom()= " + getBottom());
-
     }
 
     @Override
@@ -113,9 +106,6 @@ public class BackgroundGalaxy extends Sprite {
             for (int j = startIndexX; j < startIndexX + tiles[0].length; j++) {
                 //вычисляем координаты левого края фрагмента от аналогичного его текстуры
                 float x = getLeft() + tileWorldWidth * (TILES_IN_MARGE_A_SIDE_X - 1 + dX++);//FIXME  - counterPosX
-
-//                System.out.println("j % tiles.length= " + j % tiles.length + ", x= " + x);
-
                 //отрисовываем фрагмент
                 batch.draw(
                         //текстура регион фрагмента фона
@@ -155,20 +145,6 @@ public class BackgroundGalaxy extends Sprite {
             //сбрасываем счетчик инкремента по X
             counterX = 0;
         }
-//        //если счетчик меньше высоты фрагмента
-//        //декрементируем счетчик на величину скорости сдвига фона, пока
-//        // он не станет равен шагу(высоте фрагмента)
-//        if(Math.abs(counterPosX += v.x) >= tileWorldWidth){
-//            //инкрементируем стартовый индекс
-//            //и берем остаток по количеству арагментов по вертикали
-//            counterX = ++counterX % TILES_X_NUMBER;
-//            //если заданная скорость движения фона по вертикали отрицательная,
-//            // двигаем фон вверх(корабль летит вниз)
-//            //если положительная, двигаем фон вниз(корабль летит вверх)
-//            startIndexX = v.x < 0 ? counterX : TILES_X_NUMBER - counterX;
-//            //обнуляем счетчик приращения
-//            counterPosX = 0;
-//        }
     }
 
     /**
