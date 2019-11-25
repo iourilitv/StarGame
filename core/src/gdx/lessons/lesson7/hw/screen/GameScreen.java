@@ -70,7 +70,6 @@ public class GameScreen extends BaseScreen {
         //инициируем спрайт для анимации "конец игры"
         gameOver = new GameOver(atlas.findRegion("message_game_over"));
         //инициируем объект кнопки "новая игра"
-//        newGameButton = new ButtonNewGame(atlas, game, this);
         newGameButton = new ButtonNewGame(atlas, this);
 
         stars = new Star[STAR_COUNT];

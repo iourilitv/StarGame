@@ -41,8 +41,6 @@ public class MenuScreen extends BaseScreen {
         for (int i = 0; i < STAR_COUNT; i++) {
             stars[i] = new Star(atlas);
         }
-//        buttonExit = new ButtonExit(atlas);
-//        buttonPlay = new ButtonPlay(atlas, game);
         buttonExit = new ButtonExit(atlas, this);
         buttonPlay = new ButtonPlay(atlas, this);
     }

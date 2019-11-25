@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import gdx.lessons.lesson7.hw.StarGame;
-//import gdx.lessons.lesson7.hw.screen.GameScreen;
 
 public abstract class ScaledTouchUpButton extends Sprite {
 
@@ -18,10 +17,6 @@ public abstract class ScaledTouchUpButton extends Sprite {
 
     //объявляем переменую флага показа кнопки на экране
     private boolean isShowing;
-
-//    public ScaledTouchUpButton(TextureRegion region) {
-//        super(region);
-//    }
 
     public ScaledTouchUpButton(TextureRegion region, BaseScreen screen) {
         super(region);

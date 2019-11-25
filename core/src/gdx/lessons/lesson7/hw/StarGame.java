@@ -1,9 +1,7 @@
 package gdx.lessons.lesson7.hw;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
 
-import gdx.lessons.lesson7.hw.base.BaseScreen;
 import gdx.lessons.lesson7.hw.screen.MenuScreen;
 
 /**
