@@ -54,6 +54,9 @@ public abstract class SpritesPool<T extends Sprite> {
         }
     }
 
+    /**
+     * Метод очистки коллекции активных спрайтов(переноса в коллекцию неактивных).
+     */
     public void freeAllActiveSprites() {
         freeObjects.addAll(activeObjects);
         activeObjects.clear();
