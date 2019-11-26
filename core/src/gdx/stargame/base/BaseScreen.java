@@ -108,6 +108,12 @@ public class BaseScreen implements Screen, InputProcessor {
         batch.dispose();
     }
 
+    /**
+     * Метод организует режим начала новой игры.
+     */
+    public void startNewGame() {
+    }
+
     @Override
     public boolean keyDown(int keycode) {
 

@@ -17,20 +17,42 @@ public class ButtonNewGame extends ScaledTouchUpButton {
     //инициируем константу вектора начальной позиции спрайта
     private static final Vector2 pos0 = new Vector2(0, 0);
 
+    //передаем объект скрина(экрана)
+    private BaseScreen screen;
+
+    /**
+     * Конструктор
+     * @param atlas - атлас текстуры
+     * @param screen - объект скрина(экрана)
+     */
     public ButtonNewGame(TextureAtlas atlas, BaseScreen screen) {
+        //передаем в родительский класс текструру-регион картинки кнопки "NewGame"
         super(atlas.findRegion("button_new_game"), screen);
+        this.screen = screen;
     }
 
-    @Override
-    public void action() {
-        //запускаем новую игру
-        game.setScreen(new GameScreen(game));
-    }
-
+    /**
+     * Метод установки размера и позиции кнопки
+     * @param worldBounds - прямоугольник игровго мира в мировых координатах
+     */
     @Override
     public void resize(Rect worldBounds) {
+        //устанавливаем размер кнопки по ее заданной высоте
         setHeightProportion(INITIAL_HEIGHT);
+        //устанавливаем кнопку(центр кнопки) по центру игрового мира
         pos.set(pos0);
+    }
+
+    /**
+     * Метод отбрабатывает событие касание или клика на кнопку "NewGame"
+     */
+    @Override
+    public void action() {
+//        //запускаем новую игру
+//        game.setScreen(new GameScreen(game));//TODO delete
+
+        //вызываем метод в сткрине, чтобы начать новую игру
+        screen.startNewGame();
     }
 
 }
