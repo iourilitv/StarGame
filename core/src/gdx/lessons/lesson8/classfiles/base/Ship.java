@@ -73,10 +73,18 @@ public abstract class Ship extends Sprite {
         return damage;
     }
 
+    /**
+     * Геттер на значение жизни корабля.
+     * @return - значение жизни корабля
+     */
     public int getHp() {
         return hp;
     }
 
+    /**
+     * Сеттер на значение жизни корабля.
+     * @param hp - новое значение жизни корабля
+     */
     public void setHp(int hp) {
         this.hp = hp;
     }
