@@ -7,6 +7,9 @@ import com.badlogic.gdx.math.Vector2;
 
 import gdx.stargame.base.Sprite;
 
+/**
+ * Класс организует режим "конец игры".
+ */
 public class GameOver extends Sprite {
     //инициируем константу начального размера спрайта
     private static final float INITIAL_HEIGHT = 0.05f;
