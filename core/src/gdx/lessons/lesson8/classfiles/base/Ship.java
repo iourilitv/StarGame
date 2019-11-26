@@ -22,8 +22,9 @@ public abstract class Ship extends Sprite {
     protected Vector2 bulletV = new Vector2();
     protected Sound sound;
     protected float bulletHeight;
+    //объявляем переменную для значения повреждения наносимого при столкновении с кораблем
     protected int damage;
-
+    //объявляем переменную для значения жизни корабля
     protected int hp;
 
     protected float reloadInterval = 0f;
