@@ -57,7 +57,7 @@ public class Enemy extends Ship {
 
                     //вычитаем очки из набранных очков игрока в размере значения
                     // жизни корабля противника
-//                    updateScore();//FIXME Передать сюда клас побсчета очков
+//                    updateScore();//FIXME Передать сюда класс подсчета очков
 
                 }
                 break;
@@ -90,6 +90,25 @@ public class Enemy extends Ship {
         this.v.set(descentV);
         //устанавливаем состояние выплывания для корабля противника
         state = State.DESCENT;
+    }
+
+    /**
+     * Метод меняет праметры настройки корабля противника в зависимости от текущего уровня игры
+     * @param level - текущий уровень игры
+     * @param bulletVY - скорость снарядов корабля по вертикали
+     * @param damage - пореждение наносимое главному кораблю при столкновении с кораблем противника
+     * @param reloadInterval - период между выпуском снарядов корабля противника
+     * @param hp - уровень жизни(здоровья) корабля
+     */
+    public void changeShipSettingsByLevel(
+                        int level, float bulletVY, int damage,
+                        float reloadInterval, int hp
+                        ){
+        //увеличиваем параметры корабля в зависимости от текущего уровня игры
+        this.bulletV.set(0, bulletVY * level);
+        this.damage = damage * level;
+        this.reloadInterval = reloadInterval * level;
+        this.hp = hp * level;
     }
 
     /**

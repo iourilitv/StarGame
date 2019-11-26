@@ -11,6 +11,9 @@ import gdx.stargame.math.Rnd;
 import gdx.stargame.pool.EnemyPool;
 import gdx.stargame.sprite.Enemy;
 
+/**
+ * Класс организует вызов кораблей противника из пула и настройки их параметров.
+ */
 public class EnemyEmitter {
 
     private static final float SMALL_BULLET_HEIGHT = 0.01f;
@@ -61,7 +64,12 @@ public class EnemyEmitter {
         sound = Gdx.audio.newSound(Gdx.files.internal("sounds/bullet.wav"));
     }
 
-    public void generate(float delta) {
+    /**
+     * Метод вызова кораблей противника.
+     * @param delta - период времени между кадрами
+     * @param level- номер текущего уровня игры
+     */
+    public void generate(float delta, int level) {
         generateTimer += delta;
         if (generateTimer >= generateInterval) {
             generateTimer = 0f;
@@ -80,6 +88,11 @@ public class EnemyEmitter {
                         SMALL_HEIGHT,
                         SMALL_HP
                 );
+                //меняем настройки корабля противника в зависимости от уровня игры
+                enemy.changeShipSettingsByLevel(
+                        level, SMALL_BULLET_VY, SMALL_BULLET_DAMAGE,
+                        SMALL_RELOAD_INTERVAL, SMALL_HP
+                );
             } else if (type < 0.8f) {
                 enemy.set(
                         enemyMiddleRegions,
@@ -93,6 +106,11 @@ public class EnemyEmitter {
                         MIDDLE_HEIGHT,
                         MIDDLE_HP
                 );
+                //меняем настройки корабля противника в зависимости от уровня игры
+                enemy.changeShipSettingsByLevel(
+                        level, MIDDLE_BULLET_VY, MIDDLE_BULLET_DAMAGE,
+                        MIDDLE_RELOAD_INTERVAL, MIDDLE_HP
+                );
             } else {
                 enemy.set(
                         enemyBigRegions,
@@ -105,6 +123,11 @@ public class EnemyEmitter {
                         sound,
                         BIG_HEIGHT,
                         BIG_HP
+                );
+                //меняем настройки корабля противника в зависимости от уровня игры
+                enemy.changeShipSettingsByLevel(
+                        level, BIG_BULLET_VY, BIG_BULLET_DAMAGE,
+                        BIG_RELOAD_INTERVAL, BIG_HP
                 );
             }
             enemy.pos.x = Rnd.nextFloat(worldBounds.getLeft() + enemy.getHalfWidth(), worldBounds.getRight() - enemy.getHalfWidth());
