@@ -5,6 +5,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Родительский класс пулов объектов спрайтов(снарядов, кораблей, взрывов).
+ * @param <T>
+ */
 public abstract class SpritesPool<T extends Sprite> {
 
     protected final List<T> activeObjects = new ArrayList<>();
@@ -52,6 +56,14 @@ public abstract class SpritesPool<T extends Sprite> {
 //                System.out.println(getClass().getName() + " active/free : " + activeObjects.size() + "/" + freeObjects.size());
             }
         }
+    }
+
+    /**
+     * Метод очистки коллекции активных спрайтов(переноса в коллекцию неактивных).
+     */
+    public void freeAllActiveSprites() {
+        freeObjects.addAll(activeObjects);
+        activeObjects.clear();
     }
 
     public List<T> getActiveObjects() {
