@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import gdx.lessons.lesson8.classfiles.base.Sprite;
 import gdx.lessons.lesson8.classfiles.math.Rect;
 
+/**
+ * Класс организует режим "конец игры".
+ */
 public class GameOver extends Sprite {
 
     public GameOver(TextureAtlas atlas) {
