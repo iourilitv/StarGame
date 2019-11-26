@@ -48,7 +48,7 @@ public class EnemyEmitter {
     private Vector2 enemySmallV = new Vector2(0, -0.2f);
     private Vector2 enemyMiddleV = new Vector2(0, -0.03f);
     private Vector2 enemyBigV = new Vector2(0, -0.005f);
-
+    //инициируем перенную текущего уровня игры(?должен быть в GameScreen?)
     private int level = 1;
 
     private Sound sound;
@@ -63,7 +63,14 @@ public class EnemyEmitter {
         sound = Gdx.audio.newSound(Gdx.files.internal("sounds/bullet.wav"));
     }
 
+    /**
+     * Метод вызова кораблей противника.
+     * @param delta - период времени между кадрами
+     * @param frags - количество сбитых врагов(?Заменить на level?)
+     */
     public void generate(float delta, int frags) {
+        //подсчитываем переход на новый уровень игры(от количества сбитых кораблей противника)
+        //(?перенести в отдельный класс для подсчета очков?)
         level = frags / 10 + 1;
         generateTimer += delta;
         if (generateTimer >= generateInterval) {
@@ -77,6 +84,7 @@ public class EnemyEmitter {
                         bulletRegion,
                         SMALL_BULLET_HEIGHT,
                         SMALL_BULLET_VY,
+                        //увеличиваем наносимый урон в зависимости от уровня игры
                         SMALL_BULLET_DAMAGE * level,
                         SMALL_RELOAD_INTERVAL,
                         sound,
@@ -90,6 +98,7 @@ public class EnemyEmitter {
                         bulletRegion,
                         MIDDLE_BULLET_HEIGHT,
                         MIDDLE_BULLET_VY,
+                        //увеличиваем наносимый урон в зависимости от уровня игры
                         MIDDLE_BULLET_DAMAGE * level,
                         MIDDLE_RELOAD_INTERVAL,
                         sound,
@@ -103,6 +112,7 @@ public class EnemyEmitter {
                         bulletRegion,
                         BIG_BULLET_HEIGHT,
                         BIG_BULLET_VY,
+                        //увеличиваем наносимый урон в зависимости от уровня игры
                         BIG_BULLET_DAMAGE * level,
                         BIG_RELOAD_INTERVAL,
                         sound,
@@ -119,10 +129,18 @@ public class EnemyEmitter {
         sound.dispose();
     }
 
+    /**
+     * Геттер для уровня игры.
+     * @return - номер уровня игры
+     */
     public int getLevel() {
         return level;
     }
 
+    /**
+     * Сеттер для уровня игры.
+     * @param level - новый номер уровня игры
+     */
     public void setLevel(int level) {
         this.level = level;
     }
