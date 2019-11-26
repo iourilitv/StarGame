@@ -105,9 +105,9 @@ public class GameScreen extends BaseScreen {
         enemyEmitter = new EnemyEmitter(enemyPool, atlas, worldBounds);
 
 //        //инициируем переменную для хранения режима конец игры
-//        gameOver = new GameOver(atlas);//FIXME
         //инициируем спрайт для анимации "конец игры"
-        gameOver = new GameOver(atlas.findRegion("message_game_over"));
+        gameOver = new GameOver(atlas);//FIXME
+//        gameOver = new GameOver(atlas.findRegion("message_game_over"));
 //        //инициируем переменную для хранения режима начать новую игру
 //        startNewGame = new StartNewGame(atlas, this);//FIXME
         //инициируем объект кнопки "новая игра"
@@ -142,7 +142,7 @@ public class GameScreen extends BaseScreen {
         //передаем мировую координатную сетку в классы окончания игры и начала новой игры
         // и устанавливаем размеры их объектов
         gameOver.resize(worldBounds);
-//        startNewGame.resize(worldBounds);//FIXME
+        newGameButton.resize(worldBounds);
     }
 
     /**
@@ -248,13 +248,19 @@ public class GameScreen extends BaseScreen {
     public void startNewGame() {
         //устанавливаем текущий режим игры в положение "играть"
         state = State.PLAYING;
+        //устанавливаем начальные настройки объекта конца игры
+        gameOver.startNewGame();
+//        //останавливаем воспроизведение музыки конца игры
+//        gameOver.stopMusic();
+
+        //запускаем воспроизведение фоновой музыки
+        music.play();
         //устанавливаем переменную предыдущего уровня игры в начальное состояние
         prevLevel = 1;
         //сбрасываем счетчик сбитых врагов
         frags = 0;
         //задаем начальные параметры главному кораблю
-        mainShip.startNewGame(worldBounds);//FIXME
-
+        mainShip.startNewGame(worldBounds);
         bulletPool.freeAllActiveSprites();
         enemyPool.freeAllActiveSprites();
         explosionPool.freeAllActiveSprites();
@@ -318,7 +324,7 @@ public class GameScreen extends BaseScreen {
             mainShip.update(delta);
             bulletPool.updateActiveSprites(delta);
             enemyPool.updateActiveSprites(delta);
-            enemyEmitter.generate(delta);//FIXME add level
+            enemyEmitter.generate(delta, level);//FIXME add level
             //обновляем пул взрывов
             explosionPool.updateActiveSprites(delta);
         //если игра поставлена на паузе
@@ -370,6 +376,8 @@ public class GameScreen extends BaseScreen {
                 frags++;//FIXME
                 //если при столкновении с кораблем противника уничтожен главный корабль
                 if (mainShip.isDestroyed()) {
+                    //сбрасываем значение жизни корабля
+                    mainShip.setHp(0);
                     //устанавливаем текущий режим игры в положение "конец игры"
                     state = State.GAME_OVER;
                 }
@@ -414,6 +422,8 @@ public class GameScreen extends BaseScreen {
                 //FIXME just check
                 //если при попадании снаряда уничтожен главный корабль
                 if (mainShip.isDestroyed()) {
+                    //сбрасываем значение жизни корабля
+                    mainShip.setHp(0);
                     //устанавливаем текущий режим игры в положение "конец игры"
                     state = State.GAME_OVER;
                 }

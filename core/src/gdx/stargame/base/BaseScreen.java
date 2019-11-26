@@ -112,6 +112,7 @@ public class BaseScreen implements Screen, InputProcessor {
      * Метод организует режим начала новой игры.
      */
     public void startNewGame() {
+
     }
 
     @Override

@@ -206,5 +206,7 @@ public class MainShip extends Ship {
         hp = HP;
         //устанавливаем начальную координату позиции корабля по горизонтали
         pos.x = worldBounds.pos.x;
+        //сбрасываем флаг трупа главного корабля
+        destroyed = false;
     }
 }

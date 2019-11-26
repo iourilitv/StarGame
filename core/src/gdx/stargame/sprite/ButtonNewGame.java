@@ -51,6 +51,8 @@ public class ButtonNewGame extends ScaledTouchUpButton {
 //        //запускаем новую игру
 //        game.setScreen(new GameScreen(game));//TODO delete
 
+        //сбрасываем флаг показа кнопки
+        setShowing(false);
         //вызываем метод в сткрине, чтобы начать новую игру
         screen.startNewGame();
     }
