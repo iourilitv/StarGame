@@ -39,8 +39,8 @@ public class BaseScreen implements Screen, InputProcessor {
     @Override
     public void show() {
 
-        System.out.println("BaseScreen.show this.getClass().getSimpleName()= " +
-                this.getClass().getSimpleName());
+//        System.out.println("BaseScreen.show this.getClass().getSimpleName()= " +
+//                this.getClass().getSimpleName());
 
         Gdx.input.setInputProcessor(this);
         this.batch = new SpriteBatch();
@@ -54,8 +54,8 @@ public class BaseScreen implements Screen, InputProcessor {
     @Override
     public void resize(int width, int height) {
 
-        System.out.println("BaseScreen.resize this.getClass().getSimpleName()= " +
-                this.getClass().getSimpleName() + ". resize width = " + width + " height = " + height);
+//        System.out.println("BaseScreen.resize this.getClass().getSimpleName()= " +
+//                this.getClass().getSimpleName() + ". resize width = " + width + " height = " + height);
 
         screenBounds.setSize(width, height);
         screenBounds.setLeft(0);
@@ -77,24 +77,24 @@ public class BaseScreen implements Screen, InputProcessor {
     @Override
     public void pause() {
 
-        System.out.println("BaseScreen.pause this.getClass().getSimpleName()= " +
-                this.getClass().getSimpleName());
+//        System.out.println("BaseScreen.pause this.getClass().getSimpleName()= " +
+//                this.getClass().getSimpleName());
 
     }
 
     @Override
     public void resume() {
 
-        System.out.println("BaseScreen.resume this.getClass().getSimpleName()= " +
-                this.getClass().getSimpleName());
+//        System.out.println("BaseScreen.resume this.getClass().getSimpleName()= " +
+//                this.getClass().getSimpleName());
 
     }
 
     @Override
     public void hide() {
 
-        System.out.println("BaseScreen.hide this.getClass().getSimpleName()= " +
-                this.getClass().getSimpleName());
+//        System.out.println("BaseScreen.hide this.getClass().getSimpleName()= " +
+//                this.getClass().getSimpleName());
 
         dispose();
     }
@@ -102,8 +102,8 @@ public class BaseScreen implements Screen, InputProcessor {
     @Override
     public void dispose() {
 
-        System.out.println("BaseScreen.dispose this.getClass().getSimpleName()= " +
-                this.getClass().getSimpleName());
+//        System.out.println("BaseScreen.dispose this.getClass().getSimpleName()= " +
+//                this.getClass().getSimpleName());
 
         batch.dispose();
     }
@@ -118,8 +118,8 @@ public class BaseScreen implements Screen, InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
 
-        System.out.println("BaseScreen.keyDown this.getClass().getSimpleName()= " +
-                this.getClass().getSimpleName() + ". keyDown keycode = " + keycode);
+//        System.out.println("BaseScreen.keyDown this.getClass().getSimpleName()= " +
+//                this.getClass().getSimpleName() + ". keyDown keycode = " + keycode);
 
         return false;
     }
@@ -127,8 +127,8 @@ public class BaseScreen implements Screen, InputProcessor {
     @Override
     public boolean keyUp(int keycode) {
 
-        System.out.println("BaseScreen.keyUp this.getClass().getSimpleName()= " +
-                this.getClass().getSimpleName() + ". keyUp keycode = " + keycode);
+//        System.out.println("BaseScreen.keyUp this.getClass().getSimpleName()= " +
+//                this.getClass().getSimpleName() + ". keyUp keycode = " + keycode);
 
         return false;
     }
@@ -136,8 +136,8 @@ public class BaseScreen implements Screen, InputProcessor {
     @Override
     public boolean keyTyped(char character) {
 
-        System.out.println("BaseScreen.keyTyped this.getClass().getSimpleName()= " +
-                this.getClass().getSimpleName() + ". keyTyped character = " + character);
+//        System.out.println("BaseScreen.keyTyped this.getClass().getSimpleName()= " +
+//                this.getClass().getSimpleName() + ". keyTyped character = " + character);
 
         return false;
     }
@@ -152,9 +152,9 @@ public class BaseScreen implements Screen, InputProcessor {
 
     public boolean touchDown(Vector2 touch, int pointer) {
 
-        System.out.println("BaseScreen.touchDown this.getClass().getSimpleName()= " +
-                this.getClass().getSimpleName() +
-                ". touch= " + touch);
+//        System.out.println("BaseScreen.touchDown this.getClass().getSimpleName()= " +
+//                this.getClass().getSimpleName() +
+//                ". touch= " + touch);
 
         return false;
     }
@@ -169,9 +169,9 @@ public class BaseScreen implements Screen, InputProcessor {
 
     public boolean touchUp(Vector2 touch, int pointer) {
 
-        System.out.println("BaseScreen.touchUp this.getClass().getSimpleName()= " +
-                this.getClass().getSimpleName() +
-                ". touch= " + touch);
+//        System.out.println("BaseScreen.touchUp this.getClass().getSimpleName()= " +
+//                this.getClass().getSimpleName() +
+//                ". touch= " + touch);
 
         return false;
     }
@@ -186,9 +186,9 @@ public class BaseScreen implements Screen, InputProcessor {
 
     public boolean touchDragged(Vector2 touch, int pointer) {
 
-        System.out.println("BaseScreen.touchDragged this.getClass().getSimpleName()= " +
-                this.getClass().getSimpleName() +
-                ". touch= " + touch);
+//        System.out.println("BaseScreen.touchDragged this.getClass().getSimpleName()= " +
+//                this.getClass().getSimpleName() +
+//                ". touch= " + touch);
 
         return false;
     }
@@ -201,9 +201,9 @@ public class BaseScreen implements Screen, InputProcessor {
     @Override
     public boolean scrolled(int amount) {
 
-        System.out.println("BaseScreen.scrolled this.getClass().getSimpleName()= " +
-                this.getClass().getSimpleName() +
-                ". scrolled amount = " + amount);
+//        System.out.println("BaseScreen.scrolled this.getClass().getSimpleName()= " +
+//                this.getClass().getSimpleName() +
+//                ". scrolled amount = " + amount);
 
         return false;
     }

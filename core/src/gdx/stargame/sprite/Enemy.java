@@ -4,6 +4,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
+import gdx.stargame.base.ScoreCounter;
 import gdx.stargame.base.Ship;
 import gdx.stargame.math.Rect;
 import gdx.stargame.pool.BulletPool;
@@ -19,6 +20,9 @@ public class Enemy extends Ship {
     private State state;
     //инициируем ветор скорости выплывание корабля противника из-за экрана
     private Vector2 descentV = new Vector2(0, -0.15f);
+
+    //объявляем переменную для объекта счетчика очков
+    private ScoreCounter scoreCounter = ScoreCounter.getInstance();
 
     public Enemy(BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds) {
         this.bulletPool = bulletPool;
@@ -56,8 +60,9 @@ public class Enemy extends Ship {
                     destroyed = true;
 
                     //вычитаем очки из набранных очков игрока в размере значения
-                    // жизни корабля противника
+                    // жизни  ускользнувшего корабля противника помноженого на текущий уровень игры
 //                    updateScore();//FIXME Передать сюда класс подсчета очков
+                    scoreCounter.checkNextLevel(- getConstHp() * scoreCounter.getLevel());
 
                 }
                 break;
@@ -86,6 +91,8 @@ public class Enemy extends Ship {
         this.sound = sound;
         setHeightProportion(height);
         this.hp = hp;
+        //запоминаем значение константы жизни корабля
+        this.constHp = hp;
         //устанавливаем скорость выплывания корабля противника пока не выплыл из-за экрана
         this.v.set(descentV);
         //устанавливаем состояние выплывания для корабля противника
@@ -109,6 +116,8 @@ public class Enemy extends Ship {
         this.damage = damage * level;
         this.reloadInterval = reloadInterval * level;
         this.hp = hp * level;
+        //запоминаем новое значение константы жизни корабля
+        this.constHp = hp;
     }
 
     /**

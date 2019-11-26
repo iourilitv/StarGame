@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Align;
 import java.util.List;
 
 import gdx.stargame.base.Font;
+import gdx.stargame.base.ScoreCounter;
 import gdx.stargame.sprite.BackgroundGalaxy;
 import gdx.stargame.StarGame;
 import gdx.stargame.base.BaseScreen;
@@ -31,7 +32,8 @@ public class GameScreen extends BaseScreen {
     //инициируем перечисление для режимов игры: игра, пауза, конец игры.
     private enum State {PLAYING, PAUSE, GAME_OVER}
     //инициируем константы шаблонов текста для вывода на экран
-    private static final String FRAGS = "Frags:";//количество сбитых врагов
+//    private static final String FRAGS = "Frags:";//количество сбитых врагов//FIXME
+    private static final String SCORE = "Score:";//количество сбитых врагов
     private static final String HP = "HP:";//значение здоровья главного корабля
     private static final String LEVEL = "Level:";//текущий уровень игры
 
@@ -60,16 +62,20 @@ public class GameScreen extends BaseScreen {
     //объявляем переменную шрифта текста
     private Font font;
     //объявляем переменные готового текста для вывода на экран
-    private StringBuilder sbFrags;//количество сбитых врагов
+//    private StringBuilder sbFrags;//количество сбитых врагов//FIXME
+    private StringBuilder sbScore;//количество сбитых врагов
     private StringBuilder sbHp;//значение здоровья главного корабля
     private StringBuilder sbLevel;//текущий уровень игры
 
     //инициируем перенную текущего уровня игры(?должен быть в GameScreen?)
-    private int level = 1;
+//    private int level = ScoreCounter.getInstance().getLevel();//FIXME
     //инициируем переменную для хранения номера предыдущего уровня игры(НЕ нужно?)//FIXME
-    private int prevLevel = 1;
+//    private int prevLevel = ScoreCounter.getInstance().getPrevLevel();//FIXME
+
     //объявляем переменную для хранения количества сбитых врагов
-    private int frags;
+//    private int frags;//FIXME
+    //объявляем переменную для объекта счетчика очков
+    private ScoreCounter scoreCounter = ScoreCounter.getInstance();
 
     public GameScreen(StarGame game) {
         super(game);
@@ -104,7 +110,9 @@ public class GameScreen extends BaseScreen {
         //устанавливаем размер шрифта в мировых координатах
         font.setSize(0.02f);
         //инициируем переменные готового текста для вывода на экран
-        sbFrags = new StringBuilder();//количество сбитых врагов
+//        sbFrags = new StringBuilder();//количество сбитых врагов//FIXME
+        sbScore = new StringBuilder();//количество сбитых врагов
+
         sbHp = new StringBuilder();//значение здоровья главного корабля
         sbLevel = new StringBuilder();//текущий уровень игры
         //устанавливаем текущиему и предыдущему режиму игры режим "играть"
@@ -142,6 +150,8 @@ public class GameScreen extends BaseScreen {
         state = State.PAUSE;
         //преостанавливаем воспроизведение музыки
         music.pause();
+        //передаем событие паузу в объект конца игры
+        gameOver.pause();
     }
 
     /**
@@ -153,6 +163,8 @@ public class GameScreen extends BaseScreen {
         state = prevState;
         //воспроизводим музыку с того места, где она была преостановлена
         music.play();
+        //передаем событие разворачивания окна после паузы в объект конца игры
+        gameOver.resume();
     }
 
     @Override
@@ -234,10 +246,17 @@ public class GameScreen extends BaseScreen {
         gameOver.startNewGame();
         //запускаем воспроизведение фоновой музыки
         music.play();
-        //устанавливаем переменную предыдущего уровня игры в начальное состояние
-        prevLevel = 1;
-        //сбрасываем счетчик сбитых врагов
-        frags = 0;
+
+//        //устанавливаем переменную предыдущего уровня игры в начальное состояние
+////        prevLevel = 1;
+//        scoreCounter.setPrevLevel(1);
+//        //сбрасываем счетчик сбитых врагов
+////        frags = 0;//FIXME
+//        scoreCounter.setScoreTotal(0);
+
+        //задаем начальные параметры объекту счетчика очков
+        scoreCounter.startNewGame();
+
         //задаем начальные параметры главному кораблю
         mainShip.startNewGame(worldBounds);
         bulletPool.freeAllActiveSprites();
@@ -257,7 +276,7 @@ public class GameScreen extends BaseScreen {
             mainShip.update(delta);
             bulletPool.updateActiveSprites(delta);
             enemyPool.updateActiveSprites(delta);
-            enemyEmitter.generate(delta, level);//FIXME add level
+            enemyEmitter.generate(delta, scoreCounter.getLevel());
             //обновляем пул взрывов
             explosionPool.updateActiveSprites(delta);
         //если игра поставлена на паузе
@@ -271,14 +290,14 @@ public class GameScreen extends BaseScreen {
             return;
         }
 
-        //FIXME не надо?
-        //если переходим на следующий уровень игры
-        if (prevLevel < level) {
-            //сохраняем текущий уровень игры
-            prevLevel = level;
-            //добавляем бонусны к значению жизни главного корабля игрока
-            mainShip.setHp(mainShip.getHp() + 10);
-        }
+//        //FIXME не надо?
+//        //если переходим на следующий уровень игры
+//        if (prevLevel < level) {
+//            //сохраняем текущий уровень игры
+//            prevLevel = level;
+//            //добавляем бонусны к значению жизни главного корабля игрока
+//            mainShip.setHp(mainShip.getHp() + 10);
+//        }
     }
 
     /**
@@ -302,11 +321,11 @@ public class GameScreen extends BaseScreen {
             if (mainShip.pos.dst(enemy.pos) < minDist) {
                 //вызываем метод повреждения главного корабля
                 mainShip.damage(enemy.getDamage());
-                //вызываем метод уничтожения корабля противника(такая игровая логика)
+                //когда корабль противника уничтожен, увеличиваем значение суммы набранных очков
+                // на размер жизни сбитого корабля противника
+                scoreCounter.checkNextLevel(enemy.getConstHp());
+                //вызываем метод уничтожения корабля противника
                 enemy.destroy();
-
-                //когда корабль противника уничтожен, инкрементируем количество сбитых кораблей
-                frags++;//FIXME
                 //если при столкновении с кораблем противника уничтожен главный корабль
                 if (mainShip.isDestroyed()) {
                     //сбрасываем значение жизни корабля
@@ -329,11 +348,11 @@ public class GameScreen extends BaseScreen {
                     enemy.damage(bullet.getDamage());
                     //вызываем метод уничтожения снаряда
                     bullet.destroy();
-
                     //если корабль противника уничтожен
                     if (enemy.isDestroyed()) {
-                        //инкрементируем количество сбитых кораблей
-                        frags++;//FIXME
+                        //когда корабль противника уничтожен, увеличиваем значение суммы набранных очков
+                        // на размер жизни сбитого корабля противника
+                        scoreCounter.checkNextLevel(enemy.getConstHp());
                     }
                 }
             }
@@ -351,8 +370,6 @@ public class GameScreen extends BaseScreen {
                 mainShip.damage(bullet.getDamage());
                 //вызываем метод уничтожения снаряда
                 bullet.destroy();
-
-                //FIXME just check
                 //если при попадании снаряда уничтожен главный корабль
                 if (mainShip.isDestroyed()) {
                     //сбрасываем значение жизни корабля
@@ -415,7 +432,8 @@ public class GameScreen extends BaseScreen {
         //вызываем метод "последнего вздоха" взрывов
         explosionPool.setExplosionEndFrame(GameOver.LAST_FRAME);
         //останавливаем фоновую музыку
-        music.pause();
+//        music.pause();//FIXME
+        music.stop();
         //запускаем анимацию с начальными установками
         gameOver.start();
         //вызываем метод обновления спрайта конец игры
@@ -437,7 +455,9 @@ public class GameScreen extends BaseScreen {
      */
     private void printInfo() {
         //сбрасываем итоговую строку сообщения о подбитых кораблях противника
-        sbFrags.setLength(0);
+//        sbFrags.setLength(0);//FIXME
+        sbScore.setLength(0);
+
         //устанавливаем координаты позиции итоговой строки сообщения
         // о подбитых кораблях противника
         float fragsPosX = worldBounds.getLeft() + 0.01f;//с отступом от левого края игрового поля
@@ -445,7 +465,8 @@ public class GameScreen extends BaseScreen {
         //вызываем метод отрисовки шрифта текста сообщения о сбитых кораблях противника
         font.draw(batch,
                 //добавляем в строку шаблон сообщения и количество сбитых кораблей противника
-                sbFrags.append(FRAGS).append(frags),
+//                sbFrags.append(FRAGS).append(frags),//FIXME
+                sbScore.append(SCORE).append(scoreCounter.getScoreTotal()),
                 //координаты позиции сообщения(по умолчанию выравнивание - по левому краю)
                 fragsPosX, fragsPosY);
         //сбрасываем итоговую строку сообщения о размере жизни главного корабля
@@ -469,7 +490,7 @@ public class GameScreen extends BaseScreen {
         //вызываем метод отрисовки шрифта текста о текущем уровне игры
         font.draw(batch,
                 //добавляем в строку шаблон сообщения и номер текущего уровня игры
-                sbLevel.append(LEVEL).append(level),
+                sbLevel.append(LEVEL).append(scoreCounter.getLevel()),
                 //координаты позиции сообщения
                 levelPosX, levelPosY,
                 //выравниваем сообщение по правому краю позиции

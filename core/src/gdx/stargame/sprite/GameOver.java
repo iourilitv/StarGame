@@ -87,6 +87,20 @@ public class GameOver extends Sprite {
         setHeightProportion(INITIAL_HEIGHT);
     }
 
+    /**
+     * Метод обработки паузы игры(по событию сворачивание окна, в т.ч.).
+     */
+    public void pause(){
+        music.pause();
+    }
+
+    /**
+     * Метод обработки продолжения игры после паузы(по событию разворачивание окна, в т.ч.).
+     */
+    public void resume(){
+        music.play();
+    }
+
     public void dispose(){
         music.dispose();
     }

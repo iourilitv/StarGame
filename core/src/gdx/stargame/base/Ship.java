@@ -29,6 +29,8 @@ public abstract class Ship extends Sprite {
     protected int damage;
     //объявляем переменную для значения жизни корабля
     protected int hp;
+    //объявляем переменную для значения константы жизни корабля
+    protected int constHp;
 
     protected float reloadInterval = 0f;
     protected float reloadTimer = 0f;
@@ -124,5 +126,13 @@ public abstract class Ship extends Sprite {
         Explosion explosion = explosionPool.obtain();
         //устанавливаем настройки объекта взрыва(вектор его позиции и высоту его картинки)
         explosion.set(pos, getHeight());
+    }
+
+    /**
+     * Геттер на значение константы жизни корабля
+     * @return - значение константы жизни корабля
+     */
+    public int getConstHp() {
+        return constHp;
     }
 }

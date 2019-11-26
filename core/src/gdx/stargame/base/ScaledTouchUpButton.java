@@ -38,9 +38,9 @@ public abstract class ScaledTouchUpButton extends Sprite {
     @Override
     public boolean touchUp(Vector2 touch, int pointer) {
 
-        System.out.println("ScaledTouchUpButton.touchUp this.getClass().getSimpleName()= " +
-                this.getClass().getSimpleName() +
-                ". touch= " + touch);
+//        System.out.println("ScaledTouchUpButton.touchUp this.getClass().getSimpleName()= " +
+//                this.getClass().getSimpleName() +
+//                ". touch= " + touch);
 
         if (this.pointer != pointer || !pressed) {
             return false;
