@@ -10,6 +10,9 @@ import gdx.stargame.pool.ExplosionPool;
 import gdx.stargame.sprite.Bullet;
 import gdx.stargame.sprite.Explosion;
 
+/**
+ * Родительский метод спрайта корабля(главного или корабля противника).
+ */
 public abstract class Ship extends Sprite {
 
     protected final Vector2 v0 = new Vector2();
@@ -22,8 +25,9 @@ public abstract class Ship extends Sprite {
     protected Vector2 bulletV = new Vector2();
     protected Sound sound;
     protected float bulletHeight;
+    //объявляем переменную для значения повреждения наносимого при столкновении с кораблем
     protected int damage;
-
+    //объявляем переменную для значения жизни корабля
     protected int hp;
 
     protected float reloadInterval = 0f;
@@ -82,8 +86,28 @@ public abstract class Ship extends Sprite {
         frame = 1;
     }
 
+    /**
+     * Геттер на наносимый урон при столкновении с кораблем
+     * @return - наносимый урон при столкновении с кораблем
+     */
     public int getDamage() {
         return damage;
+    }
+
+    /**
+     * Геттер на значение жизни корабля.
+     * @return - значение жизни корабля
+     */
+    public int getHp() {
+        return hp;
+    }
+
+    /**
+     * Сеттер на значение жизни корабля.
+     * @param hp - новое значение жизни корабля
+     */
+    public void setHp(int hp) {
+        this.hp = hp;
     }
 
     protected void shoot() {
