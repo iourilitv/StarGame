@@ -14,6 +14,7 @@ public class MainShip extends Ship {
 
     private static final float BOTTOM_MARGIN = 0.05f;
     private static final int INVALID_POINTER = -1;
+    //инициируем константу значения жизни корабля главного корабля
     private static final int HP = 10;
 
     private boolean pressedLeft;
@@ -32,17 +33,27 @@ public class MainShip extends Ship {
         reloadInterval = 0.2f;
         bulletHeight = 0.01f;
         damage = 1;
+        //устанавливаем по константе переменную текущего значения жизни главного корабля
         hp = HP;
         bulletV.set(0, 0.5f);
     }
 
+    /**
+     * Метод, обрабатывающий режим игры "начать новую игру"
+     * @param worldBounds - прямоугольник игрового мира в мировых координатах
+     */
     public void startNewGame(Rect worldBounds) {
+        //сбрасываем переменые состояния клавиш
         pressedLeft = false;
         pressedRight = false;
+        //сбрасываем переменые состояния касания и кликов мыши
         leftPointer = INVALID_POINTER;
         rightPointer = INVALID_POINTER;
+        //останавливаем движение главного корабля
         stop();
+        //устанавливаем по константе переменную текущего значения жизни главного корабля
         hp = HP;
+        //устанавливаем начальную координату позиции корабля по горизонтали
         pos.x = worldBounds.pos.x;
     }
 
