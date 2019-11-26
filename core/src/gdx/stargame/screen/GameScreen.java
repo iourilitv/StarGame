@@ -51,19 +51,11 @@ public class GameScreen extends BaseScreen {
     //объявляем переменные для хранения текущего и предыдущего режимов игры
     private State state;
     private State prevState;
-//    //объявляем переменную для хранения режима конец игры
-//    private GameOver gameOver;//FIXME
-    //объявляем спрайт для сообщения "конец игры"
-    private GameOver gameOver;//FIXME mine
-//    //объявляем переменную для хранения режима начать новую игру
-//    private StartNewGame startNewGame;//FIXME
-    //объявляем регион для картинки "новая игра"
-    private ButtonNewGame newGameButton;//FIXME mine
 
-//    //объявляем переменную для хранения статуса пауза игры
-//    private boolean gamePaused;//FIXME mine
-//    //объявляем переменную для хранения статуса конца игры
-//    private boolean gameFinished;//FIXME mine
+    //объявляем спрайт для сообщения "конец игры"
+    private GameOver gameOver;
+    //объявляем регион для картинки "новая игра"
+    private ButtonNewGame newGameButton;
 
     //объявляем переменную шрифта текста
     private Font font;
@@ -103,16 +95,10 @@ public class GameScreen extends BaseScreen {
         //инициируем объект гравного корабля с дополнительным параметром - пулом взрывов
         mainShip = new MainShip(atlas, bulletPool, explosionPool);
         enemyEmitter = new EnemyEmitter(enemyPool, atlas, worldBounds);
-
-//        //инициируем переменную для хранения режима конец игры
         //инициируем спрайт для анимации "конец игры"
-        gameOver = new GameOver(atlas);//FIXME
-//        gameOver = new GameOver(atlas.findRegion("message_game_over"));
-//        //инициируем переменную для хранения режима начать новую игру
-//        startNewGame = new StartNewGame(atlas, this);//FIXME
-        //инициируем объект кнопки "новая игра"
+        gameOver = new GameOver(atlas);
+        //инициируем спрайт кнопки и организации режима "новая игра"
         newGameButton = new ButtonNewGame(atlas, this);
-
         //инициируем переменную шрифта текста. В параметрах fontFile, imageFile
         font = new Font("font/font.fnt", "font/font.png");
         //устанавливаем размер шрифта в мировых координатах
@@ -211,10 +197,8 @@ public class GameScreen extends BaseScreen {
             mainShip.touchDown(touch, pointer);
             //если текущий режим игры установлен режим "конец игры"
         } else if (state == State.GAME_OVER) {
-            //передаем касание в класс началь новую игру
-//            startNewGame.touchDown(touch, pointer);//FIXME
-//        //вызываем метод отработки нажатия кнопки NewGame
-        newGameButton.touchDown(touch, pointer);//FIXME mine
+        //вызываем метод отработки нажатия кнопки NewGame
+        newGameButton.touchDown(touch, pointer);
         }
 
         return false;
@@ -234,10 +218,8 @@ public class GameScreen extends BaseScreen {
             mainShip.touchUp(touch, pointer);
             //если текущий режим игры установлен режим "конец игры"
         } else if (state == State.GAME_OVER) {
-            //передаем касание в класс началь новую игру
-//            startNewGame.touchUp(touch, pointer);//FIXME
-//        //вызываем метод отработки отпускания нажатия кнопки NewGame
-        newGameButton.touchUp(touch, pointer);//FIXME mine
+        //вызываем метод отработки отпускания нажатия кнопки NewGame
+        newGameButton.touchUp(touch, pointer);
         }
         return false;
     }
@@ -250,9 +232,6 @@ public class GameScreen extends BaseScreen {
         state = State.PLAYING;
         //устанавливаем начальные настройки объекта конца игры
         gameOver.startNewGame();
-//        //останавливаем воспроизведение музыки конца игры
-//        gameOver.stopMusic();
-
         //запускаем воспроизведение фоновой музыки
         music.play();
         //устанавливаем переменную предыдущего уровня игры в начальное состояние
@@ -270,53 +249,7 @@ public class GameScreen extends BaseScreen {
      * Метод отработки изменений в объектах игры.
      * @param delta - период времени между кадрами(1/60 сек)
      */
-//    private void update(float delta) {
-//        //FIXME
-////        //если текущий режим игры в положении "играть" обновляем все объекты игры
-////        if (state == State.PLAYING) {
-////            mainShip.update(delta);
-////            bulletPool.updateActiveSprites(delta);
-////            enemyPool.updateActiveSprites(delta);
-////            enemyEmitter.generate(delta, frags);
-////        }
-////        //если переходим на следующий уровень игры
-////        if (prevLevel < enemyEmitter.getLevel()) {
-////            //сохраняем текущий уровень игры
-////            prevLevel = enemyEmitter.getLevel();
-////            //добавляем бонусны к значению жизни главного корабля игрока
-////            mainShip.setHp(mainShip.getHp() + 10);
-////        }
-//
-//        //если игра поставлена на паузе
-//        if(gamePaused) {
-//            //выходим, нивего не обновляя
-//            return;
-//        }
-//        //если игра окончена
-//        if (gameFinished){
-//            //запускаем метод обновления анимации окончания игры  и выходим
-//            updateGameOverAnimation(delta);
-//            return;
-//        }
-//        //если игра не на паузе или главный корабль еще живой, обновляем все элементы
-//        if(!mainShip.isDestroyed()) {
-//            //вызываем методы обновления фона со звездами
-//            background.update(delta);
-//            mainShip.update(delta);
-//            bulletPool.updateActiveSprites(delta);
-//            enemyPool.updateActiveSprites(delta);
-//            enemyEmitter.generate(delta);
-//            //обновляем пул взрывов
-//            explosionPool.updateActiveSprites(delta);
-//        }
-//        //если игра на паузе или окончена
-//        else {
-//            //устанавливаем состояние конец игры
-//            gameFinished = true;
-//        }
-//    }
     private void update(float delta) {
-        //FIXME just check
         //если текущий режим игры в положении "играть" обновляем все объекты игры
         if (state == State.PLAYING) {
             //вызываем методы обновления фона со звездами
@@ -441,49 +374,6 @@ public class GameScreen extends BaseScreen {
     /**
      * Метод отрисовки объектов игрового поля.
      */
-//    private void draw() {
-//        Gdx.gl.glClearColor(1, 0, 0, 1);
-//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-//        batch.begin();
-//        //вызываем методы прорисовки у каждого спрайта
-//        background.draw(batch);
-//        bulletPool.drawActiveSprites(batch);
-//        enemyPool.drawActiveSprites(batch);
-//        //отрисовываем объекты в пуле взрывов
-//        explosionPool.drawActiveSprites(batch);
-//
-//        //FIXME
-////        //если текущий режим игры в положении "играть" отрисовываем остальные объекты игры
-////        if (state == State.PLAYING) {
-////            mainShip.draw(batch);
-////            bulletPool.drawActiveSprites(batch);
-////            enemyPool.drawActiveSprites(batch);
-////            //если текущий режим игры в положении "конец игры"
-////        } else if (state == State.GAME_OVER) {
-////            //отрисовываем сообщение "конец игры" и кнопку "новая игра"
-////            gameOver.draw(batch);
-////            startNewGame.draw(batch);
-////        }
-//
-//        //если игра окончена
-//        if(gameFinished) {
-//            //отрисовываем объект анимации конца игры
-//            gameOver.draw(batch);
-//            //если активирован флаг ожидания запуска новой игры
-//            if(newGameButton.isShowing()){
-//                //отрисовываем объект кнопки NewGame
-//                newGameButton.draw(batch);
-//            }
-//        //если игра еще не окончена
-//        } else {
-//            //отрисовываем главный корабль
-//            mainShip.draw(batch);
-//        }
-//
-//        //вызываем метод вывода информации об игре на экран
-//        printInfo();
-//        batch.end();
-//    }
     private void draw() {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -494,8 +384,6 @@ public class GameScreen extends BaseScreen {
         enemyPool.drawActiveSprites(batch);
         //отрисовываем объекты в пуле взрывов
         explosionPool.drawActiveSprites(batch);
-
-        //FIXME just check
         //если текущий режим игры в положении "играть" отрисовываем остальные объекты игры
         if (state == State.PLAYING) {
             //отрисовываем главный корабль

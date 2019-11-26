@@ -27,14 +27,6 @@ public class GameOver extends Sprite {
     //объявляем объект музыки
     private Music music;
 
-//    public GameOver(TextureRegion region) {
-//        super(region);
-//        pos.set(pos0);
-//        setHeightProportion(INITIAL_HEIGHT);
-//        setAngle(INITIAL_ANGLE);
-//        //инициируем объект музыки
-//        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/dead-march.mp3"));
-//    }
     public GameOver(TextureAtlas atlas) {
         super(atlas.findRegion("message_game_over"));
         pos.set(pos0);
@@ -94,13 +86,6 @@ public class GameOver extends Sprite {
         setAngle(INITIAL_ANGLE);
         setHeightProportion(INITIAL_HEIGHT);
     }
-
-//    /**
-//     * Метод останавливает воспроизведение музыки конца игры
-//     */
-//    public void stopMusic(){
-//        music.stop();
-//    }
 
     public void dispose(){
         music.dispose();
