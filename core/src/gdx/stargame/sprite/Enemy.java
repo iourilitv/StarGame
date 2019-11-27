@@ -1,12 +1,14 @@
 package gdx.stargame.sprite;
 
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import gdx.stargame.base.ScoreCounter;
 import gdx.stargame.base.Ship;
 import gdx.stargame.math.Rect;
+import gdx.stargame.math.Rnd;
 import gdx.stargame.pool.BulletPool;
 import gdx.stargame.pool.ExplosionPool;
 
@@ -17,18 +19,25 @@ public class Enemy extends Ship {
         FIGHT //бой(активный режим)
     }
     //объявляем объект состояния корабля противника
-    private State state;
+    protected State state;
     //инициируем ветор скорости выплывание корабля противника из-за экрана
-    private Vector2 descentV = new Vector2(0, -0.15f);
+    protected Vector2 descentV = new Vector2(0, -0.15f);
 
     //объявляем переменную для объекта счетчика очков
     private ScoreCounter scoreCounter = ScoreCounter.getInstance();
+    //принимаем объект атласа
+    protected TextureAtlas atlas;
+    protected TextureRegion bulletRegion;
+
+    //принимаем объект звука выстрела
+    protected Sound sound;
 
     public Enemy(BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds) {
         this.bulletPool = bulletPool;
         //принимаем объект пула вызрывов
         this.explosionPool = explosionPool;
         this.worldBounds = worldBounds;
+//        bulletRegion = atlas.findRegion("bulletEnemy");
         this.v.set(v0);
     }
 
@@ -69,6 +78,7 @@ public class Enemy extends Ship {
         }
     }
 
+    //FIXME заменить
     public void set(
             TextureRegion[] regions,
             Vector2 v0,
@@ -97,6 +107,24 @@ public class Enemy extends Ship {
         this.v.set(descentV);
         //устанавливаем состояние выплывания для корабля противника
         state = State.DESCENT;
+    }
+
+    public void set(TextureAtlas atlas, Sound sound){
+//        super.set(atlas, sound);//FIXME
+
+        this.atlas = atlas;
+        this.sound = sound;
+        bulletRegion = atlas.findRegion("bulletEnemy");
+        //устанавливаем состояние выплывания для корабля противника
+        state = State.DESCENT;
+
+        pos.x = Rnd.nextFloat(worldBounds.getLeft() + getHalfWidth(), worldBounds.getRight()
+                - getHalfWidth());
+        setBottom(worldBounds.getTop());//FIXME
+
+        System.out.println("2.Enemy.set(TextureAtlas atlas, Sound sound) this= " +
+                this.toString());
+
     }
 
     /**
