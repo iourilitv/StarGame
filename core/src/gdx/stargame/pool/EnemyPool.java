@@ -21,7 +21,7 @@ public class EnemyPool extends SpritesPool<Enemy> {
         return new Enemy(bulletPool, explosionPool, worldBounds);
     }
 
-    //меняем настройки кораблей противника при переходе на другой уровень//FIXME
+    //меняем настройки кораблей противника при переходе на другой уровень
     public void changeShipsSettingsByLevel(int level){
         for (Enemy enemy: activeObjects) {
             enemy.changeShipSettingsByLevel(level);
