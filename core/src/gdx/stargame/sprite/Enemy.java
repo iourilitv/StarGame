@@ -68,6 +68,19 @@ public class Enemy extends Ship {
         }
     }
 
+    /**
+     * Метод установки начальных параметров вызванного корабля противника
+     * @param regions - коллекция регионов картинки корабля с двумя состояниями: целый и поврежденный
+     * @param v0 - начальная скорость корабля в активном режиме
+     * @param bulletRegion - регион картинки снаряда корабля противника
+     * @param bulletHeight - высота региона картинки снаряда корабля противника
+     * @param bulletVY - скорость снаряда корабля противника
+     * @param damage - размер ущерба наносимого объекту при столкновении с кораблем противника
+     * @param reloadInterval - интервал между выпуском снарядов корабля противника
+     * @param sound - объект звука выстрела корабля противника
+     * @param height - высота региона корабля противника
+     * @param hp - текущее значение жизни корабля
+     */
     public void set(
             TextureRegion[] regions,
             Vector2 v0,
@@ -111,9 +124,22 @@ public class Enemy extends Ship {
         this.v0.set(constV0.scl(level));
         this.bulletV.set(0, constBulletV.y * level);
         this.damage = constDamage * level;
-        this.reloadInterval = constReloadInterval * level;
+        this.reloadInterval = constReloadInterval / level;
         //запоминаем новое значение константы жизни корабля
         this.hp = constHp * level;
+    }
+
+    /**
+     * Метод настройки параметров звука корабля
+     * @param soundVolume - уровень громкости звука
+     * @param soundPitch - уровень тона звука
+     */
+    public void setSound(
+            float soundVolume,
+            float soundPitch
+    ) {
+        this.soundVolume = soundVolume;
+        this.soundPitch = soundPitch;
     }
 
     /**

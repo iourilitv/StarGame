@@ -22,6 +22,9 @@ public class EnemyEmitter {
     private static final float SMALL_RELOAD_INTERVAL = 3f;
     private static final float SMALL_HEIGHT = 0.1f;
     private static final int SMALL_HP = 1;
+    //объявляем константы параметров звука маленького корабля
+    private static final float SMALL_SOUND_VOLUME = 0.2f;//уровень громкости звука
+    private static final float SMALL_SOUND_PITCH = 2;//уровень тона звука
 
     private static final float MIDDLE_BULLET_HEIGHT = 0.02f;
     private static final float MIDDLE_BULLET_VY = -0.25f;
@@ -29,6 +32,9 @@ public class EnemyEmitter {
     private static final float MIDDLE_RELOAD_INTERVAL = 4f;
     private static final float MIDDLE_HEIGHT = 0.15f;
     private static final int MIDDLE_HP = 5;
+    //объявляем константы параметров звука среднего корабля
+    private static final float MIDDLE_SOUND_VOLUME = 0.5f;//уровень громкости звука
+    private static final float MIDDLE_SOUND_PITCH = 1f;//уровень тона звука
 
     private static final float BIG_BULLET_HEIGHT = 0.03f;
     private static final float BIG_BULLET_VY = -0.2f;
@@ -36,6 +42,9 @@ public class EnemyEmitter {
     private static final float BIG_RELOAD_INTERVAL = 2f;
     private static final float BIG_HEIGHT = 0.2f;
     private static final int BIG_HP = 10;
+    //объявляем константы параметров звука большого корабля
+    private static final float BIG_SOUND_VOLUME = 1f;//уровень громкости звука
+    private static final float BIG_SOUND_PITCH = 0.5f;//уровень тона звука
 
     private float generateInterval = 4f;
     private float generateTimer;
@@ -90,6 +99,8 @@ public class EnemyEmitter {
                 );
                 //меняем настройки корабля противника в зависимости от уровня игры
                 enemy.changeShipSettingsByLevel(level);
+                //устанавливаем параметры звука выстрелов маленького корабля
+                enemy.setSound(SMALL_SOUND_VOLUME, SMALL_SOUND_PITCH);
             } else if (type < 0.8f) {
                 enemy.set(
                         enemyMiddleRegions,
@@ -105,6 +116,8 @@ public class EnemyEmitter {
                 );
                 //меняем настройки корабля противника в зависимости от уровня игры
                 enemy.changeShipSettingsByLevel(level);
+                //устанавливаем параметры звука выстрелов среднего корабля
+                enemy.setSound(MIDDLE_SOUND_VOLUME, MIDDLE_SOUND_PITCH);
             } else {
                 enemy.set(
                         enemyBigRegions,
@@ -120,6 +133,8 @@ public class EnemyEmitter {
                 );
                 //меняем настройки корабля противника в зависимости от уровня игры
                 enemy.changeShipSettingsByLevel(level);
+                //устанавливаем параметры звука выстрелов большого корабля
+                enemy.setSound(BIG_SOUND_VOLUME, BIG_SOUND_PITCH);
             }
             enemy.pos.x = Rnd.nextFloat(worldBounds.getLeft() + enemy.getHalfWidth(), worldBounds.getRight() - enemy.getHalfWidth());
             enemy.setBottom(worldBounds.getTop());

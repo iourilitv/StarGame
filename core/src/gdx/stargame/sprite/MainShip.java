@@ -42,6 +42,9 @@ public class MainShip extends Ship {
         //запоминаем по константу значения жизни главного корабля для доступа извне
         constHp = HP;
         bulletV.set(0, 0.5f);
+        //задаем параметры звука выстрелов корабля
+        soundVolume = 0.3f;//громкость звука
+        soundPitch = 1f;//тон звука
     }
 
     @Override
