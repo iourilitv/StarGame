@@ -135,12 +135,6 @@ public abstract class Ship extends Sprite {
         return constHp;
     }
 
-//    protected void shoot() {
-//        sound.play(0.3f);
-//        Bullet bullet = bulletPool.obtain();
-//        bullet.set(this, bulletRegion, pos, bulletV, bulletHeight, worldBounds, damage);
-//    }
-
     /**
      * Метод стрельбы со звуковым эфектом - звук воспроизводится слева или справа
      * в зависимости от расположения корабля на поле
