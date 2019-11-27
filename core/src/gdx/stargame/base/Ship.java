@@ -16,6 +16,9 @@ import gdx.stargame.sprite.Explosion;
 public abstract class Ship extends Sprite {
 
     protected final Vector2 v0 = new Vector2();
+    //объявляем переменную для значения константы начальной скорости корабля в активном режиме
+    protected final Vector2 constV0 = new Vector2();
+
     protected final Vector2 v = new Vector2();
 
     protected Rect worldBounds;
@@ -23,21 +26,28 @@ public abstract class Ship extends Sprite {
     protected ExplosionPool explosionPool;
     protected TextureRegion bulletRegion;
     protected Vector2 bulletV = new Vector2();
+    //объявляем переменную для значения константы скорости выпускаемых кораблем снарядов
+    protected Vector2 constBulletV = new Vector2();
     protected Sound sound;
     protected float bulletHeight;
     //объявляем переменную для значения повреждения наносимого при столкновении с кораблем
     protected int damage;
+    //объявляем переменную для константы значения повреждения наносимого при столкновении с кораблем
+    protected int constDamage;
     //объявляем переменную для значения жизни корабля
     protected int hp;
     //объявляем переменную для значения константы жизни корабля
     protected int constHp;
 
     protected float reloadInterval = 0f;
+    //объявляем переменную для константы значения интервала перезагрузки снарядов корабля
+    protected float constReloadInterval;
+
     protected float reloadTimer = 0f;
 
     //инициируем переменные интервала и таймера для анимации попадания снаряда в корабль
-    protected float animateInterval = 0.05f;
-    protected float animateTimer = animateInterval;
+    private float animateInterval = 0.05f;
+    private float animateTimer = animateInterval;
 
     public Ship() {
     }

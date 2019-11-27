@@ -295,7 +295,6 @@ public class GameScreen extends BaseScreen {
             //сбрасываем флаг перехода на новый уровень
             scoreCounter.resetNextLevel();
             //восстанавливаем значение жизни главного корабля игрока при измении уровеня игры
-//            mainShip.setHp(mainShip.getConstHp());//FIXME
             mainShip.changeShipSettingsByLevel(scoreCounter.getLevel());
             //меняем настройки кораблей противника при переходе на другой уровень
             enemyPool.changeShipsSettingsByLevel(scoreCounter.getLevel());//FIXME
