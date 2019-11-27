@@ -100,7 +100,7 @@ public class Enemy extends Ship {
     }
 
     /**
-     * Метод меняет праметры настройки корабля противника в зависимости от текущего уровня игры
+     * Метод меняет параметры настройки корабля противника в зависимости от текущего уровня игры
      * @param level - текущий уровень игры
      * @param bulletVY - скорость снарядов корабля по вертикали
      * @param damage - пореждение наносимое главному кораблю при столкновении с кораблем противника
@@ -115,9 +115,23 @@ public class Enemy extends Ship {
         this.bulletV.set(0, bulletVY * level);
         this.damage = damage * level;
         this.reloadInterval = reloadInterval * level;
-        this.hp = hp * level;
+        this.hp = constHp * level;
         //запоминаем новое значение константы жизни корабля
         this.constHp = hp;
+    }
+
+    /** //FIXME
+     * Метод меняет настройки корабля противника в зависимости от текущего уровня игры
+     * @param level - текущий уровень игры
+     */
+    public void changeShipSettingsByLevel(int level){
+        //увеличиваем параметры корабля в зависимости от текущего уровня игры
+        this.bulletV.set(0, bulletV.y * level);
+        this.damage = damage * level;
+        this.reloadInterval = reloadInterval * level;
+        //запоминаем новое значение константы жизни корабля
+        this.constHp = constHp * level;
+        this.hp = constHp;
     }
 
     /**

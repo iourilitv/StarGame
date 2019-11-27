@@ -1,5 +1,8 @@
 package gdx.stargame.base;
 
+/**
+ * Класс логики подсчета очков.
+ */
 public class ScoreCounter {
 
     //создаем объект класса
@@ -15,8 +18,10 @@ public class ScoreCounter {
     private int scoreTotal = 0;
     //инициируем перенную текущего уровня игры(?должен быть в GameScreen?)
     private int level = 1;
-    //инициируем переменную для хранения номера предыдущего уровня игры(НЕ нужно?)//FIXME
-    private int prevLevel = 1;
+    //инициируем переменную для хранения номера предыдущего уровня игры
+//    private int prevLevel = 1;//FIXME
+    //объявляем фраг перехода на следующий уровень
+    private boolean isNextLevel;
 
     public void checkNextLevel(int score){
         //прибавляем переданные очки к текущей сумме набранных очков
@@ -25,29 +30,26 @@ public class ScoreCounter {
         scoreTotal = scoreTotal > 0 ? scoreTotal : 0;
         //если новая текущая сумма набранных очков достаточна для перехода на новый уровень
         if(scoreTotal >= level * NEXT_LEVEL_SCORE_SUM){
-            //сохраняем значение текущего уровня
-            prevLevel = level;
+            //устанавливаем фраг перехода на следующий уровень
+            isNextLevel = true;
+
+//            //сохраняем значение текущего уровня
+//            prevLevel = level;//FIXME
+
             //инкрементируем текущий уровень
             level++;
         //если значение уровня игры больше минимального уровня и
         //если новая текущая сумма набранных очков уменьшилась достаточно для
         // возврата на предыдущий уровень
-        } else if(level > 1 && scoreTotal <= (level - 1) * NEXT_LEVEL_SCORE_SUM) {
-            //сохраняем значение текущего уровня
-            level = prevLevel;
-            //декрементируем текущий уровень
-            prevLevel--;
+        } else if(level > 1 && scoreTotal < (level - 1) * NEXT_LEVEL_SCORE_SUM) {
 
-//            if(scoreTotal <= (level - 1) * NEXT_LEVEL_SCORE_SUM){
-//                //сохраняем значение текущего уровня
-//                level = prevLevel;
-//                //декрементируем текущий уровень
-//                prevLevel--;
-//                }
-//            //если значение уровня игры не больше минимального уровня
-//            } /*else if (scoreTotal <= NEXT_LEVEL_SCORE_SUM){
+//            //сохраняем значение текущего уровня//FIXME
+//            level = prevLevel;
 //            //декрементируем текущий уровень
-//            prevLevel = 1;*/
+//            prevLevel--;
+
+            //декрементируем значение текущего уровня
+            level--;
         }
     }
 
@@ -55,12 +57,15 @@ public class ScoreCounter {
      * Метод организует режим начала новой игры.
      */
     public void startNewGame() {
-
         //устанавливаем переменные текущего и предыдущего уровней игры в начальное состояние
         setLevel(1);
-        setPrevLevel(1);
+
+//        setPrevLevel(1);//FIXME
+
         //сбрасываем счетчик сбитых врагов
         setScoreTotal(0);
+        //сбрасываем флаг перехода на новый уровень
+        resetNextLevel();
     }
 
     public int getLevel() {
@@ -71,13 +76,13 @@ public class ScoreCounter {
         this.level = level;
     }
 
-    public int getPrevLevel() {
-        return prevLevel;
-    }
-
-    public void setPrevLevel(int prevLevel) {
-        this.prevLevel = prevLevel;
-    }
+//    public int getPrevLevel() {//FIXME
+//        return prevLevel;
+//    }
+//
+//    public void setPrevLevel(int prevLevel) {//FIXME
+//        this.prevLevel = prevLevel;
+//    }
 
     public int getScoreTotal() {
         return scoreTotal;
@@ -85,5 +90,13 @@ public class ScoreCounter {
 
     public void setScoreTotal(int scoreTotal) {
         this.scoreTotal = scoreTotal;
+    }
+
+    public boolean isNextLevel() {
+        return isNextLevel;
+    }
+
+    public void resetNextLevel() {
+        isNextLevel = false;
     }
 }

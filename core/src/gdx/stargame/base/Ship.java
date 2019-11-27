@@ -112,6 +112,15 @@ public abstract class Ship extends Sprite {
         this.hp = hp;
     }
 
+
+    /**
+     * Геттер на значение константы жизни корабля
+     * @return - значение константы жизни корабля
+     */
+    public int getConstHp() {
+        return constHp;
+    }
+
     protected void shoot() {
         sound.play(0.3f);
         Bullet bullet = bulletPool.obtain();
@@ -128,11 +137,4 @@ public abstract class Ship extends Sprite {
         explosion.set(pos, getHeight());
     }
 
-    /**
-     * Геттер на значение константы жизни корабля
-     * @return - значение константы жизни корабля
-     */
-    public int getConstHp() {
-        return constHp;
-    }
 }

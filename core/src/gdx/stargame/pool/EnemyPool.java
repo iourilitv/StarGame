@@ -20,4 +20,11 @@ public class EnemyPool extends SpritesPool<Enemy> {
     protected Enemy newObject() {
         return new Enemy(bulletPool, explosionPool, worldBounds);
     }
+
+    //меняем настройки кораблей противника при переходе на другой уровень//FIXME
+    public void changeShipsSettingsByLevel(int level){
+        for (Enemy enemy: activeObjects) {
+            enemy.changeShipSettingsByLevel(level);
+        }
+    }
 }

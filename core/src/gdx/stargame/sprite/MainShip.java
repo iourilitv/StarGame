@@ -39,6 +39,8 @@ public class MainShip extends Ship {
         damage = 1;
         //устанавливаем по константе переменную текущего значения жизни главного корабля
         hp = HP;
+        //запоминаем по константу значения жизни главного корабля для доступа извне
+        constHp = HP;
         bulletV.set(0, 0.5f);
     }
 
@@ -189,6 +191,20 @@ public class MainShip extends Ship {
         v.setZero();
     }
 
+    /** //FIXME
+     * Метод меняет настройки корабля противника в зависимости от текущего уровня игры
+     * @param level - текущий уровень игры
+     */
+    public void changeShipSettingsByLevel(int level){
+        //увеличиваем параметры корабля в зависимости от текущего уровня игры
+//        this.bulletV.set(0, bulletV.y * level);
+//        this.damage = damage * level;
+//        this.reloadInterval = reloadInterval * level;
+//        //запоминаем новое значение константы жизни корабля
+//        this.constHp = constHp * level;
+        this.hp = constHp;
+    }
+
     /**
      * Метод, обрабатывающий режим игры "начать новую игру"
      * @param worldBounds - прямоугольник игрового мира в мировых координатах
@@ -204,6 +220,8 @@ public class MainShip extends Ship {
         stop();
         //устанавливаем по константе переменную текущего значения жизни главного корабля
         hp = HP;
+        //запоминаем по константу значения жизни главного корабля для доступа извне
+        constHp = HP;
         //устанавливаем начальную координату позиции корабля по горизонтали
         pos.x = worldBounds.pos.x;
         //сбрасываем флаг трупа главного корабля

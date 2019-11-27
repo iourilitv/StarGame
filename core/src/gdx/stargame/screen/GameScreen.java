@@ -290,14 +290,16 @@ public class GameScreen extends BaseScreen {
             return;
         }
 
-//        //FIXME не надо?
-//        //если переходим на следующий уровень игры
-//        if (prevLevel < level) {
-//            //сохраняем текущий уровень игры
-//            prevLevel = level;
-//            //добавляем бонусны к значению жизни главного корабля игрока
-//            mainShip.setHp(mainShip.getHp() + 10);
-//        }
+        //если переходим на следующий уровень игры
+        if (scoreCounter.isNextLevel()) {
+            //сбрасываем флаг перехода на новый уровень
+            scoreCounter.resetNextLevel();
+            //восстанавливаем значение жизни главного корабля игрока при измении уровеня игры
+//            mainShip.setHp(mainShip.getConstHp());//FIXME
+            mainShip.changeShipSettingsByLevel(scoreCounter.getLevel());
+            //меняем настройки кораблей противника при переходе на другой уровень
+            enemyPool.changeShipsSettingsByLevel(scoreCounter.getLevel());//FIXME
+        }
     }
 
     /**
@@ -333,7 +335,6 @@ public class GameScreen extends BaseScreen {
                     //устанавливаем текущий режим игры в положение "конец игры"
                     state = State.GAME_OVER;
                 }
-
             }
             //листаем коллекцию снарядов (главного корабля) - отрабатываем их столкновения
             for (Bullet bullet : bulletList) {
