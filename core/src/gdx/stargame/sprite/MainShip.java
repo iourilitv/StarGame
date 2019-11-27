@@ -191,17 +191,12 @@ public class MainShip extends Ship {
         v.setZero();
     }
 
-    /** //FIXME
+    /**
      * Метод меняет настройки корабля противника в зависимости от текущего уровня игры
      * @param level - текущий уровень игры
      */
     public void changeShipSettingsByLevel(int level){
-        //увеличиваем параметры корабля в зависимости от текущего уровня игры
-//        this.bulletV.set(0, bulletV.y * level);
-//        this.damage = damage * level;
-//        this.reloadInterval = reloadInterval * level;
-//        //запоминаем новое значение константы жизни корабля
-//        this.constHp = constHp * level;
+        //не меняем значение жизни от значения уровня
         this.hp = constHp;
     }
 
