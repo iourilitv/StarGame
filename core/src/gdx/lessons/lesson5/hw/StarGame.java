@@ -20,6 +20,7 @@ import gdx.lessons.lesson5.hw.screen.MenuScreen;
  * Additionally.
  * DONE 1. Замораживать картинку по нажатию клавиши "пауза"
  * DONE 2. Сохранять настройки игры по свертыванию(hide) окна
+ * DONE 3. Добавить кораблям противника движение по x в заданных рандомно границах.
  */
 public class StarGame extends Game {
 

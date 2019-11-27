@@ -15,7 +15,7 @@ import gdx.stargame.sprite.Explosion;
  */
 public abstract class Ship extends Sprite {
 
-    protected final Vector2 v0 = new Vector2();
+    protected Vector2 v0 = new Vector2();
     //объявляем переменную для значения константы начальной скорости корабля в активном режиме
     protected final Vector2 constV0 = new Vector2();
 
@@ -65,7 +65,12 @@ public abstract class Ship extends Sprite {
         reloadTimer += delta;
         if (reloadTimer > reloadInterval) {
             reloadTimer = 0f;
-            shoot();
+            //если корабль не вышел на половину за левую и правую границы игрового поля
+            if(getLeft() + getHalfWidth() > worldBounds.getLeft() &&
+                    getRight() - getHalfWidth() < worldBounds.getRight()){
+                //корабль стреляет
+                shoot();
+            }
         }
         //инкрементируем таймер анимации попадания снаряда в корабль
         animateTimer += delta;

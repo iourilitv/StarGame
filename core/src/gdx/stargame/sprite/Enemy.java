@@ -21,6 +21,9 @@ public class Enemy extends Ship {
     //инициируем ветор скорости выплывание корабля противника из-за экрана
     private Vector2 descentV = new Vector2(0, -0.15f);
 
+    //принимаем прямоугольник зоны действия корабля
+    private Rect coverageArea;
+
     //объявляем переменную для объекта счетчика очков
     private ScoreCounter scoreCounter = ScoreCounter.getInstance();
 
@@ -29,7 +32,8 @@ public class Enemy extends Ship {
         //принимаем объект пула вызрывов
         this.explosionPool = explosionPool;
         this.worldBounds = worldBounds;
-        this.v.set(v0);
+
+//        this.v.set(v0);//FIXME
     }
 
     @Override
@@ -66,6 +70,27 @@ public class Enemy extends Ship {
                 }
                 break;
         }
+        //если корабль вышел за правый край своей зоны действия
+        if (getRight() > coverageArea.getRight()) {
+            //устанавливаем его правый край по краю своей зоны действия
+            setRight(coverageArea.getRight());
+            //меняем направление движения
+            changeDirectionX();
+        }
+        //тоже самое для движение влево
+        if (getLeft() < coverageArea.getLeft()) {
+            setLeft(coverageArea.getLeft());
+            changeDirectionX();
+        }
+    }
+
+    /**
+     * Метод изменения на противоположое направления движения корабля по горизонтали
+     */
+    private void changeDirectionX() {
+        //устанавливаем вектору скорости значение заданной константы скорости и
+        // меняем направление на обратное
+        v.x *= - 1;
     }
 
     /**
@@ -114,6 +139,15 @@ public class Enemy extends Ship {
         //устанавливаем состояние выплывания для корабля противника
         state = State.DESCENT;
     }
+
+    /**
+     * Метод установки дополнительных настроек корабля.
+     * @param coverageArea - прямоугольник зоны действия корабля
+     */
+    public void setAdditionally(Rect coverageArea){
+        this.coverageArea = coverageArea;
+    }
+
 
     /**
      * Метод меняет настройки корабля противника в зависимости от текущего уровня игры
