@@ -61,7 +61,6 @@ public class Enemy extends Ship {
 
                     //вычитаем очки из набранных очков игрока в размере значения
                     // жизни  ускользнувшего корабля противника помноженого на текущий уровень игры
-//                    updateScore();//FIXME Передать сюда класс подсчета очков
                     scoreCounter.checkNextLevel(- getConstHp() * scoreCounter.getLevel());
 
                 }
@@ -82,29 +81,18 @@ public class Enemy extends Ship {
             int hp
     ) {
         this.regions = regions;
-
         this.constV0.set(v0);
         this.v0.set(constV0);
-//        this.v0.set(v0);
-
         this.bulletRegion = bulletRegion;
         this.bulletHeight = bulletHeight;
-
         this.constBulletV.set(0, bulletVY);
         this.bulletV.set(constBulletV);
-//        this.bulletV.set(0, bulletVY);
-
         this.constDamage = damage;
         this.damage = constDamage;
-//        this.damage = damage;
-
         this.constReloadInterval = reloadInterval;
         this.reloadInterval = constReloadInterval;
-
-//        this.reloadInterval = reloadInterval;
         this.sound = sound;
         setHeightProportion(height);
-
         //запоминаем значение константы жизни корабля
         this.constHp = hp;
         this.hp = constHp;
@@ -114,28 +102,7 @@ public class Enemy extends Ship {
         state = State.DESCENT;
     }
 
-//    /**
-//     * Метод меняет параметры настройки корабля противника в зависимости от текущего уровня игры
-//     * @param level - текущий уровень игры
-//     * @param bulletVY - скорость снарядов корабля по вертикали
-//     * @param damage - пореждение наносимое главному кораблю при столкновении с кораблем противника
-//     * @param reloadInterval - период между выпуском снарядов корабля противника
-//     * @param hp - уровень жизни(здоровья) корабля
-//     */ //FIXME add v0
-//    public void changeShipSettingsByLevel(
-//                        int level, float bulletVY, int damage,
-//                        float reloadInterval, int hp
-//                        ){
-//        //увеличиваем параметры корабля в зависимости от текущего уровня игры
-//        this.bulletV.set(0, bulletVY * level);
-//        this.damage = damage * level;
-//        this.reloadInterval = reloadInterval * level;
-//        this.hp = constHp * level;
-//        //запоминаем новое значение константы жизни корабля
-//        this.constHp = hp;
-//    }
-
-    /** //FIXME
+    /**
      * Метод меняет настройки корабля противника в зависимости от текущего уровня игры
      * @param level - текущий уровень игры
      */
@@ -146,7 +113,6 @@ public class Enemy extends Ship {
         this.damage = constDamage * level;
         this.reloadInterval = constReloadInterval * level;
         //запоминаем новое значение константы жизни корабля
-//        this.constHp = constHp * level;
         this.hp = constHp * level;
     }
 
