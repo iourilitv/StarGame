@@ -89,10 +89,6 @@ public class EnemyEmitter {
                         SMALL_HP
                 );
                 //меняем настройки корабля противника в зависимости от уровня игры
-//                enemy.changeShipSettingsByLevel(
-//                        level, SMALL_BULLET_VY, SMALL_BULLET_DAMAGE,
-//                        SMALL_RELOAD_INTERVAL, SMALL_HP
-//                );
                 enemy.changeShipSettingsByLevel(level);
             } else if (type < 0.8f) {
                 enemy.set(
@@ -108,10 +104,6 @@ public class EnemyEmitter {
                         MIDDLE_HP
                 );
                 //меняем настройки корабля противника в зависимости от уровня игры
-//                enemy.changeShipSettingsByLevel(
-//                        level, MIDDLE_BULLET_VY, MIDDLE_BULLET_DAMAGE,
-//                        MIDDLE_RELOAD_INTERVAL, MIDDLE_HP
-//                );
                 enemy.changeShipSettingsByLevel(level);
             } else {
                 enemy.set(
@@ -127,10 +119,6 @@ public class EnemyEmitter {
                         BIG_HP
                 );
                 //меняем настройки корабля противника в зависимости от уровня игры
-//                enemy.changeShipSettingsByLevel(
-//                        level, BIG_BULLET_VY, BIG_BULLET_DAMAGE,
-//                        BIG_RELOAD_INTERVAL, BIG_HP
-//                );
                 enemy.changeShipSettingsByLevel(level);
             }
             enemy.pos.x = Rnd.nextFloat(worldBounds.getLeft() + enemy.getHalfWidth(), worldBounds.getRight() - enemy.getHalfWidth());
