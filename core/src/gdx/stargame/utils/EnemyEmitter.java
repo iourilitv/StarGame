@@ -90,12 +90,8 @@ public class EnemyEmitter {
         if (generateTimer >= generateInterval) {
             generateTimer = 0f;
             Enemy enemy = enemyPool.obtain();
-
             //генерирует и устанавливаем начальные параметры любому типу корабля противника
             generateShipProperties(enemy);
-            //передаем кораблю прямоугольник зоны действия корабля
-            enemy.setAdditionally(coverageArea);
-
             float type = (float) Math.random();
             if (type < 0.5f) {
                 enemy.set(
@@ -110,8 +106,9 @@ public class EnemyEmitter {
                         SMALL_HEIGHT,
                         SMALL_HP
                 );
-                //меняем настройки корабля противника в зависимости от уровня игры
-                enemy.changeShipSettingsByLevel(level);
+//                //меняем настройки корабля противника в зависимости от уровня игры
+//                enemy.changeShipSettingsByLevel(level);//FIXME
+
                 //устанавливаем параметры звука выстрелов маленького корабля
                 enemy.setSound(SMALL_SOUND_VOLUME, SMALL_SOUND_PITCH);
             } else if (type < 0.8f) {
@@ -127,8 +124,9 @@ public class EnemyEmitter {
                         MIDDLE_HEIGHT,
                         MIDDLE_HP
                 );
-                //меняем настройки корабля противника в зависимости от уровня игры
-                enemy.changeShipSettingsByLevel(level);
+//                //меняем настройки корабля противника в зависимости от уровня игры
+//                enemy.changeShipSettingsByLevel(level);//FIXME
+
                 //устанавливаем параметры звука выстрелов среднего корабля
                 enemy.setSound(MIDDLE_SOUND_VOLUME, MIDDLE_SOUND_PITCH);
             } else {
@@ -144,18 +142,24 @@ public class EnemyEmitter {
                         BIG_HEIGHT,
                         BIG_HP
                 );
-                //меняем настройки корабля противника в зависимости от уровня игры
-                enemy.changeShipSettingsByLevel(level);
+//                //меняем настройки корабля противника в зависимости от уровня игры
+//                enemy.changeShipSettingsByLevel(level);//FIXME
+
                 //устанавливаем параметры звука выстрелов большого корабля
                 enemy.setSound(BIG_SOUND_VOLUME, BIG_SOUND_PITCH);
             }
 
+            //передаем кораблю прямоугольник зоны действия корабля
+            enemy.setAdditionally(coverageArea);
+            //меняем настройки корабля противника в зависимости от уровня игры
+            enemy.changeShipSettingsByLevel(level);
+
 //            //устанавливаем случайные координаты по горизонтали любому типу корабля противника
-//            enemy.pos.x = Rnd.nextFloat(worldBounds.getLeft() + enemy.getHalfWidth(),
+//            enemy.pos.x = Rnd.nextFloat(worldBounds.getLeft() + enemy.getHalfWidth(),//FIXME
 //                    worldBounds.getRight() - enemy.getHalfWidth());
 //            //устанавливаем сразу за верхним краем игрового мира корабль противника любого типа
 //            enemy.setBottom(worldBounds.getTop());
-            //
+
         }
     }
 
@@ -171,14 +175,30 @@ public class EnemyEmitter {
         //устанавливаем сразу за верхним краем игрового мира корабль противника любого типа
         enemy.setBottom(worldBounds.getTop());
 
-        //устанавливаем значения зоны действия корабля
-        coverageArea.setSize(worldBounds.getWidth(), worldBounds.getHeight());
+//        //устанавливаем значения зоны действия корабля
+//        coverageArea.setSize(worldBounds.getWidth(), worldBounds.getHeight());
         //устанавливаем положение зоны действия по X
         coverageArea.pos.x = rndX;
+        //устанавливаем значения зоны действия корабля
+        coverageArea.setWidth(worldBounds.getWidth());
+        coverageArea.setHeight(worldBounds.getHeight());
 
-        //устанавливаем значения вектора начальной позиции корабля
+//        //TODO temporarily
+//        System.out.println("EnemyEmitter.generateShipProperties damage= " + enemy.getDamage() +
+//                ", rndX= " + rndX +
+//                ", coverageArea.getWidth= " + coverageArea.getWidth() +
+//                ", coverageArea.getHeight()= " + coverageArea.getHeight() +
+//                ", coverageArea.getLeft()= " + coverageArea.getLeft() +
+//                ", coverageArea.getRight()= " + coverageArea.getRight());
+
+        //TODO temporarily
+        System.out.println("EnemyEmitter.generateShipProperties damage= " + enemy.getDamage() +
+                ", coverageArea.getLeft()= " + coverageArea.getLeft() +
+                ", coverageArea.getRight()= " + coverageArea.getRight());
+
+        //устанавливаем значения вектора начальной позиции корабля по x в середине его зоны покрытия
         //все выплывают сверху экрана
-//        pos0.set(rndX, worldBounds.getTop() + getHeight());
+//        pos0.set(rndX, worldBounds.getTop() + getHeight());//FIXME
         enemy.pos.x = rndX;
 
         //генерируем случайные значения знака скорости

@@ -30,7 +30,8 @@ public abstract class Ship extends Sprite {
     protected Vector2 constBulletV = new Vector2();
     protected Sound sound;
     protected float bulletHeight;
-    //объявляем переменную для значения повреждения наносимого при столкновении с кораблем
+    //объявляем переменную для значения повреждения наносимого при столкновении
+    // с кораблем или с его снарядом
     protected int damage;
     //объявляем переменную для константы значения повреждения наносимого при столкновении с кораблем
     protected int constDamage;
@@ -63,6 +64,7 @@ public abstract class Ship extends Sprite {
     @Override
     public void update(float delta) {
         reloadTimer += delta;
+        //если пора выпускать снаряд
         if (reloadTimer > reloadInterval) {
             reloadTimer = 0f;
             //если корабль не вышел на половину за левую и правую границы игрового поля
@@ -79,7 +81,7 @@ public abstract class Ship extends Sprite {
             //показываем основную картинку корабля
             frame = 0;
         }
-        pos.mulAdd(v, delta);
+//        pos.mulAdd(v, delta);//FIXME
     }
 
     @Override

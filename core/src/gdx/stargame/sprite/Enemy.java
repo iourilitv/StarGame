@@ -21,8 +21,8 @@ public class Enemy extends Ship {
     //инициируем ветор скорости выплывание корабля противника из-за экрана
     private Vector2 descentV = new Vector2(0, -0.15f);
 
-    //принимаем прямоугольник зоны действия корабля
-    private Rect coverageArea;
+    //инициируем объект прямоугольника зоны действия корабля
+    private Rect coverageArea = new Rect();
 
     //объявляем переменную для объекта счетчика очков
     private ScoreCounter scoreCounter = ScoreCounter.getInstance();
@@ -62,25 +62,80 @@ public class Enemy extends Ship {
                 if (getTop() < worldBounds.getBottom()) {
                     //помечаем корабль противника как уничтоженный, но без взрыва
                     destroyed = true;
-
                     //вычитаем очки из набранных очков игрока в размере значения
                     // жизни  ускользнувшего корабля противника помноженого на текущий уровень игры
                     scoreCounter.checkNextLevel(- getConstHp() * scoreCounter.getLevel());
-
                 }
                 break;
         }
-        //если корабль вышел за правый край своей зоны действия
-        if (getRight() > coverageArea.getRight()) {
-            //устанавливаем его правый край по краю своей зоны действия
-            setRight(coverageArea.getRight());
+        //если корабль противника не вышел полностью за экран слева и справа
+        if(getRight() > worldBounds.getLeft() && getLeft() < worldBounds.getRight()){
+            //обновляем его вектор позиции по x и y
+            pos.mulAdd(v, delta);
+        //если корабль противника вышел за экран слева или справа
+        } else {
+            //оставляем только движение по x
+            pos.x += v.x * delta;
+        }
+
+//        //если корабль вышел за правый край своей зоны действия
+//        if (getRight() > coverageArea.getRight()) {
+//            //устанавливаем его правый край по краю своей зоны действия
+//            setRight(coverageArea.getRight());//FIXME
+//            //меняем направление движения
+//            changeDirectionX();
+//        //тоже самое для движение влево
+//        } else if (getLeft() < coverageArea.getLeft()) {
+//            setLeft(coverageArea.getLeft());//FIXME
+//            changeDirectionX();
+//        }
+        //если корабль коснулся правого или левого края своей зоны действия
+//        if (getRight() > coverageArea.getRight()) {
+//            //
+////            setRight(coverageArea.getRight());
+//            //если
+//            if(v.x > 0){
+//                //меняем направление движения
+//                changeDirectionX();
+//            }
+//
+//            //оставляем только движение по x//FIXME отползаем, чтобы не зависнуть
+////            pos.x += v.x * delta;
+//
+//            //TODO temporarily
+//            System.out.println("2.RIGHT .Enemy.update level= " + scoreCounter.getLevel() +
+//                    ",  damage= " + damage + ", pos= " + pos.toString() +
+//                    ", v= " + v.toString());
+//
+//        } else if(getLeft() < coverageArea.getLeft()){
+//            //
+////            setLeft(coverageArea.getLeft());
+//            //
+//            if(v.x < 0){
+//                //меняем направление движения
+//                changeDirectionX();
+//            }
+//
+//            //TODO temporarily
+//            System.out.println("3 LEFT .Enemy.update level= " + scoreCounter.getLevel() +
+//                    ",  damage= " + damage + ", pos= " + pos.toString() +
+//                    ", v= " + v.toString());
+//        }
+        //если корабль коснулся правого или левого края своей зоны действия
+        //и дополнительно проверяем направление скорости, чтобы не зацикливалась
+        // на смене направления из-за пролета границы
+        if (getRight() > coverageArea.getRight() && v.x > 0 ||
+                getLeft() < coverageArea.getLeft() && v.x < 0) {
             //меняем направление движения
             changeDirectionX();
-        }
-        //тоже самое для движение влево
-        if (getLeft() < coverageArea.getLeft()) {
-            setLeft(coverageArea.getLeft());
-            changeDirectionX();
+
+            //TODO temporarily
+            System.out.println("2.Enemy.update level= " + scoreCounter.getLevel() +
+                    ",  damage= " + damage + ", pos= " + pos.toString() +
+                    ", v= " + v.toString() +
+                    ", coverageArea.getLeft()= " + coverageArea.getLeft() +
+                    ", coverageArea.getRight()= " + coverageArea.getRight());
+
         }
     }
 
@@ -100,7 +155,7 @@ public class Enemy extends Ship {
      * @param bulletRegion - регион картинки снаряда корабля противника
      * @param bulletHeight - высота региона картинки снаряда корабля противника
      * @param bulletVY - скорость снаряда корабля противника
-     * @param damage - размер ущерба наносимого объекту при столкновении с кораблем противника
+     * @param damage - размер ущерба снарядом корабля противника или самим кораблем противника
      * @param reloadInterval - интервал между выпуском снарядов корабля противника
      * @param sound - объект звука выстрела корабля противника
      * @param height - высота региона корабля противника
@@ -145,9 +200,10 @@ public class Enemy extends Ship {
      * @param coverageArea - прямоугольник зоны действия корабля
      */
     public void setAdditionally(Rect coverageArea){
-        this.coverageArea = coverageArea;
+//        this.coverageArea = coverageArea;//FIXME
+        //принимаем рандомные настройки зоны действия корабля
+        this.coverageArea.set(coverageArea);
     }
-
 
     /**
      * Метод меняет настройки корабля противника в зависимости от текущего уровня игры
@@ -168,10 +224,7 @@ public class Enemy extends Ship {
      * @param soundVolume - уровень громкости звука
      * @param soundPitch - уровень тона звука
      */
-    public void setSound(
-            float soundVolume,
-            float soundPitch
-    ) {
+    public void setSound(float soundVolume, float soundPitch) {
         this.soundVolume = soundVolume;
         this.soundPitch = soundPitch;
     }

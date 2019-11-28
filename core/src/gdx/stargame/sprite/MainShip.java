@@ -57,6 +57,7 @@ public class MainShip extends Ship {
     @Override
     public void update(float delta) {
         super.update(delta);
+        pos.mulAdd(v, delta);
         if (getRight() > worldBounds.getRight()) {
             setRight(worldBounds.getRight());
             stop();
@@ -68,11 +69,11 @@ public class MainShip extends Ship {
     }
 
     public void keyDown(int keycode) {
-        //если гланый корабль удален
-        if(isDestroyed()){
-            //выходим, игнорируя событие управления корабля
-            return;
-        }
+//        //если главный корабль удален//FIXME
+//        if(isDestroyed()){
+//            //выходим, игнорируя событие управления корабля
+//            return;
+//        }
         switch (keycode) {
             case Input.Keys.D:
             case Input.Keys.RIGHT:
@@ -91,11 +92,11 @@ public class MainShip extends Ship {
     }
 
     public void keyUp(int keycode) {
-        //если гланый корабль удален
-        if(isDestroyed()){
-            //выходим, игнорируя событие управления корабля
-            return;
-        }
+//        //если главный корабль удален//FIXME
+//        if(isDestroyed()){
+//            //выходим, игнорируя событие управления корабля
+//            return;
+//        }
         switch (keycode) {
             case Input.Keys.D:
             case Input.Keys.RIGHT:
@@ -120,11 +121,11 @@ public class MainShip extends Ship {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
-        //если гланый корабль удален
-        if(isDestroyed()){
-            //выходим, игнорируя событие управления корабля
-            return false;
-        }
+//        //если главный корабль удален//FIXME
+//        if(isDestroyed()){
+//            //выходим, игнорируя событие управления корабля
+//            return false;
+//        }
 
         if (touch.x < worldBounds.pos.x) {
             if (leftPointer != INVALID_POINTER) return false;
@@ -140,11 +141,11 @@ public class MainShip extends Ship {
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer) {
-        //если гланый корабль удален
-        if(isDestroyed()){
-            //выходим, игнорируя событие управления корабля
-            return false;
-        }
+//        //если главный корабль удален//FIXME
+//        if(isDestroyed()){
+//            //выходим, игнорируя событие управления корабля
+//            return false;
+//        }
         if (pointer == leftPointer) {
             leftPointer = INVALID_POINTER;
             if (rightPointer != INVALID_POINTER) {
