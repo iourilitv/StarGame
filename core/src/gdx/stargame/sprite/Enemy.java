@@ -32,8 +32,6 @@ public class Enemy extends Ship {
         //принимаем объект пула вызрывов
         this.explosionPool = explosionPool;
         this.worldBounds = worldBounds;
-
-//        this.v.set(v0);//FIXME
     }
 
     @Override
@@ -77,65 +75,13 @@ public class Enemy extends Ship {
             //оставляем только движение по x
             pos.x += v.x * delta;
         }
-
-//        //если корабль вышел за правый край своей зоны действия
-//        if (getRight() > coverageArea.getRight()) {
-//            //устанавливаем его правый край по краю своей зоны действия
-//            setRight(coverageArea.getRight());//FIXME
-//            //меняем направление движения
-//            changeDirectionX();
-//        //тоже самое для движение влево
-//        } else if (getLeft() < coverageArea.getLeft()) {
-//            setLeft(coverageArea.getLeft());//FIXME
-//            changeDirectionX();
-//        }
-        //если корабль коснулся правого или левого края своей зоны действия
-//        if (getRight() > coverageArea.getRight()) {
-//            //
-////            setRight(coverageArea.getRight());
-//            //если
-//            if(v.x > 0){
-//                //меняем направление движения
-//                changeDirectionX();
-//            }
-//
-//            //оставляем только движение по x//FIXME отползаем, чтобы не зависнуть
-////            pos.x += v.x * delta;
-//
-//            //TODO temporarily
-//            System.out.println("2.RIGHT .Enemy.update level= " + scoreCounter.getLevel() +
-//                    ",  damage= " + damage + ", pos= " + pos.toString() +
-//                    ", v= " + v.toString());
-//
-//        } else if(getLeft() < coverageArea.getLeft()){
-//            //
-////            setLeft(coverageArea.getLeft());
-//            //
-//            if(v.x < 0){
-//                //меняем направление движения
-//                changeDirectionX();
-//            }
-//
-//            //TODO temporarily
-//            System.out.println("3 LEFT .Enemy.update level= " + scoreCounter.getLevel() +
-//                    ",  damage= " + damage + ", pos= " + pos.toString() +
-//                    ", v= " + v.toString());
-//        }
         //если корабль коснулся правого или левого края своей зоны действия
         //и дополнительно проверяем направление скорости, чтобы не зацикливалась
-        // на смене направления из-за пролета границы
+        // на смене направления из-за проскакивания границы
         if (getRight() > coverageArea.getRight() && v.x > 0 ||
                 getLeft() < coverageArea.getLeft() && v.x < 0) {
             //меняем направление движения
             changeDirectionX();
-
-            //TODO temporarily
-            System.out.println("2.Enemy.update level= " + scoreCounter.getLevel() +
-                    ",  damage= " + damage + ", pos= " + pos.toString() +
-                    ", v= " + v.toString() +
-                    ", coverageArea.getLeft()= " + coverageArea.getLeft() +
-                    ", coverageArea.getRight()= " + coverageArea.getRight());
-
         }
     }
 
@@ -200,7 +146,6 @@ public class Enemy extends Ship {
      * @param coverageArea - прямоугольник зоны действия корабля
      */
     public void setAdditionally(Rect coverageArea){
-//        this.coverageArea = coverageArea;//FIXME
         //принимаем рандомные настройки зоны действия корабля
         this.coverageArea.set(coverageArea);
     }
