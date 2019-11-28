@@ -67,6 +67,9 @@ public class EnemyEmitter {
     //инициируем константу делителя верхней границы начальной скорости корабля
     private final int LOW_V0_DENOMINATOR = 5;
     private final int HIGH_V0_DENOMINATOR = 10;
+    //объявляем переменные для генерации случайных значений корабля противника
+    private float rndX;//координата по x
+    private int minus;//знак скорости
 
     private Sound sound;
 
@@ -93,7 +96,11 @@ public class EnemyEmitter {
             //генерирует и устанавливаем начальные параметры любому типу корабля противника
             generateShipProperties(enemy);
             float type = (float) Math.random();
+            //генерируем с вероятностью 50% маленький корабль
             if (type < 0.5f) {
+                //устанавливаем значение вектора начальной скорости для среднего корабля
+                enemySmallV.x = minus * rndX;
+                //устанавливаем основные параметры маленького корабля
                 enemy.set(
                         enemySmallRegions,
                         enemySmallV,
@@ -106,12 +113,13 @@ public class EnemyEmitter {
                         SMALL_HEIGHT,
                         SMALL_HP
                 );
-//                //меняем настройки корабля противника в зависимости от уровня игры
-//                enemy.changeShipSettingsByLevel(level);//FIXME
-
                 //устанавливаем параметры звука выстрелов маленького корабля
                 enemy.setSound(SMALL_SOUND_VOLUME, SMALL_SOUND_PITCH);
+            //генерируем с вероятностью 30% средний корабль
             } else if (type < 0.8f) {
+                //устанавливаем значение вектора начальной скорости для среднего корабля
+                enemyMiddleV.x = minus * rndX;
+                //устанавливаем основные параметры среднего корабля
                 enemy.set(
                         enemyMiddleRegions,
                         enemyMiddleV,
@@ -124,12 +132,13 @@ public class EnemyEmitter {
                         MIDDLE_HEIGHT,
                         MIDDLE_HP
                 );
-//                //меняем настройки корабля противника в зависимости от уровня игры
-//                enemy.changeShipSettingsByLevel(level);//FIXME
-
                 //устанавливаем параметры звука выстрелов среднего корабля
                 enemy.setSound(MIDDLE_SOUND_VOLUME, MIDDLE_SOUND_PITCH);
+            //генерируем с вероятностью 20% большой корабль
             } else {
+                //устанавливаем значение вектора начальной скорости для большого корабля
+                enemyBigV.x = minus * rndX;
+                //устанавливаем основные параметры большого корабля
                 enemy.set(
                         enemyBigRegions,
                         enemyBigV,
@@ -142,24 +151,13 @@ public class EnemyEmitter {
                         BIG_HEIGHT,
                         BIG_HP
                 );
-//                //меняем настройки корабля противника в зависимости от уровня игры
-//                enemy.changeShipSettingsByLevel(level);//FIXME
-
                 //устанавливаем параметры звука выстрелов большого корабля
                 enemy.setSound(BIG_SOUND_VOLUME, BIG_SOUND_PITCH);
             }
-
             //передаем кораблю прямоугольник зоны действия корабля
             enemy.setAdditionally(coverageArea);
             //меняем настройки корабля противника в зависимости от уровня игры
             enemy.changeShipSettingsByLevel(level);
-
-//            //устанавливаем случайные координаты по горизонтали любому типу корабля противника
-//            enemy.pos.x = Rnd.nextFloat(worldBounds.getLeft() + enemy.getHalfWidth(),//FIXME
-//                    worldBounds.getRight() - enemy.getHalfWidth());
-//            //устанавливаем сразу за верхним краем игрового мира корабль противника любого типа
-//            enemy.setBottom(worldBounds.getTop());
-
         }
     }
 
@@ -168,53 +166,21 @@ public class EnemyEmitter {
      */
     private void generateShipProperties(Enemy enemy) {
         //генерируем случайние значения координат по X и Y в рамках игрового поля
-        float rndX = Rnd.nextFloat(- worldBounds.getHalfWidth(), worldBounds.getHalfWidth());
-//        enemy.pos.x = Rnd.nextFloat(worldBounds.getLeft() + enemy.getHalfWidth(),
-//                worldBounds.getRight() - enemy.getHalfWidth());
-
+        rndX = Rnd.nextFloat(- worldBounds.getHalfWidth(), worldBounds.getHalfWidth());
         //устанавливаем сразу за верхним краем игрового мира корабль противника любого типа
         enemy.setBottom(worldBounds.getTop());
-
-//        //устанавливаем значения зоны действия корабля
-//        coverageArea.setSize(worldBounds.getWidth(), worldBounds.getHeight());
+        //устанавливаем значения зоны действия корабля
+        coverageArea.setSize(worldBounds.getWidth(), worldBounds.getHeight());
         //устанавливаем положение зоны действия по X
         coverageArea.pos.x = rndX;
-        //устанавливаем значения зоны действия корабля
-        coverageArea.setWidth(worldBounds.getWidth());
-        coverageArea.setHeight(worldBounds.getHeight());
-
-//        //TODO temporarily
-//        System.out.println("EnemyEmitter.generateShipProperties damage= " + enemy.getDamage() +
-//                ", rndX= " + rndX +
-//                ", coverageArea.getWidth= " + coverageArea.getWidth() +
-//                ", coverageArea.getHeight()= " + coverageArea.getHeight() +
-//                ", coverageArea.getLeft()= " + coverageArea.getLeft() +
-//                ", coverageArea.getRight()= " + coverageArea.getRight());
-
-        //TODO temporarily
-        System.out.println("EnemyEmitter.generateShipProperties damage= " + enemy.getDamage() +
-                ", coverageArea.getLeft()= " + coverageArea.getLeft() +
-                ", coverageArea.getRight()= " + coverageArea.getRight());
-
         //устанавливаем значения вектора начальной позиции корабля по x в середине его зоны покрытия
         //все выплывают сверху экрана
-//        pos0.set(rndX, worldBounds.getTop() + getHeight());//FIXME
         enemy.pos.x = rndX;
-
         //генерируем случайные значения знака скорости
-        int minus = Rnd.nextFloat(- 1f, 1f) < 0 ? - 1 : 1;
+        minus = Rnd.nextFloat(- 1f, 1f) < 0 ? - 1 : 1;
         //генерируем значения модуля начальной скорости по X
         rndX = Rnd.nextFloat(worldBounds.getHalfWidth() / HIGH_V0_DENOMINATOR,
                 worldBounds.getHalfWidth() / LOW_V0_DENOMINATOR);
-
-//        float rndY = Rnd.nextFloat(worldBounds.getHalfHeight() / HIGH_V0_DENOMINATOR,
-//                worldBounds.getHalfHeight() / LOW_V0_DENOMINATOR);
-        //устанавливаем значения вектора начальной скорости корабля
-//        v0.set(minus * rndX, - rndY);//(0.05f, -0.02f)
-
-        enemySmallV.x = minus * rndX;
-        enemyMiddleV.x = minus * rndX;
-        enemyBigV.x = minus * rndX;
     }
 
     public void dispose() {
