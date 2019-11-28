@@ -70,23 +70,9 @@ public class MainShip extends Ship {
             setLeft(worldBounds.getLeft() - getHalfWidth() + delta);
             stop();
         }
-
-//        if (getRight() > worldBounds.getRight()) {
-//            setRight(worldBounds.getRight());
-//            stop();
-//        }
-//        if (getLeft() < worldBounds.getLeft()) {
-//            setLeft(worldBounds.getLeft());
-//            stop();
-//        }
     }
 
     public void keyDown(int keycode) {
-//        //если главный корабль удален//FIXME
-//        if(isDestroyed()){
-//            //выходим, игнорируя событие управления корабля
-//            return;
-//        }
         switch (keycode) {
             case Input.Keys.D:
             case Input.Keys.RIGHT:
@@ -105,11 +91,6 @@ public class MainShip extends Ship {
     }
 
     public void keyUp(int keycode) {
-//        //если главный корабль удален//FIXME
-//        if(isDestroyed()){
-//            //выходим, игнорируя событие управления корабля
-//            return;
-//        }
         switch (keycode) {
             case Input.Keys.D:
             case Input.Keys.RIGHT:
@@ -134,12 +115,6 @@ public class MainShip extends Ship {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
-//        //если главный корабль удален//FIXME
-//        if(isDestroyed()){
-//            //выходим, игнорируя событие управления корабля
-//            return false;
-//        }
-
         if (touch.x < worldBounds.pos.x) {
             if (leftPointer != INVALID_POINTER) return false;
             leftPointer = pointer;
@@ -154,11 +129,6 @@ public class MainShip extends Ship {
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer) {
-//        //если главный корабль удален//FIXME
-//        if(isDestroyed()){
-//            //выходим, игнорируя событие управления корабля
-//            return false;
-//        }
         if (pointer == leftPointer) {
             leftPointer = INVALID_POINTER;
             if (rightPointer != INVALID_POINTER) {
@@ -213,13 +183,8 @@ public class MainShip extends Ship {
      * @param level - текущий уровень игры
      */
     public void changeShipSettingsByLevel(int level){
-        //не меняем значение жизни от значения уровня
-//        this.hp = constHp;
         //увеличиваем параметры корабля в зависимости от текущего уровня игры
-//        this.v0.set(constV0.scl(level));
-//        this.bulletV.set(0, constBulletV.y * level);
         this.damage = constDamage * level;
-//        this.reloadInterval = constReloadInterval / level;
         //запоминаем новое значение константы жизни корабля
         this.hp = constHp * level;
     }
@@ -241,6 +206,12 @@ public class MainShip extends Ship {
         hp = HP;
         //запоминаем по константу значения жизни главного корабля для доступа извне
         constHp = HP;
+        //устанавливаем по константе переменную текущего значения константы
+        // значения повреждения наносимого кораблем
+        damage = DAMAGE;
+        //запоминаем по константу значения константы значения повреждения наносимого
+        // главным кораблем для доступа извне
+        constDamage = DAMAGE;
         //устанавливаем начальную координату позиции корабля по горизонтали
         pos.x = worldBounds.pos.x;
         //сбрасываем флаг трупа главного корабля
