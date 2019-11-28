@@ -19,23 +19,11 @@ public class ButtonMenu extends ScaledTouchUpButton {
     //принимаем объект скрина(экрана)
     private GameScreen screen;
 
-//    private TextureRegion region;// =
-//            new TextureRegion(new Texture("textures/menu-but-wildberries-320x320.jpg"));
-
-    //    /**
-//     * Конструктор
-//     * @param atlas - атлас текстуры
-//     * @param screen - объект скрина(экрана)
-//     */
-//    public ButtonMenu(TextureAtlas atlas, BaseScreen screen) {
-//        //передаем в родительский класс текструру-регион картинки кнопки "NewGame"
-//        super(atlas.findRegion("button_new_game"), screen);
-//        this.screen = screen;
-//    }
     public ButtonMenu(GameScreen screen) {
         //передаем в родительский класс текструру-регион картинки кнопки "NewGame"
-        super(new TextureRegion(
-                new Texture("textures/menu-but-wildberries-320x320.jpg")),
+        super(new TextureRegion(new Texture(
+                "textures/menu-but-3lines-blackBorder-whiteFill-transp-321x254.jpg")
+                ),
                 screen);
         this.screen = screen;
     }

@@ -13,6 +13,7 @@ import java.util.List;
 
 import gdx.stargame.base.Font;
 import gdx.stargame.base.ScoreCounter;
+import gdx.stargame.sprite.AboutMessage;
 import gdx.stargame.sprite.BackgroundGalaxy;
 import gdx.stargame.StarGame;
 import gdx.stargame.base.BaseScreen;
@@ -60,6 +61,8 @@ public class GameScreen extends BaseScreen {
     private ButtonNewGame newGameButton;
     //объявляем спрайт для кнопки меню
     private ButtonMenu buttonMenu;
+    //объявляем спрайт сообщения "О программе"
+    private AboutMessage aboutMessage;
 
     //объявляем переменную шрифта текста
     private Font font;
@@ -99,6 +102,8 @@ public class GameScreen extends BaseScreen {
         gameOver = new GameOver(atlas);
         //инициируем объект спрайта кнопки и организации режима "новая игра"
         newGameButton = new ButtonNewGame(atlas, this);
+        //инициируем объект спрайта сообщения "О программе"
+        aboutMessage = new AboutMessage(this);
         //инициируем объект спрайта для кнопки меню
         buttonMenu = new ButtonMenu(this);
         //инициируем переменную шрифта текста. В параметрах fontFile, imageFile
@@ -133,6 +138,7 @@ public class GameScreen extends BaseScreen {
         gameOver.resize(worldBounds);
         newGameButton.resize(worldBounds);
         buttonMenu.resize(worldBounds);
+        aboutMessage.resize(worldBounds);
     }
 
     /**
@@ -424,7 +430,7 @@ public class GameScreen extends BaseScreen {
             }
             bulletPool.drawActiveSprites(batch);
             enemyPool.drawActiveSprites(batch);
-            //если текущий режим игры в положении "конец игры"
+        //если текущий режим игры в положении "конец игры"
         } else if (state == State.GAME_OVER) {
             //отрисовываем сообщение "конец игры" и кнопку "новая игра"
             //отрисовываем объект анимации конца игры
@@ -437,6 +443,12 @@ public class GameScreen extends BaseScreen {
         }
         //вызываем метод вывода информации об игре на экран
         printInfo();
+        //если установлен режим паузы
+        if (state == State.PAUSE) {
+            //отрисовываем сообщение "О программе"
+            aboutMessage.draw(batch);
+        }
+
         //отрисовываем объект кнопки меню
         buttonMenu.draw(batch);
         batch.end();
