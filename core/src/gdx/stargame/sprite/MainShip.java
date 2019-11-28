@@ -19,6 +19,8 @@ public class MainShip extends Ship {
     private static final int INVALID_POINTER = -1;
     //инициируем константу значения жизни корабля главного корабля
     private static final int HP = 10;
+    //инициируем константу значения урона наносимого главным кораблем
+    private static final int DAMAGE = 1;
 
     private boolean pressedLeft;
     private boolean pressedRight;
@@ -36,7 +38,9 @@ public class MainShip extends Ship {
         v0.set(0.5f, 0);
         reloadInterval = 0.2f;
         bulletHeight = 0.01f;
-        damage = 1;
+        damage = DAMAGE;
+        //запоминаем по константу значения урона наносимого главным кораблем для доступа извне
+        constDamage = DAMAGE;
         //устанавливаем по константе переменную текущего значения жизни главного корабля
         hp = HP;
         //запоминаем по константу значения жизни главного корабля для доступа извне
@@ -58,14 +62,23 @@ public class MainShip extends Ship {
     public void update(float delta) {
         super.update(delta);
         pos.mulAdd(v, delta);
-        if (getRight() > worldBounds.getRight()) {
-            setRight(worldBounds.getRight());
+        //если главный корабль вышел на половину за правый край игрового поля
+        if (pos.x >= worldBounds.getRight()) {
+            setRight(worldBounds.getRight() + getHalfWidth() - delta);
+            stop();
+        } else if (pos.x <= worldBounds.getLeft()) {
+            setLeft(worldBounds.getLeft() - getHalfWidth() + delta);
             stop();
         }
-        if (getLeft() < worldBounds.getLeft()) {
-            setLeft(worldBounds.getLeft());
-            stop();
-        }
+
+//        if (getRight() > worldBounds.getRight()) {
+//            setRight(worldBounds.getRight());
+//            stop();
+//        }
+//        if (getLeft() < worldBounds.getLeft()) {
+//            setLeft(worldBounds.getLeft());
+//            stop();
+//        }
     }
 
     public void keyDown(int keycode) {
@@ -201,7 +214,14 @@ public class MainShip extends Ship {
      */
     public void changeShipSettingsByLevel(int level){
         //не меняем значение жизни от значения уровня
-        this.hp = constHp;
+//        this.hp = constHp;
+        //увеличиваем параметры корабля в зависимости от текущего уровня игры
+//        this.v0.set(constV0.scl(level));
+//        this.bulletV.set(0, constBulletV.y * level);
+        this.damage = constDamage * level;
+//        this.reloadInterval = constReloadInterval / level;
+        //запоминаем новое значение константы жизни корабля
+        this.hp = constHp * level;
     }
 
     /**

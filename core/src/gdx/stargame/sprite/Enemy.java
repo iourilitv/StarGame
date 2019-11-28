@@ -156,7 +156,8 @@ public class Enemy extends Ship {
      */
     public void changeShipSettingsByLevel(int level){
         //увеличиваем параметры корабля в зависимости от текущего уровня игры
-        this.v0.set(constV0.scl(level));
+//        this.v0.set(constV0.scl(level));//FIXME
+        this.v0.y = constV0.y * level;
         this.bulletV.set(0, constBulletV.y * level);
         this.damage = constDamage * level;
         this.reloadInterval = constReloadInterval / level;
