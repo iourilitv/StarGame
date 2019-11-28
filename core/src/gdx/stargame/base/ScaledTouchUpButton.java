@@ -64,4 +64,6 @@ public abstract class ScaledTouchUpButton extends Sprite {
     public void setShowing(boolean showing) {
         isShowing = showing;
     }
+
+
 }

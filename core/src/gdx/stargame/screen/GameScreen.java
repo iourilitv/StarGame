@@ -21,6 +21,7 @@ import gdx.stargame.pool.BulletPool;
 import gdx.stargame.pool.EnemyPool;
 import gdx.stargame.pool.ExplosionPool;
 import gdx.stargame.sprite.Bullet;
+import gdx.stargame.sprite.ButtonMenu;
 import gdx.stargame.sprite.ButtonNewGame;
 import gdx.stargame.sprite.Enemy;
 import gdx.stargame.sprite.GameOver;
@@ -30,7 +31,7 @@ import gdx.stargame.utils.EnemyEmitter;
 public class GameScreen extends BaseScreen {
 
     //инициируем перечисление для режимов игры: игра, пауза, конец игры.
-    private enum State {PLAYING, PAUSE, GAME_OVER}
+    public enum State {PLAYING, PAUSE, GAME_OVER}
     //инициируем константы шаблонов текста для вывода на экран
     private static final String SCORE = "Score:";//количество сбитых врагов
     private static final String HP = "HP:";//значение здоровья главного корабля
@@ -57,6 +58,8 @@ public class GameScreen extends BaseScreen {
     private GameOver gameOver;
     //объявляем регион для картинки "новая игра"
     private ButtonNewGame newGameButton;
+    //объявляем спрайт для кнопки меню
+    private ButtonMenu buttonMenu;
 
     //объявляем переменную шрифта текста
     private Font font;
@@ -92,10 +95,12 @@ public class GameScreen extends BaseScreen {
         //инициируем объект гравного корабля с дополнительным параметром - пулом взрывов
         mainShip = new MainShip(atlas, bulletPool, explosionPool);
         enemyEmitter = new EnemyEmitter(enemyPool, atlas, worldBounds);
-        //инициируем спрайт для анимации "конец игры"
+        //инициируем объект спрайта для анимации "конец игры"
         gameOver = new GameOver(atlas);
-        //инициируем спрайт кнопки и организации режима "новая игра"
+        //инициируем объект спрайта кнопки и организации режима "новая игра"
         newGameButton = new ButtonNewGame(atlas, this);
+        //инициируем объект спрайта для кнопки меню
+        buttonMenu = new ButtonMenu(this);
         //инициируем переменную шрифта текста. В параметрах fontFile, imageFile
         font = new Font("font/font.fnt", "font/font.png");
         //устанавливаем размер шрифта в мировых координатах
@@ -122,10 +127,12 @@ public class GameScreen extends BaseScreen {
     public void resize(Rect worldBounds) {
         background.resize(worldBounds);
         mainShip.resize(worldBounds);
-        //передаем мировую координатную сетку в классы окончания игры и начала новой игры
+        //передаем мировую координатную сетку в классы
+        // окончания игры, начала новой игры и кнопки меню
         // и устанавливаем размеры их объектов
         gameOver.resize(worldBounds);
         newGameButton.resize(worldBounds);
+        buttonMenu.resize(worldBounds);
     }
 
     /**
@@ -152,8 +159,10 @@ public class GameScreen extends BaseScreen {
         state = prevState;
         //воспроизводим музыку с того места, где она была преостановлена
         music.play();
-        //передаем событие разворачивания окна после паузы в объект конца игры
-        gameOver.resume();
+        if (state == State.GAME_OVER) {
+            //передаем событие разворачивания окна после паузы в объект конца игры
+            gameOver.resume();
+        }
     }
 
     @Override
@@ -192,16 +201,28 @@ public class GameScreen extends BaseScreen {
      */
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
+        //если текущий режим игры установлен режим паузы
+        if (state == State.PAUSE) {
+            //вызываем метод отработки нажатия кнопки меню
+            buttonMenu.touchDown(touch, pointer);
         //если текущий режим игры установлен режим "играть"
-        if (state == State.PLAYING) {
-            //передаем касание только в класс главного корабля
-            mainShip.touchDown(touch, pointer);
-            //если текущий режим игры установлен режим "конец игры"
+        } else if (state == State.PLAYING) {
+            //если касание не попало на кнопку меню
+            if(!buttonMenu.isMe(touch)){
+                //передаем касание только в класс главного корабля
+                mainShip.touchDown(touch, pointer);
+                //если касание на кнопке
+            } else {
+                //вызываем метод отработки нажатия кнопки меню
+                buttonMenu.touchDown(touch, pointer);
+            }
+        //если текущий режим игры установлен режим "конец игры"
         } else if (state == State.GAME_OVER) {
-        //вызываем метод отработки нажатия кнопки NewGame
-        newGameButton.touchDown(touch, pointer);
+            //вызываем метод отработки нажатия кнопки NewGame
+            newGameButton.touchDown(touch, pointer);
+            //вызываем метод отработки нажатия кнопки меню
+            buttonMenu.touchDown(touch, pointer);
         }
-
         return false;
     }
 
@@ -213,14 +234,27 @@ public class GameScreen extends BaseScreen {
      */
     @Override
     public boolean touchUp(Vector2 touch, int pointer) {
+        //если текущий режим игры установлен режим паузы
+        if (state == State.PAUSE) {
+            //вызываем метод отработки отпускания нажатия кнопки меню
+            buttonMenu.touchUp(touch, pointer);
         //если текущий режим игры установлен режим "играть"
-        if (state == State.PLAYING) {
-            //передаем касание только в класс главного корабля
-            mainShip.touchUp(touch, pointer);
-            //если текущий режим игры установлен режим "конец игры"
+        } else if (state == State.PLAYING) {
+            //если касание не попало на кнопку меню
+            if(!buttonMenu.isMe(touch)){
+                //передаем касание только в класс главного корабля
+                mainShip.touchUp(touch, pointer);
+                //если касание на кнопке
+            } else {
+                //вызываем метод отработки отпускания нажатия кнопки меню
+                buttonMenu.touchUp(touch, pointer);
+            }
+        //если текущий режим игры установлен режим "конец игры"
         } else if (state == State.GAME_OVER) {
-        //вызываем метод отработки отпускания нажатия кнопки NewGame
-        newGameButton.touchUp(touch, pointer);
+            //вызываем метод отработки отпускания нажатия кнопки NewGame
+            newGameButton.touchUp(touch, pointer);
+            //вызываем метод отработки отпускания нажатия кнопки меню
+            buttonMenu.touchUp(touch, pointer);
         }
         return false;
     }
@@ -380,10 +414,14 @@ public class GameScreen extends BaseScreen {
         enemyPool.drawActiveSprites(batch);
         //отрисовываем объекты в пуле взрывов
         explosionPool.drawActiveSprites(batch);
-        //если текущий режим игры в положении "играть" отрисовываем остальные объекты игры
-        if (state == State.PLAYING) {
-            //отрисовываем главный корабль
-            mainShip.draw(batch);
+        //если текущий режим игры в положении "играть" или паузы
+        // отрисовываем остальные объекты игры
+        if (state == State.PLAYING || state == State.PAUSE) {
+            //если главный корабль не уничтожен
+            if(!mainShip.isDestroyed()){
+                //отрисовываем главный корабль
+                mainShip.draw(batch);
+            }
             bulletPool.drawActiveSprites(batch);
             enemyPool.drawActiveSprites(batch);
             //если текущий режим игры в положении "конец игры"
@@ -399,6 +437,8 @@ public class GameScreen extends BaseScreen {
         }
         //вызываем метод вывода информации об игре на экран
         printInfo();
+        //отрисовываем объект кнопки меню
+        buttonMenu.draw(batch);
         batch.end();
     }
 
@@ -469,5 +509,9 @@ public class GameScreen extends BaseScreen {
                 levelPosX, levelPosY,
                 //выравниваем сообщение по правому краю позиции
                 Align.right);
+    }
+
+    public State getState() {
+        return state;
     }
 }
