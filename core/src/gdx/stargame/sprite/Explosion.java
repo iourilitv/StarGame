@@ -47,7 +47,7 @@ public class Explosion extends Sprite {
     public void set(Vector2 pos, float height) {
         this.pos.set(pos);
         setHeightProportion(height);
-        sound.play();
+//        sound.play();//FIXME
     }
 
     @Override
@@ -55,5 +55,13 @@ public class Explosion extends Sprite {
         //сбрасываем на начальный кадр анимации
         frame = 0;
         super.destroy();
+    }
+
+    /**
+     * Геттер на звук взрыва
+     * @return - объект звука взрыва
+     */
+    public Sound getSound() {
+        return sound;
     }
 }
