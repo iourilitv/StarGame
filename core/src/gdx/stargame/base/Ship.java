@@ -81,7 +81,6 @@ public abstract class Ship extends Sprite {
             //показываем основную картинку корабля
             frame = 0;
         }
-//        pos.mulAdd(v, delta);//FIXME
     }
 
     @Override
