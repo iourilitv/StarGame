@@ -1,6 +1,7 @@
 package gdx.stargame.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -187,12 +188,34 @@ public class GameScreen extends BaseScreen {
         super.dispose();
     }
 
+    /**
+     * Метод обработки нажатия клавиши
+     * @param keycode - код клавиши клавиатуры
+     * @return - не используется
+     */
     @Override
     public boolean keyDown(int keycode) {
+        //если нажата клавиша пробел
+        if(keycode == Input.Keys.SPACE){
+            //если установлено состояние пауза игры
+            if(state == State.PAUSE){
+                //восстанавливаем игру после паузы
+                resume();
+            //если игра не в режиме паузы
+            } else {
+                //ставим игру на паузу
+                pause();
+            }
+        }
         mainShip.keyDown(keycode);
         return false;
     }
 
+    /**
+     * Метод обработки отпускания нажатой клавиши
+     * @param keycode - код клавиши клавиатуры
+     * @return - не используется
+     */
     @Override
     public boolean keyUp(int keycode) {
         mainShip.keyUp(keycode);
