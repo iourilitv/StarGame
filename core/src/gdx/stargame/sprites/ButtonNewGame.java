@@ -1,4 +1,4 @@
-package gdx.stargame.sprite;
+package gdx.stargame.sprites;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import gdx.stargame.base.BaseScreen;
 import gdx.stargame.base.ScaledTouchUpButton;
 import gdx.stargame.math.Rect;
-import gdx.stargame.screen.GameScreen;
 
 /**
  * Класс кнопки новая игра на экране игрового поля.

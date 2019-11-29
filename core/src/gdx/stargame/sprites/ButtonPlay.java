@@ -1,11 +1,11 @@
-package gdx.stargame.sprite;
+package gdx.stargame.sprites;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 import gdx.stargame.base.BaseScreen;
 import gdx.stargame.base.ScaledTouchUpButton;
 import gdx.stargame.math.Rect;
-import gdx.stargame.screen.GameScreen;
+import gdx.stargame.screens.GameScreen;
 
 public class ButtonPlay extends ScaledTouchUpButton {
 

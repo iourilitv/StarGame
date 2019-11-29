@@ -1,4 +1,4 @@
-package gdx.stargame.sprite;
+package gdx.stargame.sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 
 import gdx.stargame.base.Ship;
 import gdx.stargame.math.Rect;
-import gdx.stargame.pool.BulletPool;
-import gdx.stargame.pool.ExplosionPool;
+import gdx.stargame.pools.BulletPool;
+import gdx.stargame.pools.ExplosionPool;
 
 /**
  * Класс спрайта корабля игрока(главного корабля).

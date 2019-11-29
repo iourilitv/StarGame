@@ -1,11 +1,11 @@
-package gdx.stargame.sprite;
+package gdx.stargame.sprites;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import gdx.stargame.base.ScaledTouchUpButton;
 import gdx.stargame.math.Rect;
-import gdx.stargame.screen.GameScreen;
+import gdx.stargame.screens.GameScreen;
 
 /**
  * Класс кнопки меню на экране игрового поля.

@@ -1,4 +1,4 @@
-package gdx.stargame.sprite;
+package gdx.stargame.sprites;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import gdx.stargame.base.Sprite;
 import gdx.stargame.math.Rect;
-import gdx.stargame.screen.GameScreen;
+import gdx.stargame.screens.GameScreen;
 
 /**
  * Класс спрайта сообщения "О программе".

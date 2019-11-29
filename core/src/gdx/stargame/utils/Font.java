@@ -1,4 +1,4 @@
-package gdx.stargame.base;
+package gdx.stargame.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

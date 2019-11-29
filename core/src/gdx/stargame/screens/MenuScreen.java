@@ -1,4 +1,4 @@
-package gdx.stargame.screen;
+package gdx.stargame.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,9 +10,9 @@ import com.badlogic.gdx.math.Vector2;
 import gdx.stargame.StarGame;
 import gdx.stargame.base.BaseScreen;
 import gdx.stargame.math.Rect;
-import gdx.stargame.sprite.Background;
-import gdx.stargame.sprite.ButtonExit;
-import gdx.stargame.sprite.ButtonPlay;
+import gdx.stargame.sprites.Background;
+import gdx.stargame.sprites.ButtonExit;
+import gdx.stargame.sprites.ButtonPlay;
 
 public class MenuScreen extends BaseScreen {
 

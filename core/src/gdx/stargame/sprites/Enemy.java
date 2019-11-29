@@ -1,14 +1,14 @@
-package gdx.stargame.sprite;
+package gdx.stargame.sprites;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-import gdx.stargame.base.ScoreCounter;
+import gdx.stargame.managers.ScoreCounter;
 import gdx.stargame.base.Ship;
 import gdx.stargame.math.Rect;
-import gdx.stargame.pool.BulletPool;
-import gdx.stargame.pool.ExplosionPool;
+import gdx.stargame.pools.BulletPool;
+import gdx.stargame.pools.ExplosionPool;
 
 public class Enemy extends Ship {
     //инициируем перечисление состояний корабля противника

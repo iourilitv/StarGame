@@ -1,4 +1,4 @@
-package gdx.stargame.base;
+package gdx.stargame.managers;
 
 /**
  * Класс логики подсчета очков.

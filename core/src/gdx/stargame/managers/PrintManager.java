@@ -1,14 +1,12 @@
-package gdx.stargame.manager;
+package gdx.stargame.managers;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
 
-import gdx.stargame.base.BaseScreen;
-import gdx.stargame.base.Font;
-import gdx.stargame.base.ScoreCounter;
+import gdx.stargame.utils.Font;
 import gdx.stargame.math.Rect;
-import gdx.stargame.screen.GameScreen;
-import gdx.stargame.sprite.MainShip;
+import gdx.stargame.screens.GameScreen;
+import gdx.stargame.sprites.MainShip;
 
 /**
  * Класс управления выводом текстовой информации на экран.

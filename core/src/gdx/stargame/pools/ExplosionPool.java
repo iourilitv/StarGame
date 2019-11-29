@@ -1,11 +1,11 @@
-package gdx.stargame.pool;
+package gdx.stargame.pools;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 import gdx.stargame.base.SpritesPool;
-import gdx.stargame.sprite.Explosion;
+import gdx.stargame.sprites.Explosion;
 
 /**
  * Класс для организации пула объектов-взрывов.

@@ -5,10 +5,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import gdx.stargame.math.Rect;
-import gdx.stargame.pool.BulletPool;
-import gdx.stargame.pool.ExplosionPool;
-import gdx.stargame.sprite.Bullet;
-import gdx.stargame.sprite.Explosion;
+import gdx.stargame.pools.BulletPool;
+import gdx.stargame.pools.ExplosionPool;
+import gdx.stargame.sprites.Bullet;
+import gdx.stargame.sprites.Explosion;
 
 /**
  * Родительский метод спрайта корабля(главного или корабля противника).

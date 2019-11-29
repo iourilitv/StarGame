@@ -1,4 +1,4 @@
-package gdx.stargame.screen;
+package gdx.stargame.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,28 +8,26 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Align;
 
 import java.util.List;
 
-import gdx.stargame.base.Font;
-import gdx.stargame.base.ScoreCounter;
-import gdx.stargame.manager.PrintManager;
-import gdx.stargame.sprite.AboutMessage;
-import gdx.stargame.sprite.BackgroundGalaxy;
+import gdx.stargame.managers.ScoreCounter;
+import gdx.stargame.managers.PrintManager;
+import gdx.stargame.sprites.AboutMessage;
+import gdx.stargame.sprites.BackgroundGalaxy;
 import gdx.stargame.StarGame;
 import gdx.stargame.base.BaseScreen;
 import gdx.stargame.math.Rect;
-import gdx.stargame.pool.BulletPool;
-import gdx.stargame.pool.EnemyPool;
-import gdx.stargame.pool.ExplosionPool;
-import gdx.stargame.sprite.Bullet;
-import gdx.stargame.sprite.ButtonMenu;
-import gdx.stargame.sprite.ButtonNewGame;
-import gdx.stargame.sprite.Enemy;
-import gdx.stargame.sprite.GameOver;
-import gdx.stargame.sprite.MainShip;
-import gdx.stargame.utils.EnemyEmitter;
+import gdx.stargame.pools.BulletPool;
+import gdx.stargame.pools.EnemyPool;
+import gdx.stargame.pools.ExplosionPool;
+import gdx.stargame.sprites.Bullet;
+import gdx.stargame.sprites.ButtonMenu;
+import gdx.stargame.sprites.ButtonNewGame;
+import gdx.stargame.sprites.Enemy;
+import gdx.stargame.sprites.GameOver;
+import gdx.stargame.sprites.MainShip;
+import gdx.stargame.managers.EnemyEmitter;
 
 public class GameScreen extends BaseScreen {
 

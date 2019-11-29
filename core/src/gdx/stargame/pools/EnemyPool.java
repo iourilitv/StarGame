@@ -1,8 +1,8 @@
-package gdx.stargame.pool;
+package gdx.stargame.pools;
 
 import gdx.stargame.base.SpritesPool;
 import gdx.stargame.math.Rect;
-import gdx.stargame.sprite.Enemy;
+import gdx.stargame.sprites.Enemy;
 
 public class EnemyPool extends SpritesPool<Enemy> {
 

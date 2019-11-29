@@ -1,4 +1,4 @@
-package gdx.stargame.utils;
+package gdx.stargame.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
@@ -8,8 +8,9 @@ import com.badlogic.gdx.math.Vector2;
 
 import gdx.stargame.math.Rect;
 import gdx.stargame.math.Rnd;
-import gdx.stargame.pool.EnemyPool;
-import gdx.stargame.sprite.Enemy;
+import gdx.stargame.pools.EnemyPool;
+import gdx.stargame.sprites.Enemy;
+import gdx.stargame.utils.Regions;
 
 /**
  * Класс организует вызов кораблей противника из пула и настройки их параметров.

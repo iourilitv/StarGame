@@ -1,7 +1,7 @@
-package gdx.stargame.pool;
+package gdx.stargame.pools;
 
 import gdx.stargame.base.SpritesPool;
-import gdx.stargame.sprite.Bullet;
+import gdx.stargame.sprites.Bullet;
 
 public class BulletPool extends SpritesPool<Bullet> {
     @Override
