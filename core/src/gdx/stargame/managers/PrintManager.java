@@ -142,7 +142,7 @@ public class PrintManager {
         //добавляем шаблон сообщения и текущее значение набранных очков
         sbScore.append(SCORE).append(scoreCounter.getScoreTotal());
         // и максимальное за игру значение набранных очков
-        sbScore.append("/").append(scoreCounter.getScoreTotal());//FIXME поменять на максимальное
+        sbScore.append("/").append(scoreCounter.getMaxScoreTotal());
         //вызываем метод отрисовки шрифта текста сообщения о сбитых кораблях противника
         fontInfoLine.draw(batch,
                 //отрисовываем готовую строку об очках
@@ -191,7 +191,7 @@ public class PrintManager {
         //добавляем в строку шаблон сообщения и номер текущего уровня игры
         sbLevel.append(LEVEL).append(scoreCounter.getLevel());
         // и максимальное за игру значение уровня игры
-        sbLevel.append("/").append(scoreCounter.getLevel());//FIXME поменять на максимальное
+        sbLevel.append("/").append(scoreCounter.getMaxLevel());
         //вызываем метод отрисовки шрифта текста о текущем уровне игры
         fontInfoLine.draw(batch,
                 //отрисовываем готовую строку об уровне игры

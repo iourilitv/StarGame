@@ -16,10 +16,14 @@ public class ScoreCounter {
     private static final int NEXT_LEVEL_SCORE_SUM = 10;//100;
     //инициируем переменную для текущей суммы набранных очков с начала игры
     private int scoreTotal = 0;
+    //инициируем переменную для хранения максимального значения очков набранных за игру
+    //(значение очков может уменьшаться из-за штрафов)
+    private int maxScoreTotal = 0;//FIXME
     //инициируем перенную текущего уровня игры(?должен быть в GameScreen?)
     private int level = 1;
-    //инициируем переменную для хранения номера предыдущего уровня игры
-//    private int prevLevel = 1;//FIXME
+    //инициируем переменную для хранения максимального значения уровня игры достигнутого за игру
+    //(уровень может уменьшаться из-за штрафов)
+    private int maxLevel = 1;//FIXME
     //объявляем фраг перехода на следующий уровень
     private boolean isNextLevel;
 
@@ -32,24 +36,32 @@ public class ScoreCounter {
         if(scoreTotal >= level * NEXT_LEVEL_SCORE_SUM){
             //устанавливаем фраг перехода на следующий уровень
             isNextLevel = true;
-
-//            //сохраняем значение текущего уровня
-//            prevLevel = level;//FIXME
-
             //инкрементируем текущий уровень
             level++;
         //если значение уровня игры больше минимального уровня и
         //если новая текущая сумма набранных очков уменьшилась достаточно для
         // возврата на предыдущий уровень
         } else if(level > 1 && scoreTotal < (level - 1) * NEXT_LEVEL_SCORE_SUM) {
-
-//            //сохраняем значение текущего уровня//FIXME
-//            level = prevLevel;
-//            //декрементируем текущий уровень
-//            prevLevel--;
-
             //декрементируем значение текущего уровня
             level--;
+        }
+        //проверяем и сохраняем новые значения максимумов за игру набранных очков и уровня
+        checkAndSaveMaxScoreAndLevel();
+    }
+
+    /**
+     * Метод проверяет и сохраняет новые значения максимумов за игру набранных очков и уровня.
+     */
+    private void checkAndSaveMaxScoreAndLevel() {
+        //если текущее значение набранных очков больше сохраненного максимального значения
+        if(scoreTotal > maxScoreTotal){
+            //сохраняем новое значение
+            maxScoreTotal = scoreTotal;
+        }
+        //если текущее значение уровня игры больше сохраненного максимального значения
+        if(level > maxLevel){
+            //сохраняем новое значение
+            maxLevel = level;
         }
     }
 
@@ -57,24 +69,35 @@ public class ScoreCounter {
      * Метод организует режим начала новой игры.
      */
     public void startNewGame() {
-        //устанавливаем переменные текущего и предыдущего уровней игры в начальное состояние
-        setLevel(1);
-
-//        setPrevLevel(1);//FIXME
-
-        //сбрасываем счетчик сбитых врагов
-        setScoreTotal(0);
+        //устанавливаем переменные текущего и максимального уровней игры в начальное состояние
+        level = 1;
+        maxLevel = 1;
+        //сбрасываем переменные текущего и максимального за игру значений набранных очков
+        scoreTotal = 0;
+        maxScoreTotal = 0;
         //сбрасываем флаг перехода на новый уровень
         resetNextLevel();
+    }
+
+    int getScoreTotal() {
+        return scoreTotal;
+    }
+
+    int getMaxScoreTotal() {
+        return maxScoreTotal;
     }
 
     public int getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    int getMaxLevel() {
+        return maxLevel;
     }
+
+    //    public void setLevel(int level) {
+//        this.level = level;
+//    }
 
 //    public int getPrevLevel() {//FIXME
 //        return prevLevel;
@@ -83,14 +106,6 @@ public class ScoreCounter {
 //    public void setPrevLevel(int prevLevel) {//FIXME
 //        this.prevLevel = prevLevel;
 //    }
-
-    public int getScoreTotal() {
-        return scoreTotal;
-    }
-
-    public void setScoreTotal(int scoreTotal) {
-        this.scoreTotal = scoreTotal;
-    }
 
     public boolean isNextLevel() {
         return isNextLevel;
