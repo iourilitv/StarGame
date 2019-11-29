@@ -22,7 +22,7 @@ public class ButtonMenu extends ScaledTouchUpButton {
     public ButtonMenu(GameScreen screen) {
         //передаем в родительский класс текструру-регион картинки кнопки "NewGame"
         super(new TextureRegion(new Texture(
-                "textures/menu-but-3lines-blackBorder-whiteFill-transp-321x254.jpg")
+                "textures/menu-but-wildberries-320x320.png")
                 ),
                 screen);
         this.screen = screen;

@@ -29,7 +29,7 @@ public class MenuScreen extends BaseScreen {
     @Override
     public void show() {
         super.show();
-        bg = new Texture("textures/galaxy02-1800x2880.jpg");
+        bg = new Texture("textures/bg-menuscreen-1484x2272.png");
         background = new Background(new TextureRegion(bg));
         atlas = new TextureAtlas("textures/menuAtlas.tpack");
         buttonExit = new ButtonExit(atlas, this);
