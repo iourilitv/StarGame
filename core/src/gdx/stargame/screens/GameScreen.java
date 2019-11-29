@@ -30,14 +30,8 @@ import gdx.stargame.sprites.MainShip;
 import gdx.stargame.managers.EnemyEmitter;
 
 public class GameScreen extends BaseScreen {
-
     //инициируем перечисление для режимов игры: игра, пауза, конец игры.
     public enum State {PLAYING, PAUSE, GAME_OVER}
-
-//    //инициируем константы шаблонов текста для вывода на экран//FIXME
-//    private static final String SCORE = "Score:";//количество сбитых врагов
-//    private static final String HP = "HP:";//значение здоровья главного корабля
-//    private static final String LEVEL = "Level:";//текущий уровень игры
 
     //объявляем тектуру картинки фона с галактикой
     private Texture bgGalaxy;
@@ -64,13 +58,6 @@ public class GameScreen extends BaseScreen {
     private ButtonMenu buttonMenu;
     //объявляем спрайт сообщения "О программе"
     private AboutMessage aboutMessage;
-
-//    //объявляем переменную шрифта текста
-//    private Font font;//FIXME
-//    //объявляем переменные готового текста для вывода на экран
-//    private StringBuilder sbScore;//количество сбитых врагов
-//    private StringBuilder sbHp;//значение здоровья главного корабля
-//    private StringBuilder sbLevel;//текущий уровень игры
 
     //инициируем переменную для объекта счетчика очков
     private ScoreCounter scoreCounter = ScoreCounter.getInstance();
@@ -109,19 +96,8 @@ public class GameScreen extends BaseScreen {
         aboutMessage = new AboutMessage(this);
         //инициируем объект спрайта для кнопки меню
         buttonMenu = new ButtonMenu(this);
-
-//        //инициируем переменную шрифта текста. В параметрах fontFile, imageFile
-//        font = new Font("font/font.fnt", "font/font.png");
-//        //устанавливаем размер шрифта в мировых координатах
-//        font.setSize(0.02f);//FIXME
         //инициируем переменную объекта менеджера печати
         printManager = new PrintManager(this);
-
-//        //инициируем переменные готового текста для вывода на экран
-//        sbScore = new StringBuilder();//количество сбитых врагов
-//        sbHp = new StringBuilder();//значение здоровья главного корабля
-//        sbLevel = new StringBuilder();//текущий уровень игры//FIXME
-
         //устанавливаем текущиему и предыдущему режиму игры режим "играть"
         state = State.PLAYING;
         prevState = State.PLAYING;
@@ -361,7 +337,7 @@ public class GameScreen extends BaseScreen {
                 mainShip.damage(enemy.getDamage());
                 //когда корабль противника уничтожен, увеличиваем значение суммы набранных очков
                 // на размер жизни сбитого корабля противника
-                scoreCounter.checkNextLevel(enemy.getConstHp());
+                scoreCounter.updateScoresAndCheckNextLevel(enemy.getConstHp());
                 //вызываем метод уничтожения корабля противника
                 enemy.destroy();
                 //если при столкновении с кораблем противника уничтожен главный корабль
@@ -389,7 +365,7 @@ public class GameScreen extends BaseScreen {
                     if (enemy.isDestroyed()) {
                         //когда корабль противника уничтожен, увеличиваем значение суммы набранных очков
                         // на размер жизни сбитого корабля противника
-                        scoreCounter.checkNextLevel(enemy.getConstHp());
+                        scoreCounter.updateScoresAndCheckNextLevel(enemy.getConstHp());
                     }
                 }
             }
@@ -464,7 +440,6 @@ public class GameScreen extends BaseScreen {
             }
         }
         //вызываем метод вывода информации об игре на экран
-//        printInfo();//FIXME
         printManager.draw(batch);
 
         //если установлен режим паузы
@@ -502,50 +477,6 @@ public class GameScreen extends BaseScreen {
             newGameButton.update(delta);
         }
     }
-
-//    /** //FIXME
-//     * Метод вывода информации об игре на экран
-//     */
-//    private void printInfo() {
-//        //сбрасываем итоговую строку сообщения о подбитых кораблях противника
-//        sbScore.setLength(0);
-//        //устанавливаем координаты позиции итоговой строки сообщения
-//        // о подбитых кораблях противника
-//        float fragsPosX = worldBounds.getLeft() + 0.01f;//с отступом от левого края игрового поля
-//        float fragsPosY = worldBounds.getTop() - 0.01f;//с отступом от верха игрового поля
-//        //вызываем метод отрисовки шрифта текста сообщения о сбитых кораблях противника
-//        font.draw(batch,
-//                //добавляем в строку шаблон сообщения и количество сбитых кораблей противника
-//                sbScore.append(SCORE).append(scoreCounter.getScoreTotal()),
-//                //координаты позиции сообщения(по умолчанию выравнивание - по левому краю)
-//                fragsPosX, fragsPosY);
-//        //сбрасываем итоговую строку сообщения о размере жизни главного корабля
-//        sbHp.setLength(0);
-//        //устанавливаем координаты позиции итоговой строки сообщения о жизни главного корабля
-//        float hpPosX = worldBounds.pos.x;//по середине ширины игрового экрана
-//        float hpPosY = worldBounds.getTop() - 0.01f;//с отступом от верха игрового поля
-//        //вызываем метод отрисовки шрифта текста о размере жизни главного корабля
-//        font.draw(batch,
-//                //добавляем в строку шаблон сообщения и размер жизни главного корабля
-//                sbHp.append(HP).append(mainShip.getHp()),
-//                //координаты позиции сообщения
-//                hpPosX, hpPosY,
-//                //выравниваем сообщение по центру позиции
-//                Align.center);
-//        //сбрасываем итоговую строку сообщения о текущем уровне игры
-//        sbLevel.setLength(0);
-//        //устанавливаем координаты позиции итоговой строки сообщения о текущем уровне игры
-//        float levelPosX = worldBounds.getRight() - 0.01f;
-//        float levelPosY = worldBounds.getTop() - 0.01f;
-//        //вызываем метод отрисовки шрифта текста о текущем уровне игры
-//        font.draw(batch,
-//                //добавляем в строку шаблон сообщения и номер текущего уровня игры
-//                sbLevel.append(LEVEL).append(scoreCounter.getLevel()),
-//                //координаты позиции сообщения
-//                levelPosX, levelPosY,
-//                //выравниваем сообщение по правому краю позиции
-//                Align.right);
-//    }
 
     /**
      * Геттер на состояние игры.
