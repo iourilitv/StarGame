@@ -228,32 +228,6 @@ public class GameScreen extends BaseScreen {
      * @param pointer - номер пальца или клика
      * @return - не используется
      */
-//    @Override
-//    public boolean touchDown(Vector2 touch, int pointer) {
-//        //если текущий режим игры установлен режим паузы
-//        if (state == State.PAUSE) {
-//            //вызываем метод отработки нажатия кнопки меню
-//            buttonMenu.touchDown(touch, pointer);
-//        //если текущий режим игры установлен режим "играть"
-//        } else if (state == State.PLAYING) {
-//            //если касание не попало на кнопку меню
-//            if(!buttonMenu.isMe(touch)){
-//                //передаем касание только в класс главного корабля
-//                mainShip.touchDown(touch, pointer);
-//                //если касание на кнопке
-//            } else {
-//                //вызываем метод отработки нажатия кнопки меню
-//                buttonMenu.touchDown(touch, pointer);
-//            }
-//        //если текущий режим игры установлен режим "конец игры"
-//        } else if (state == State.GAME_OVER) {
-//            //вызываем метод отработки нажатия кнопки NewGame
-//            newGameButton.touchDown(touch, pointer);
-//            //вызываем метод отработки нажатия кнопки меню
-//            buttonMenu.touchDown(touch, pointer);
-//        }
-//        return false;
-//    }
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
         //если касание не попало на кнопку меню
@@ -279,32 +253,6 @@ public class GameScreen extends BaseScreen {
      * @param pointer - номер пальца или клика
      * @return - не используется
      */
-//    @Override
-//    public boolean touchUp(Vector2 touch, int pointer) {
-//        //если текущий режим игры установлен режим паузы
-//        if (state == State.PAUSE) {
-//            //вызываем метод отработки отпускания нажатия кнопки меню
-//            buttonMenu.touchUp(touch, pointer);
-//        //если текущий режим игры установлен режим "играть"
-//        } else if (state == State.PLAYING) {
-//            //если касание не попало на кнопку меню
-//            if(!buttonMenu.isMe(touch)){
-//                //передаем касание только в класс главного корабля
-//                mainShip.touchUp(touch, pointer);
-//                //если касание на кнопке
-//            } else {
-//                //вызываем метод отработки отпускания нажатия кнопки меню
-//                buttonMenu.touchUp(touch, pointer);
-//            }
-//        //если текущий режим игры установлен режим "конец игры"
-//        } else if (state == State.GAME_OVER) {
-//            //вызываем метод отработки отпускания нажатия кнопки NewGame
-//            newGameButton.touchUp(touch, pointer);
-//            //вызываем метод отработки отпускания нажатия кнопки меню
-//            buttonMenu.touchUp(touch, pointer);
-//        }
-//        return false;
-//    }
     @Override
     public boolean touchUp(Vector2 touch, int pointer) {
         //если касание не попало на кнопку меню
