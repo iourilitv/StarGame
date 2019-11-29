@@ -13,7 +13,7 @@ public class Explosion extends Sprite {
     //инициируем переменные интервала и таймера анимации взрыва
     private float animateInterval = 0.01f;
     private float animateTimer;
-    //принимаем объект звака взрыва
+    //принимаем объект звука взрыва
     private Sound sound;
 
     public Explosion(TextureAtlas atlas, Sound sound) {

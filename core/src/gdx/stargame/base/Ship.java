@@ -146,23 +146,8 @@ public abstract class Ship extends Sprite {
      * в зависимости от расположения корабля на поле
      */
     protected void shoot() {
-//        //устанавливаем значение панорамы звука в зависимости от положения корабля на поле
-//        //если корабль находится в левой трети поля
-//        float pan = 0f;
-//        if(pos.x < worldBounds.pos.x - worldBounds.getHalfWidth() / 3){
-//            //воспроизводим звук в левый динамик
-//            pan = -1f;
-//            //если корабль находится в правой трети поля
-//        } else if(pos.x > worldBounds.pos.x + worldBounds.getHalfWidth() / 3){
-//            //воспроизводим звук в правый динамик
-//            pan = 1f;
-//        }
-//        //воспроизводим звук выстрела по заданным параметрам
-//        sound.play(soundVolume, soundPitch, pan);
-
         //воспроизводим звук выстрела в зависимости от расположения корабля
         playSurroundSound(sound, soundVolume, soundPitch);
-
         Bullet bullet = bulletPool.obtain();
         bullet.set(this, bulletRegion, pos, bulletV, bulletHeight, worldBounds, damage);
     }
@@ -177,14 +162,13 @@ public abstract class Ship extends Sprite {
         explosion.set(pos, getHeight());
         //воспроизводим звук взрыва корабля в зависимости от расположения и
         // звуковых настроек корабля
-//        playSurroundSound(explosion.getSound(), 1, 1);//FIXME
         playSurroundSound(explosion.getSound(), soundVolume, soundPitch);
     }
 
     /**
      * Метод воспроизводит звук выстрела или взрыва в зависимости от расположения корабля
      */
-    private void playSurroundSound(Sound sound, float soundVolume, float soundPitch) {
+    public void playSurroundSound(Sound sound, float soundVolume, float soundPitch) {
         //устанавливаем значение панорамы звука в зависимости от положения корабля на поле
         //если корабль находится в левой трети поля
         float pan = 0f;
