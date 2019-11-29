@@ -336,8 +336,9 @@ public class GameScreen extends BaseScreen {
                 //вызываем метод повреждения главного корабля
                 mainShip.damage(enemy.getDamage());
                 //когда корабль противника уничтожен, увеличиваем значение суммы набранных очков
-                // на размер жизни сбитого корабля противника
-                scoreCounter.updateScoresAndCheckNextLevel(enemy.getConstHp());
+                // на размер жизни сбитого корабля противника установленного для текущего уровня
+                scoreCounter.updateScoresAndCheckNextLevel(
+                        enemy.getConstHp() * scoreCounter.getLevel());
                 //вызываем метод уничтожения корабля противника
                 enemy.destroy();
                 //если при столкновении с кораблем противника уничтожен главный корабль
@@ -364,8 +365,9 @@ public class GameScreen extends BaseScreen {
                     //если корабль противника уничтожен
                     if (enemy.isDestroyed()) {
                         //когда корабль противника уничтожен, увеличиваем значение суммы набранных очков
-                        // на размер жизни сбитого корабля противника
-                        scoreCounter.updateScoresAndCheckNextLevel(enemy.getConstHp());
+                        // на размер жизни сбитого корабля противника установленного для текущего уровня
+                        scoreCounter.updateScoresAndCheckNextLevel(
+                                enemy.getConstHp() * scoreCounter.getLevel());
                     }
                 }
             }
