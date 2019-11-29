@@ -3,6 +3,7 @@ package gdx.stargame.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -37,6 +38,12 @@ public class GameScreen extends BaseScreen {
     private Texture bgGalaxy;
     private TextureAtlas atlas;
     private Music music;
+    //объявляем объект звука попадания снаряда в корабль
+    private Sound shellHitSound;
+    //объявляем константы параметров звука
+    private final float shellHitSoundVolume = 0.1f;//уровень громкости звука
+    private final float shellHitSoundPitch = 2f;//уровень тона звука
+
     //объявляем объект спрайта фона
     private BackgroundGalaxy background;
     private MainShip mainShip;
@@ -74,6 +81,8 @@ public class GameScreen extends BaseScreen {
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
         music.setLooping(true);
         music.play();
+        //инициируем объект звука попадания снаряда в корабль
+        shellHitSound = Gdx.audio.newSound(Gdx.files.internal("sounds/shell-hit.mp3"));
         //инициируем текстуру картинки фона галактики
         bgGalaxy = new Texture("textures/galaxy03-2610x3960.jpg");
         //инициируем объект региона всей картинки фона
@@ -164,6 +173,7 @@ public class GameScreen extends BaseScreen {
         bgGalaxy.dispose();
         atlas.dispose();
         music.dispose();
+        shellHitSound.dispose();
         mainShip.dispose();
         bulletPool.dispose();
         enemyPool.dispose();
@@ -358,6 +368,8 @@ public class GameScreen extends BaseScreen {
                 }
                 //если снаряд главного корабля попал в корабль противника
                 if (enemy.isBulletCollision(bullet)) {
+                    //воспроизводим звук попадания сняряда в корабль в зависимости от расположения корабля
+                    enemy.playSurroundSound(shellHitSound, shellHitSoundVolume, shellHitSoundPitch);
                     //вызываем метод расчета повреждения корабля противника
                     enemy.damage(bullet.getDamage());
                     //вызываем метод уничтожения снаряда
@@ -381,6 +393,8 @@ public class GameScreen extends BaseScreen {
             }
             //если снаряд корабля противника попал в главный корабль
             if (mainShip.isBulletCollision(bullet)) {
+                //воспроизводим звук попадания сняряда в корабль в зависимости от расположения корабля
+                mainShip.playSurroundSound(shellHitSound, shellHitSoundVolume, shellHitSoundPitch);
                 //вызываем метод расчета повреждения главного корабля
                 mainShip.damage(bullet.getDamage());
                 //вызываем метод уничтожения снаряда
