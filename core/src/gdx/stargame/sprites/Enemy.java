@@ -62,7 +62,7 @@ public class Enemy extends Ship {
                     destroyed = true;
                     //вычитаем очки из набранных очков игрока в размере значения
                     // жизни  ускользнувшего корабля противника помноженого на текущий уровень игры
-                    scoreCounter.checkNextLevel(- getConstHp() * scoreCounter.getLevel());
+                    scoreCounter.updateScoresAndCheckNextLevel(- getConstHp() * scoreCounter.getLevel());
                 }
                 break;
         }
