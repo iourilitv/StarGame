@@ -26,12 +26,16 @@ public class Enemy extends Ship {
 
     //объявляем переменную для объекта счетчика очков
     private ScoreCounter scoreCounter = ScoreCounter.getInstance();
+    //объявляем переменную готового текста значения здоровья корабля противника для вывода на экран
+    private StringBuilder sbHp;
 
     public Enemy(BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds) {
         this.bulletPool = bulletPool;
         //принимаем объект пула вызрывов
         this.explosionPool = explosionPool;
         this.worldBounds = worldBounds;
+        //инициируем переменную готового текста значение здоровья корабля противника для вывода на экран
+        sbHp = new StringBuilder();
     }
 
     @Override
@@ -187,5 +191,13 @@ public class Enemy extends Ship {
                         //чтобы снаряд визуально долетал до центра корабля противника
                         || bullet.getTop() < pos.y
         );
+    }
+
+    /**
+     * Геттер для переменной готового текста значения здоровья корабля противника для вывода на экран
+     * @return - строку готового текста значения здоровья корабля противника
+     */
+    public StringBuilder getSbHp() {
+        return sbHp;
     }
 }

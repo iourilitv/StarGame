@@ -441,14 +441,11 @@ public class GameScreen extends BaseScreen {
         }
         //вызываем метод вывода информации об игре на экран
         printManager.draw(batch);
-
-
         //если установлен режим паузы
         if (state == State.PAUSE) {
             //отрисовываем сообщение "О программе"
             aboutMessage.draw(batch);
         }
-
         //отрисовываем объект кнопки меню
         buttonMenu.draw(batch);
         batch.end();
@@ -493,5 +490,13 @@ public class GameScreen extends BaseScreen {
      */
     public MainShip getMainShip() {
         return mainShip;
+    }
+
+    /**
+     * Геттер на пул кораблей противника.
+     * @return - пул кораблей противника
+     */
+    public EnemyPool getEnemyPool() {
+        return enemyPool;
     }
 }

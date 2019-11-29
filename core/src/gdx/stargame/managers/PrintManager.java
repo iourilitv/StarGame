@@ -3,6 +3,7 @@ package gdx.stargame.managers;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
 
+import gdx.stargame.sprites.Enemy;
 import gdx.stargame.utils.Font;
 import gdx.stargame.math.Rect;
 import gdx.stargame.screens.GameScreen;
@@ -14,6 +15,8 @@ import gdx.stargame.sprites.MainShip;
 public class PrintManager {
     //инициируем константу размера шрифта линии информации
     private final float INFOLINE_FONT_SIZE = 0.02f;
+    //инициируем константу размера шрифта линии информации
+    private final float ENEMY_HP_FONT_SIZE = 0.015f;
     //инициируем константы шаблонов текста для вывода на экран
     private static final String SCORE = "Score:";//количество сбитых врагов
     private static final String HP = "HP:";//значение здоровья главного корабля
@@ -28,8 +31,10 @@ public class PrintManager {
     //инициируем переменную для объекта счетчика очков
     private ScoreCounter scoreCounter = ScoreCounter.getInstance();
 
-    //объявляем переменную шрифта текста
+    //объявляем переменную шрифта текста информационной строки
     private Font fontInfoLine;
+    //объявляем переменную шрифта значения жизни корабля противника
+    private Font fontEnemyHp;
     //объявляем переменные готового текста для вывода на экран
     private StringBuilder sbScore;//количество сбитых врагов
     private StringBuilder sbHp;//значение здоровья главного корабля
@@ -39,6 +44,8 @@ public class PrintManager {
         this.screen = screen;
         //инициируем переменную шрифта текста. В параметрах fontFile, imageFile
         fontInfoLine = new Font("font/font.fnt", "font/font.png");
+        //инициируем переменную шрифта значения жизни корабля противника
+        fontEnemyHp = new Font("font/font.fnt", "font/font.png");//FIXME задвоение?
         //инициируем переменные готового текста для вывода на экран
         sbScore = new StringBuilder();//количество сбитых врагов
         sbHp = new StringBuilder();//значение здоровья главного корабля
@@ -56,7 +63,8 @@ public class PrintManager {
         this.worldBounds = worldBounds;
         //устанавливаем размер шрифта в мировых координатах
         fontInfoLine.setSize(INFOLINE_FONT_SIZE);//FIXME сделать зависимой от пропорций экрана
-
+        //устанавливаем размер шрифта в мировых координатах
+        fontEnemyHp.setSize(ENEMY_HP_FONT_SIZE);//FIXME сделать зависимой от пропорций экрана
     }
 
     /**
@@ -65,6 +73,8 @@ public class PrintManager {
     public void draw(SpriteBatch batch) {
         //выводим линию информации об игре на экран
          printInfoLine(batch);
+        //отрисовываем значения жизни действующих кораблей противника
+        drawHpMessageActiveEnemy(batch);
     }
 
     /**
@@ -78,53 +88,6 @@ public class PrintManager {
         printMainShipHpBlock(batch);
         //собираем и выводим строку блока информации об уровне игры
         printLevelBlock(batch);
-
-//        //сбрасываем итоговую строку сообщения о набранных очках//FIXME
-//        sbScore.setLength(0);
-//        //устанавливаем координаты позиции итоговой строки сообщения
-//        // о подбитых кораблях противника
-//        float fragsPosX = worldBounds.getLeft() + 0.01f;//с отступом от левого края игрового поля
-//        float fragsPosY = worldBounds.getTop() - 0.01f;//с отступом от верха игрового поля
-//        //***собираем строку информации об очках***
-//        //текущее значение набранных очков
-//        sbScore.append(SCORE).append(scoreCounter.getScoreTotal());
-//        // и максимальное за игру значение набранных очков
-//        sbScore.append("/").append(scoreCounter.getScoreTotal());//FIXME поменять на максимальное
-//        //вызываем метод отрисовки шрифта текста сообщения о сбитых кораблях противника
-//        fontInfoLine.draw(batch,
-//                //добавляем в строку шаблон сообщения и количество сбитых кораблей противника
-////                sbScore.append(SCORE).append(scoreCounter.getScoreTotal()).append("/"),//FIXME
-//                sbScore,
-//                //координаты позиции сообщения(по умолчанию выравнивание - по левому краю)
-//                fragsPosX, fragsPosY);
-
-        //сбрасываем итоговую строку сообщения о размере жизни главного корабля
-//        sbHp.setLength(0);
-//        //устанавливаем координаты позиции итоговой строки сообщения о жизни главного корабля
-//        float hpPosX = worldBounds.pos.x;//по середине ширины игрового экрана
-//        float hpPosY = worldBounds.getTop() - 0.01f;//с отступом от верха игрового поля
-//        //вызываем метод отрисовки шрифта текста о размере жизни главного корабля
-//        fontInfoLine.draw(batch,
-//                //добавляем в строку шаблон сообщения и размер жизни главного корабля
-//                sbHp.append(HP).append(mainShip.getHp()),
-//                //координаты позиции сообщения
-//                hpPosX, hpPosY,
-//                //выравниваем сообщение по центру позиции
-//                Align.center);
-
-//        //сбрасываем итоговую строку сообщения о текущем уровне игры
-//        sbLevel.setLength(0);
-//        //устанавливаем координаты позиции итоговой строки сообщения о текущем уровне игры
-//        float levelPosX = worldBounds.getRight() - 0.01f;
-//        float levelPosY = worldBounds.getTop() - 0.01f;
-//        //вызываем метод отрисовки шрифта текста о текущем уровне игры
-//        fontInfoLine.draw(batch,
-//                //добавляем в строку шаблон сообщения и номер текущего уровня игры
-//                sbLevel.append(LEVEL).append(scoreCounter.getLevel()),
-//                //координаты позиции сообщения
-//                levelPosX, levelPosY,
-//                //выравниваем сообщение по правому краю позиции
-//                Align.right);
     }
 
     /**
@@ -143,7 +106,7 @@ public class PrintManager {
         sbScore.append(SCORE).append(scoreCounter.getScoreTotal());
         // и максимальное за игру значение набранных очков
         sbScore.append("/").append(scoreCounter.getMaxScoreTotal());
-        //вызываем метод отрисовки шрифта текста сообщения о сбитых кораблях противника
+        //вызываем метод отрисовки шрифта текста сообщения об очках
         fontInfoLine.draw(batch,
                 //отрисовываем готовую строку об очках
                 sbScore,
@@ -200,5 +163,30 @@ public class PrintManager {
                 levelPosX, levelPosY,
                 //выравниваем сообщение по правому краю позиции
                 Align.right);
+    }
+
+    /**
+     * МЕтод отрисовывает значения жизни действующих кораблей противника прямо над кораблях
+     * @param batch - батчер
+     */
+    private void drawHpMessageActiveEnemy(SpriteBatch batch){
+        for (Enemy enemy: screen.getEnemyPool().getActiveObjects()) {
+            //сбрасываем итоговую строку блока сообщения о значении жизни корабля противника
+            enemy.getSbHp().setLength(0);
+            //устанавливаем координаты позиции сообщения точно в центре корабля противника
+            float sbHpPosX = enemy.pos.x - ENEMY_HP_FONT_SIZE;
+            float sbHpPosY = enemy.pos.y + ENEMY_HP_FONT_SIZE;
+            //***собираем строку информации об очках***
+            //добавляем текущее значение жизни корабля противника
+            enemy.getSbHp().append(enemy.getHp());
+            // и максимально возможное значение жизни на текущем уровне игры
+            enemy.getSbHp().append("/").append(enemy.getConstHp() * scoreCounter.getLevel());
+            //вызываем метод отрисовки шрифта текста сообщения о значении жизни корабля противника
+            fontEnemyHp.draw(batch,
+                    //отрисовываем готовую строку об очках
+                    enemy.getSbHp(),
+                    //координаты позиции сообщения(по умолчанию выравнивание - по левому краю)
+                    sbHpPosX, sbHpPosY);
+        }
     }
 }
