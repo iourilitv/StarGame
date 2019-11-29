@@ -12,7 +12,7 @@ public class ScoreCounter {
     }
 
     //инициируем константу суммы набранных очков требуемых для перехода на следующий уровень
-    private static final int NEXT_LEVEL_SCORE_SUM = 10;//100;
+    private static final int NEXT_LEVEL_SCORE_SUM = 100;//50;
     //инициируем переменную для текущей суммы набранных очков с начала игры
     private int scoreTotal = 0;
     //инициируем переменную для хранения максимального значения очков набранных за игру

@@ -29,7 +29,7 @@ public class EnemyEmitter {
 
     private static final float MIDDLE_BULLET_HEIGHT = 0.02f;
     private static final float MIDDLE_BULLET_VY = -0.25f;
-    private static final int MIDDLE_BULLET_DAMAGE = 5;
+    private static final int MIDDLE_BULLET_DAMAGE = 3;//5;
     private static final float MIDDLE_RELOAD_INTERVAL = 4f;
     private static final float MIDDLE_HEIGHT = 0.15f;
     private static final int MIDDLE_HP = 5;
@@ -39,7 +39,7 @@ public class EnemyEmitter {
 
     private static final float BIG_BULLET_HEIGHT = 0.03f;
     private static final float BIG_BULLET_VY = -0.2f;
-    private static final int BIG_BULLET_DAMAGE = 10;
+    private static final int BIG_BULLET_DAMAGE = 7;//10;
     private static final float BIG_RELOAD_INTERVAL = 2f;
     private static final float BIG_HEIGHT = 0.2f;
     private static final int BIG_HP = 10;
@@ -48,7 +48,7 @@ public class EnemyEmitter {
     private static final float BIG_SOUND_PITCH = 0.5f;//уровень тона звука
 
     //инициируем константные значения векторов скорости для кораблей противника
-    private final Vector2 enemySmallV = new Vector2(0, -0.2f);
+    private final Vector2 enemySmallV = new Vector2(0, -0.1f);//y-0.2f
     private final Vector2 enemyMiddleV = new Vector2(0, -0.03f);
     private final Vector2 enemyBigV = new Vector2(0, -0.005f);
 

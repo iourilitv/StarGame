@@ -22,7 +22,7 @@ public class AboutMessage extends Sprite {
     public AboutMessage(GameScreen screen) {
         //передаем в родительский класс текструру-регион картинки кнопки "NewGame"
         super(new TextureRegion(new Texture(
-                        "textures/about.png")
+                        "textures/about-878x720.png")
                 ));
         this.screen = screen;
     }
