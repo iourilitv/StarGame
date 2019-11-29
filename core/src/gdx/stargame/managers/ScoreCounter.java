@@ -4,7 +4,6 @@ package gdx.stargame.managers;
  * Класс логики подсчета очков.
  */
 public class ScoreCounter {
-
     //создаем объект класса
     private static final ScoreCounter ourInstance = new ScoreCounter();
 
@@ -18,16 +17,16 @@ public class ScoreCounter {
     private int scoreTotal = 0;
     //инициируем переменную для хранения максимального значения очков набранных за игру
     //(значение очков может уменьшаться из-за штрафов)
-    private int maxScoreTotal = 0;//FIXME
+    private int maxScoreTotal = 0;
     //инициируем перенную текущего уровня игры(?должен быть в GameScreen?)
     private int level = 1;
     //инициируем переменную для хранения максимального значения уровня игры достигнутого за игру
     //(уровень может уменьшаться из-за штрафов)
-    private int maxLevel = 1;//FIXME
+    private int maxLevel = 1;
     //объявляем фраг перехода на следующий уровень
     private boolean isNextLevel;
 
-    public void checkNextLevel(int score){
+    public void updateScoresAndCheckNextLevel(int score){
         //прибавляем переданные очки к текущей сумме набранных очков
         scoreTotal += score;
         //если текущая сумма очков стала меньше нуля, устанавливаем ноль
@@ -94,18 +93,6 @@ public class ScoreCounter {
     int getMaxLevel() {
         return maxLevel;
     }
-
-    //    public void setLevel(int level) {
-//        this.level = level;
-//    }
-
-//    public int getPrevLevel() {//FIXME
-//        return prevLevel;
-//    }
-//
-//    public void setPrevLevel(int prevLevel) {//FIXME
-//        this.prevLevel = prevLevel;
-//    }
 
     public boolean isNextLevel() {
         return isNextLevel;
