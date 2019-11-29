@@ -428,8 +428,6 @@ public class GameScreen extends BaseScreen {
                 //отрисовываем главный корабль
                 mainShip.draw(batch);
             }
-            bulletPool.drawActiveSprites(batch);
-            enemyPool.drawActiveSprites(batch);
         //если текущий режим игры в положении "конец игры"
         } else if (state == State.GAME_OVER) {
             //отрисовываем сообщение "конец игры" и кнопку "новая игра"
@@ -443,6 +441,7 @@ public class GameScreen extends BaseScreen {
         }
         //вызываем метод вывода информации об игре на экран
         printManager.draw(batch);
+
 
         //если установлен режим паузы
         if (state == State.PAUSE) {
