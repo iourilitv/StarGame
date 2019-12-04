@@ -1,4 +1,4 @@
-package gdx.lessons.lesson3.classbook;
+package gdx.lessons.lesson3.classbook1;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

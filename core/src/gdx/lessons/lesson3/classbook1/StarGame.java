@@ -1,4 +1,4 @@
-package gdx.lessons.lesson3.classbook;
+package gdx.lessons.lesson3.classbook1;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
